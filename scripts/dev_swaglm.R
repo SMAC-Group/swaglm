@@ -14,8 +14,18 @@ p <- 20
 Sigma <- diag(rep(1/p, p))
 
 X_mat_predictors = MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)
+beta_predictors = c(2,5,6,19,70, rep(0,p-5))
 X_generate <- cbind(rep(1, n), X_mat_predictors)
-beta = c(0,5,6,19,70,rep(0,16))
+beta = c(1, beta_predictors)
+
+# ----------------------------- gaussian iid regression
+
+sigma2 = 5
+y = X_generate %*% beta + rnorm(n, sd = sqrt(sigma2))
+run_estimation_model_one_dimension_cpp(X_mat_predictors, y = y, family = gaussian())
+
+
+#---------------------------------------- logistic regression
 z <- 1 + X_generate%*%beta
 pr <- 1/(1 + exp(-z))
 y <- as.factor(rbinom(n, 1, pr))
@@ -47,5 +57,7 @@ run_estimation_model_one_dimension = function(X, y, family=binomial()){
   )
 }
 
-# run_estimation_model_one_dimension(X=X_mat_predictors, y = y)
-# run_estimation_model_one_dimension_cpp(X_mat_predictors, y = y)
+res1 = run_estimation_model_one_dimension(X=X_mat_predictors, y = y)
+res2 = run_estimation_model_one_dimension_cpp(X_mat_predictors, y = y)
+res1
+res2
