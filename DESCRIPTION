@@ -2,7 +2,8 @@ Package: swaglm
 Title: Fast Sparse Wrapper Algorithm for Generalized Linear Models and Testing Procedures for Network of Highly Predictive Variables
 Version: 0.0.1
 Authors@R: c(
-    person("Lionel", "Voirol", email = "lionelvoirol@hotmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-1696-1407"))
+    person("Lionel", "Voirol", email = "lionelvoirol@hotmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-1696-1407")),
+    person("Yagmur", "Ozdemir", role = "aut")
     )
 Description: Provides a fast implementation of the SWAG algorithm for Generalized Linear Models which allows to perform a meta-learning procedure that combines 
     screening and wrapper methods to find a set of extremely low-dimensional attribute combinations. The package then performs test on the network of variables identified as highly predictive.
