@@ -12,3 +12,16 @@ fast_toeplitz_matrix_from_vector_cpp <- function(v) {
     .Call(`_swaglm_fast_toeplitz_matrix_from_vector_cpp`, v)
 }
 
+#' Run Estimation Model in One Dimension
+#'
+#' This function runs an estimation model in one dimension using the fastglm function.
+#' @name run_estimation_model_one_dimension_cpp
+#' @param X A numeric matrix of predictors.
+#' @param y A numeric vector of responses.
+#' @param family A glm family object (default is binomial).
+#' @return A list containing the AIC matrix and the beta coefficients matrix.
+#' @export
+run_estimation_model_one_dimension_cpp <- function(X, y, family = NULL) {
+    .Call(`_swaglm_run_estimation_model_one_dimension_cpp`, X, y, family)
+}
+
