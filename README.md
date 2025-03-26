@@ -2,7 +2,7 @@
 
 # swaglm
 
-The `swaglm` `R` provides a fast implementation of the SWAG algorithm for GLM and allows testing on network of variables with high predictive accuracy.
+The `swaglm` `R` provides a fast implementation of the SWAG algorithm for GLM and allows testing network of variables with high predictive accuracy.
 
 Below are instructions on how to install and make use of the `swaglm` package.
 
@@ -32,6 +32,7 @@ The `swaglm` package relies on a limited number of external libraries, but notab
 This source code is released under is the GNU AFFERO GENERAL PUBLIC LICENSE (AGPL) v3.0. 
 
 ## References
+
 [Molinari, R. et al. SWAG: A Wrapper Method for Sparse Learning (2021) ](https://arxiv.org/abs/2006.12837)
 
 

@@ -11,11 +11,12 @@ using namespace Rcpp;
 //' @name run_estimation_model_one_dimension_cpp
 //' @param X A numeric matrix of predictors.
 //' @param y A numeric vector of responses.
+//' @param method an integer scalar with value 0 for the column-pivoted QR decomposition, 1 for the unpivoted QR decomposition, 2 for the LLT Cholesky, or 3 for the LDLT Cholesky
 //' @param family A glm family object (default is binomial).
 //' @return A list containing the AIC matrix and the beta coefficients matrix.
 //' @export
 // [[Rcpp::export]]
-Rcpp::List run_estimation_model_one_dimension_cpp(const arma::mat& X, const arma::vec& y,  Nullable<List> family = R_NilValue) {
+Rcpp::List run_estimation_model_one_dimension_cpp(const arma::mat& X, const arma::vec& y,  Nullable<List> family = R_NilValue, int method = 0) {
    int p = X.n_cols;
    int n = X.n_rows;
    
@@ -46,8 +47,8 @@ Rcpp::List run_estimation_model_one_dimension_cpp(const arma::mat& X, const arma
      
      // Fit the model using fastglm
      // This is not optimal, fastglm is a R function implemented in Rcpp Eigen, but still we call its R implementation
-     List fit = fastglm(Named("x") = X_mat_i, Named("y") = y, Named("family") = family_obj);
-     // List fit = fastglm(Named("x") = X_mat_i, Named("y") = y);
+     List fit = fastglm(Named("x") = X_mat_i, Named("y") = y, Named("family") = family_obj, Named("method") = method);
+     
      // Extract AIC and coefficients
      mat_AIC_dim_1(i, 0) = as<double>(fit["aic"]);
      mat_beta_dim_1(i, 0) = as<arma::vec>(fit["coefficients"])(0);

@@ -33,8 +33,8 @@ y = as.numeric(y)-1
 
 
 
-
-run_estimation_model_one_dimension = function(X, y, family=binomial()){
+# an integer scalar with value 0 for the column-pivoted QR decomposition, 1 for the unpivoted QR decomposition, 2 for the LLT Cholesky, or 3 for the LDLT Cholesky
+run_estimation_model_one_dimension = function(X, y, family=binomial(), method = 0){
   
  # X=X_mat_predictors
   p = dim(X)[2]
@@ -46,12 +46,12 @@ run_estimation_model_one_dimension = function(X, y, family=binomial()){
   
   for(i in 1:p){
     X_mat_i = cbind(rep(1, n), X[,i])
-    fit = fastglm::fastglm(x =X_mat_i, y=y, family=family)
+    fit = fastglm::fastglm(x =X_mat_i, y=y, family=family, method = method)
     mat_AIC_dim_1[i,1] = fit$aic
     mat_beta_dim_1[i, ] = fit$coefficients
   }
-  ret=list(mat_AIC_dim_1,
-           mat_beta_dim_1)
+  ret=list("mat_AIC_dim_1" = mat_AIC_dim_1,
+           "mat_beta_dim_1" = mat_beta_dim_1)
   return(
     ret
   )
@@ -61,3 +61,4 @@ res1 = run_estimation_model_one_dimension(X=X_mat_predictors, y = y)
 res2 = run_estimation_model_one_dimension_cpp(X_mat_predictors, y = y)
 res1
 res2
+all.equal(res1, res2)

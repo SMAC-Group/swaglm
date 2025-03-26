@@ -23,22 +23,23 @@ BEGIN_RCPP
 END_RCPP
 }
 // run_estimation_model_one_dimension_cpp
-Rcpp::List run_estimation_model_one_dimension_cpp(const arma::mat& X, const arma::vec& y, Nullable<List> family);
-RcppExport SEXP _swaglm_run_estimation_model_one_dimension_cpp(SEXP XSEXP, SEXP ySEXP, SEXP familySEXP) {
+Rcpp::List run_estimation_model_one_dimension_cpp(const arma::mat& X, const arma::vec& y, Nullable<List> family, int method);
+RcppExport SEXP _swaglm_run_estimation_model_one_dimension_cpp(SEXP XSEXP, SEXP ySEXP, SEXP familySEXP, SEXP methodSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
     Rcpp::traits::input_parameter< const arma::vec& >::type y(ySEXP);
     Rcpp::traits::input_parameter< Nullable<List> >::type family(familySEXP);
-    rcpp_result_gen = Rcpp::wrap(run_estimation_model_one_dimension_cpp(X, y, family));
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(run_estimation_model_one_dimension_cpp(X, y, family, method));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
     {"_swaglm_fast_toeplitz_matrix_from_vector_cpp", (DL_FUNC) &_swaglm_fast_toeplitz_matrix_from_vector_cpp, 1},
-    {"_swaglm_run_estimation_model_one_dimension_cpp", (DL_FUNC) &_swaglm_run_estimation_model_one_dimension_cpp, 3},
+    {"_swaglm_run_estimation_model_one_dimension_cpp", (DL_FUNC) &_swaglm_run_estimation_model_one_dimension_cpp, 4},
     {NULL, NULL, 0}
 };
 

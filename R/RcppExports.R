@@ -18,10 +18,11 @@ fast_toeplitz_matrix_from_vector_cpp <- function(v) {
 #' @name run_estimation_model_one_dimension_cpp
 #' @param X A numeric matrix of predictors.
 #' @param y A numeric vector of responses.
+#' @param method an integer scalar with value 0 for the column-pivoted QR decomposition, 1 for the unpivoted QR decomposition, 2 for the LLT Cholesky, or 3 for the LDLT Cholesky
 #' @param family A glm family object (default is binomial).
 #' @return A list containing the AIC matrix and the beta coefficients matrix.
 #' @export
-run_estimation_model_one_dimension_cpp <- function(X, y, family = NULL) {
-    .Call(`_swaglm_run_estimation_model_one_dimension_cpp`, X, y, family)
+run_estimation_model_one_dimension_cpp <- function(X, y, family = NULL, method = 0L) {
+    .Call(`_swaglm_run_estimation_model_one_dimension_cpp`, X, y, family, method)
 }
 
