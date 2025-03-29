@@ -221,11 +221,67 @@ swag_network <- function(obj, mode = "undirected", weighted = F, show_net = T) {
   
   g <- graph_from_adjacency_matrix(intensity, mode = mode, weighted = NULL)
   
-  if(show_net == T) plot(g)
+  vertex_degrees_obs <- degree(g)
+  
+  E(g)$weight <- 1  
+  
+  # Simplify the graph, summing the weights of multiple edges
+  g_simplified_obs <- simplify(g, edge.attr.comb = list(weight = "sum"))
+  
+  # Set the edge width based on the combined weights
+  E(g_simplified_obs)$width <- E(g_simplified_obs)$weight
+  
+  
+  if(show_net == T) plot(g_simplified_obs, layout = layout.circle, vertex.color = "skyblue", edge.color = "black", vertex.size = 0.1*degree(g), edge.width = 0.1*E(g_simplified_obs)$width )
   
   return(list(g = g, models = models))
   
 }
+
+
+# Function to calculate optimal bandwidth using Silverman's rule of thumb
+optimal_bandwidth <- function(data) {
+  
+  n <- length(data)
+  s <-   sd(data)                # Standard deviation of data
+  IQR <- IQR(data)               # Interquartile range of data
+  h <- 0.9 * min(s, IQR / 1.34) * n^(-1/5)
+  
+  return(h)
+  
+}
+
+# Smoothed bootstrap function with bandwidth
+smoothed_bootstrap <- function(data, H = 1000, bandwidth = NULL) {
+  
+  n <- length(data)
+  
+  # If bandwidth is not provided, use Silverman's rule to select it
+  if (is.null(bandwidth)) {
+    bandwidth <- optimal_bandwidth(data)
+  }
+  
+  # Matrix to store bootstrap samples
+  boot_samples <- matrix(NA, nrow = H, ncol = n)
+  
+  # Perform B bootstrap replicates
+  for (i in 1:H) {
+    
+    # Resample the data (with replacement)
+    resample <- sample(data, size = n, replace = TRUE)
+    
+    # Add smoothed noise with standard deviation based on bandwidth
+    noise <- rnorm(n, mean = 0, sd = bandwidth)
+    
+    # Smoothed bootstrap sample
+    boot_samples[i, ] <- resample + noise
+    
+  }
+  
+  return(boot_samples)
+  
+}
+
 
 
 swag_significance_test <- function(y, X, swag_obs, net_obs, p_max, q, sign_level = 0.05, B = 100) {
@@ -267,14 +323,29 @@ swag_significance_test <- function(y, X, swag_obs, net_obs, p_max, q, sign_level
     entropy_eigen_null[b] <- Entropy(eigen_centrality(net_null$g)$vector)
   }
   
-  # Compute significance
-  eigen_significance <- mean(entropy_eigen_null < entropy_eigen_obs) < sign_level
-  freq_significance <- mean(entropy_freq_null < entropy_freq_obs) < sign_level
+  # smoothed bootstrap
+  
+  entropy_freq_null = as.vector(smoothed_bootstrap(entropy_freq_null))
+  entropy_eigen_null = as.vector(smoothed_bootstrap(entropy_eigen_null))
+  
+  # Compute p-values
+  p_value_eigen <- mean(entropy_eigen_null < entropy_eigen_obs)
+  p_value_freq <- mean(entropy_freq_null < entropy_freq_obs)
+  
+  # Determine significance
+  eigen_significance <- p_value_eigen < sign_level
+  freq_significance <- p_value_freq < sign_level
   
   # Return results
   return(list(
-    eigenvector_centrality = ifelse(eigen_significance, "SWAG is significant by eigenvector centrality", "SWAG is not significant by eigenvector centrality"),
-    frequency = ifelse(freq_significance, "SWAG is significant by frequency", "SWAG is not significant by frequency")
+    eigenvector_centrality = list(
+      result = ifelse(eigen_significance, "SWAG is significant by eigenvector centrality", "SWAG is not significant by eigenvector centrality"),
+      p_value = p_value_eigen
+    ),
+    frequency = list(
+      result = ifelse(freq_significance, "SWAG is significant by frequency", "SWAG is not significant by frequency"),
+      p_value = p_value_freq
+    )
   ))
 }
 
@@ -294,4 +365,4 @@ y <- as.factor(rbinom(n, 1, pr))
 
 swag_obs = swag(y, X, p_max=5, q = 0.7, family = "binomial")
 swag_net = swag_network(swag_obs)
-swag_test = swag_significance_test(y,X, swag_obs = swag_obs, net_obs = swag_net, pmax = 5, alpha = 0.7, sign_level = 0.1, B=50)
+swag_test = swag_significance_test(y,X, swag_obs = swag_obs, net_obs = swag_net,  p_max=5, q = 0.7, sign_level = 0.1, B=50)

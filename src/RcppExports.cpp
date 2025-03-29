@@ -11,17 +11,6 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// fast_toeplitz_matrix_from_vector_cpp
-arma::mat fast_toeplitz_matrix_from_vector_cpp(const arma::vec& v);
-RcppExport SEXP _swaglm_fast_toeplitz_matrix_from_vector_cpp(SEXP vSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::vec& >::type v(vSEXP);
-    rcpp_result_gen = Rcpp::wrap(fast_toeplitz_matrix_from_vector_cpp(v));
-    return rcpp_result_gen;
-END_RCPP
-}
 // run_estimation_model_one_dimension_cpp
 Rcpp::List run_estimation_model_one_dimension_cpp(const arma::mat& X, const arma::vec& y, Nullable<List> family, int method);
 RcppExport SEXP _swaglm_run_estimation_model_one_dimension_cpp(SEXP XSEXP, SEXP ySEXP, SEXP familySEXP, SEXP methodSEXP) {
@@ -36,10 +25,120 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// identify_selected_combinations_cpp
+List identify_selected_combinations_cpp(const arma::mat& mat_of_variables, const arma::mat& mat_criterion, double alpha);
+RcppExport SEXP _swaglm_identify_selected_combinations_cpp(SEXP mat_of_variablesSEXP, SEXP mat_criterionSEXP, SEXP alphaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type mat_of_variables(mat_of_variablesSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type mat_criterion(mat_criterionSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
+    rcpp_result_gen = Rcpp::wrap(identify_selected_combinations_cpp(mat_of_variables, mat_criterion, alpha));
+    return rcpp_result_gen;
+END_RCPP
+}
+// estimate_all_model_combinations_cpp
+List estimate_all_model_combinations_cpp(const arma::mat& X, const arma::vec& y, const arma::mat& matrix_of_variables, Nullable<List> family, int method);
+RcppExport SEXP _swaglm_estimate_all_model_combinations_cpp(SEXP XSEXP, SEXP ySEXP, SEXP matrix_of_variablesSEXP, SEXP familySEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type matrix_of_variables(matrix_of_variablesSEXP);
+    Rcpp::traits::input_parameter< Nullable<List> >::type family(familySEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(estimate_all_model_combinations_cpp(X, y, matrix_of_variables, family, method));
+    return rcpp_result_gen;
+END_RCPP
+}
+// removeRowsWithDuplicates
+arma::mat removeRowsWithDuplicates(const arma::mat& inputMatrix);
+RcppExport SEXP _swaglm_removeRowsWithDuplicates(SEXP inputMatrixSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type inputMatrix(inputMatrixSEXP);
+    rcpp_result_gen = Rcpp::wrap(removeRowsWithDuplicates(inputMatrix));
+    return rcpp_result_gen;
+END_RCPP
+}
+// removeDuplicateRowsRegardlessOfOrder
+arma::mat removeDuplicateRowsRegardlessOfOrder(const arma::mat& inputMatrix);
+RcppExport SEXP _swaglm_removeDuplicateRowsRegardlessOfOrder(SEXP inputMatrixSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type inputMatrix(inputMatrixSEXP);
+    rcpp_result_gen = Rcpp::wrap(removeDuplicateRowsRegardlessOfOrder(inputMatrix));
+    return rcpp_result_gen;
+END_RCPP
+}
+// sort_rows
+arma::mat sort_rows(const arma::mat& X);
+RcppExport SEXP _swaglm_sort_rows(SEXP XSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    rcpp_result_gen = Rcpp::wrap(sort_rows(X));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_all_possible_variable_combinations_cpp
+arma::mat compute_all_possible_variable_combinations_cpp(const arma::mat& originalMatrix, const arma::vec& idScreening);
+RcppExport SEXP _swaglm_compute_all_possible_variable_combinations_cpp(SEXP originalMatrixSEXP, SEXP idScreeningSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type originalMatrix(originalMatrixSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type idScreening(idScreeningSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_all_possible_variable_combinations_cpp(originalMatrix, idScreening));
+    return rcpp_result_gen;
+END_RCPP
+}
+// binomial_coefficient
+int binomial_coefficient(int n, int k);
+RcppExport SEXP _swaglm_binomial_coefficient(SEXP nSEXP, SEXP kSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    rcpp_result_gen = Rcpp::wrap(binomial_coefficient(n, k));
+    return rcpp_result_gen;
+END_RCPP
+}
+// swaglm
+List swaglm(const arma::mat& X, const arma::vec& y, int p_max, Nullable<List> family, int method, double alpha, bool verbose, int seed);
+RcppExport SEXP _swaglm_swaglm(SEXP XSEXP, SEXP ySEXP, SEXP p_maxSEXP, SEXP familySEXP, SEXP methodSEXP, SEXP alphaSEXP, SEXP verboseSEXP, SEXP seedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< int >::type p_max(p_maxSEXP);
+    Rcpp::traits::input_parameter< Nullable<List> >::type family(familySEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    Rcpp::traits::input_parameter< int >::type seed(seedSEXP);
+    rcpp_result_gen = Rcpp::wrap(swaglm(X, y, p_max, family, method, alpha, verbose, seed));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_swaglm_fast_toeplitz_matrix_from_vector_cpp", (DL_FUNC) &_swaglm_fast_toeplitz_matrix_from_vector_cpp, 1},
     {"_swaglm_run_estimation_model_one_dimension_cpp", (DL_FUNC) &_swaglm_run_estimation_model_one_dimension_cpp, 4},
+    {"_swaglm_identify_selected_combinations_cpp", (DL_FUNC) &_swaglm_identify_selected_combinations_cpp, 3},
+    {"_swaglm_estimate_all_model_combinations_cpp", (DL_FUNC) &_swaglm_estimate_all_model_combinations_cpp, 5},
+    {"_swaglm_removeRowsWithDuplicates", (DL_FUNC) &_swaglm_removeRowsWithDuplicates, 1},
+    {"_swaglm_removeDuplicateRowsRegardlessOfOrder", (DL_FUNC) &_swaglm_removeDuplicateRowsRegardlessOfOrder, 1},
+    {"_swaglm_sort_rows", (DL_FUNC) &_swaglm_sort_rows, 1},
+    {"_swaglm_compute_all_possible_variable_combinations_cpp", (DL_FUNC) &_swaglm_compute_all_possible_variable_combinations_cpp, 2},
+    {"_swaglm_binomial_coefficient", (DL_FUNC) &_swaglm_binomial_coefficient, 2},
+    {"_swaglm_swaglm", (DL_FUNC) &_swaglm_swaglm, 8},
     {NULL, NULL, 0}
 };
 

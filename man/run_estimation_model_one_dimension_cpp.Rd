@@ -6,18 +6,6 @@
 \usage{
 run_estimation_model_one_dimension_cpp(X, y, family = NULL, method = 0L)
 }
-\arguments{
-\item{X}{A numeric matrix of predictors.}
-
-\item{y}{A numeric vector of responses.}
-
-\item{family}{A glm family object (default is binomial).}
-
-\item{method}{an integer scalar with value 0 for the column-pivoted QR decomposition, 1 for the unpivoted QR decomposition, 2 for the LLT Cholesky, or 3 for the LDLT Cholesky}
-}
-\value{
-A list containing the AIC matrix and the beta coefficients matrix.
-}
 \description{
 This function runs an estimation model in one dimension using the fastglm function.
 }
