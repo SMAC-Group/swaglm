@@ -50,15 +50,11 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
   List lst_selected_models;
   List lst_index_selected_models;
   
-  
-  
   //-------------- first we run screening procedure
   List res_screening = run_estimation_model_one_dimension_cpp(X, y, family, method);
   
   // identify the selected variables from screening
-  List res2 = identify_selected_combinations_cpp(as<arma::mat>(res_screening["matrix_of_variables"]),  as<arma::mat>(res_screening["mat_AIC_dim_1"]), alpha = alpha);
-  
-  
+  List res2 = identify_selected_combinations_cpp(as<arma::mat>(res_screening["matrix_of_variables"]),  as<arma::mat>(res_screening["mat_AIC_dim_1"]), alpha);
   
   // //  Store estimated beta and AIC for dimension 1
   lst_estimated_beta.push_back(res_screening["mat_beta_dim_1"]);
@@ -66,7 +62,6 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
   lst_var_mat.push_back(res_screening["matrix_of_variables"]);
   lst_selected_models.push_back(res2["mat_of_variables_selected_models"]);
   lst_index_selected_models.push_back(res2["id_selected_models"]);
-  
   
   // save variables identified in screening
   arma::vec variables_screening = as<arma::vec>(res2["mat_of_variables_selected_models"]).col(0);
@@ -81,10 +76,8 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
   
   // run procedure for 2 to pmax
   for (int dimension_model = 2; dimension_model <= p_max; ++dimension_model) {
-    
     // create matrix of new combinations of models to explore
     arma::mat res3 = compute_all_possible_variable_combinations_cpp(as<arma::mat>(res2["mat_of_variables_selected_models"]), variables_screening);
-    
     // Select at most m models to evaluate randomly
     if (res3.n_rows > m) {
       // Set the seed for reproducibility
@@ -103,7 +96,7 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
     List res4 = estimate_all_model_combinations_cpp(X, y, res3, family, method);
     
     // identify selected combination of variables based on quantile
-    List new_res2 = identify_selected_combinations_cpp(res3,  as<arma::mat>(res4["mat_AIC"]), alpha = alpha);
+    List new_res2 = identify_selected_combinations_cpp(res3, as<arma::mat>(res4["mat_AIC"]), alpha);
     
     // update res 2
     res2 = new_res2;
