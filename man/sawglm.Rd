@@ -12,13 +12,16 @@ swaglm(
   family = NULL,
   method = 0L,
   alpha = 0.3,
-  verbose = FALSE
+  verbose = FALSE,
+  seed = 123L
 )
 }
 \arguments{
 \item{X}{A numeric matrix of predictors.}
 
 \item{y}{A numeric vector of responses.}
+
+\item{p_max}{maximum dimension to explore}
 
 \item{family}{A glm family object (default is binomial).}
 
@@ -28,7 +31,7 @@ swaglm(
 
 \item{verbose}{boolean for verbose}
 
-\item{pmax}{maximum dimension to explore}
+\item{seed}{A \code{int} that is the random seed used when creating the set of model to explore for the next dimension}
 }
 \value{
 A list of list of matrices. Each list correspond to the estimated coefficients from the estimated models, xxx.
