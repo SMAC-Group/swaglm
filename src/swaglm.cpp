@@ -25,17 +25,20 @@ using namespace Rcpp;
 
 //' sawglm 
 //'
-//' This function runs the SWAG algorithm.
-//' @name sawglm
-//' @param X A numeric matrix of predictors.
-//' @param y A numeric vector of responses.
-//' @param family A glm family object. Default is binomial.
-//' @param p_max maximum dimension to explore
-//' @param method an integer scalar with value 0 for the column-pivoted QR decomposition, 1 for the unpivoted QR decomposition, 2 for the LLT Cholesky, or 3 for the LDLT Cholesky
-//' @param alpha lower quantile to of criterion
-//' @param verbose boolean for verbose
+//' Run the SWAG algorithm supporting Generalized Linear Models specified by a family object and using fastglm library.
+//' @name swaglm
+//' @param X A numeric \code{matrix} of predictors.
+//' @param y A numeric \code{vector} of responses.
+//' @param family A \code{family} object. Default is binomial.
+//' @param p_max A \code{integer} specifying the maximum dimension to explore
+//' @param method An \code{integer} scalar with value 0 for the column-pivoted QR decomposition, 1 for the unpivoted QR decomposition, 2 for the LLT Cholesky, or 3 for the LDLT Cholesky
+//' @param alpha a \code{double} specifying the quantile of the criterion used to select models which are employed to construct models to explore at the next dimension
+//' @param verbose A \code{boolean} used to control verbose
 //' @param seed A \code{int} that is the random seed used when creating the set of model to explore for the next dimension
-//' @return A list of list of matrices. Each list correspond to the estimated coefficients from the estimated models, xxx.
+//' @return A list of list of matrices. The first list corresponds to the estimated coefficients per models per dimension. At each dimension, the matrix of estimated coefficient including the intercept for each models.
+//' models are listed per lines and estimated coefficients on each columns. Second list is the list of AIC criterion values for evaluated models at eahc dimension. Each entries of that List is a matrix of a single column where for each row is indicated the criterion value evaluated at this models.
+//' Third list is the list of matrices that specify the combinations of variables explored at each dimension. On this list, each entry correspond to a dimension, the matrix for each dimension indicates on the row the combinations of variables explored and on the columns the variables composing each model represented per each row.
+//' Fouth entry on the List of Lists is the List corresponding to xxx.
 //' @export
 // [[Rcpp::export]]
 List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> family = R_NilValue, int method = 0, double alpha=0.3, bool verbose = false, int seed  = 123) {
@@ -53,8 +56,7 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
   List res_screening = run_estimation_model_one_dimension_cpp(X, y, family, method);
   
   // identify the selected variables from screening
-  List res2 = identify_selected_combinations_cpp(as<arma::mat>(res_screening["matrix_of_variables"]), 
-                                                 as<arma::mat>(res_screening["mat_AIC_dim_1"]), alpha = alpha);
+  List res2 = identify_selected_combinations_cpp(as<arma::mat>(res_screening["matrix_of_variables"]),  as<arma::mat>(res_screening["mat_AIC_dim_1"]), alpha = alpha);
   
   
   
