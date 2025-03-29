@@ -1,8 +1,8 @@
 ![R-CMD-check](https://github.com/SMAC-Group/swaglm/actions/workflows/R-CMD-check.yaml/badge.svg)
 
-# swaglm
+# `swaglm`
 
-The `swaglm` `R` provides a fast implementation of the SWAG algorithm for GLM and allows testing network of variables with high predictive accuracy.
+The `swaglm` `R` provides a fast implementation of the SWAG algorithm for Generalized Linear Models (GLM) and allows testing hypothesis on obtained network of variables with high predictive accuracy.
 
 Below are instructions on how to install and make use of the `swaglm` package.
 
