@@ -23,10 +23,9 @@ pr <- 1/(1 + exp(-z))
 y <- as.factor(rbinom(n, 1, pr))
 y = as.numeric(y)-1
 
-
-# demo fit
-fit=glm(y~X+1, family = stats::binomial())
-fit
+# # demo fit
+# fit=glm(y~X+1, family = stats::binomial())
+# fit
 
 
 # ----------------------------- gaussian iid regression
@@ -226,12 +225,40 @@ swag <- function(y, X, p_max, q, m = choose(floor(q*ncol(X)), 2), family = "gaus
   
 }
 
-res = swaglm::swaglm(X=X, y = y, p_max = 10, family = binomial(), method = 0, alpha = .4, verbose = T)
-res
-# 
-# microbenchmark::microbenchmark(res1 = swag(X=X, y = y, p_max = 10, q = .4, family = binomial(), eval_func = AIC),
-#                                res2 = swaglm::swaglm(X=X, y = y, p_max = 10, family = binomial(), method = 0, alpha = .4, verbose = F), times=10)
-# 
+#
+
+quantile_alpha = .3
+p_max  =20
+res1 = swag(y = y, X = X, p_max = p_max, q = quantile_alpha, family = binomial(), eval_func = AIC)
+res2 = swaglm::swaglm(X=X, y = y, p_max = p_max, family = binomial(),alpha = quantile_alpha, verbose = F)
+res1$group
+res2$lst_var_mat
+microbenchmark::microbenchmark(res1 = swag(y = y, X = X, p_max = p_max, q = quantile_alpha, family = binomial(), eval_func = AIC),
+                               res2 = swaglm::swaglm(X=X, y = y, p_max = p_max, family = binomial(),alpha = quantile_alpha, verbose = F), times=10)
+
+
+
+
+
+# test to make sure the new implementation of swag works
+res2$lst_estimated_beta
+# lets take model of 5 dimension first model
+res2$lst_var_mat[[5]][1,]
+Xtemp = cbind(rep(1,n), X[, (res2$lst_var_mat[[5]][1,] +1)])
+fit = glm(y~Xtemp-1, family = binomial())
+all.equal(fit$coefficients, res2$lst_estimated_beta[[5]][1,])
+res2$lst_AIC[[5]][1,]
+AIC(fit)
+
+
+
+
+
+
+
+
+
+
 # 
 # 
 # res1$group
