@@ -226,8 +226,8 @@ swag <- function(y, X, p_max, q, m = choose(floor(q*ncol(X)), 2), family = "gaus
   
 }
 
-
-
+res = swaglm::swaglm(X=X, y = y, p_max = 10, family = binomial(), method = 0, alpha = .4, verbose = T)
+res
 # 
 # microbenchmark::microbenchmark(res1 = swag(X=X, y = y, p_max = 10, q = .4, family = binomial(), eval_func = AIC),
 #                                res2 = swaglm::swaglm(X=X, y = y, p_max = 10, family = binomial(), method = 0, alpha = .4, verbose = F), times=10)
