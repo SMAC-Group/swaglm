@@ -7,15 +7,23 @@ using namespace Rcpp;
 
 // ------------------------------------------------ estimation model one dimension / screening
 
+
+// run_estimation_model_one_dimension_cpp
+
 #include "f1.h"
  
 // ------------------------------------------------------- identify selected models to keep for next dimension
  
+// identify_selected_combinations_cpp
+
 #include "f2.h"
  
 // ---------------------------------------------------------------- estimate all models combinations provided
 
+// estimate_all_model_combinations_cpp
+
 #include "f3.h"
+
 
 // ------------------- create matrix of combinations of models to explore
 

@@ -227,17 +227,15 @@ swag <- function(y, X, p_max, q, m = choose(floor(q*ncol(X)), 2), family = "gaus
 
 #
 
-quantile_alpha = .3
+quantile_alpha = .4
 p_max  =20
 res1 = swag(y = y, X = X, p_max = p_max, q = quantile_alpha, family = binomial(), eval_func = AIC)
-res2 = swaglm::swaglm(X=X, y = y, p_max = p_max, family = binomial(),alpha = quantile_alpha, verbose = F)
+res2 = swaglm::swaglm(X=X, y = y, p_max = p_max, family = binomial(),alpha = quantile_alpha, verbose = T)
 res1$group
 res2$lst_var_mat
 microbenchmark::microbenchmark(res1 = swag(y = y, X = X, p_max = p_max, q = quantile_alpha, family = binomial(), eval_func = AIC),
-                               res2 = swaglm::swaglm(X=X, y = y, p_max = p_max, family = binomial(),alpha = quantile_alpha, verbose = F), times=10)
-
-
-
+                               res2 = swaglm::swaglm(X=X, y = y, p_max = p_max, family = binomial(),
+                                                     alpha = quantile_alpha, verbose = F), times=10)
 
 
 # test to make sure the new implementation of swag works
@@ -250,6 +248,9 @@ all.equal(fit$coefficients, res2$lst_estimated_beta[[5]][1,])
 res2$lst_AIC[[5]][1,]
 AIC(fit)
 
+
+res2$lst_var_mat[[4]]
+res2$lst_var_mat[[5]][res2$lst_index_selected_models[[5]]+1,]
 
 
 
