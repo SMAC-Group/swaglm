@@ -1,0 +1,22 @@
+url: ~
+template:
+  params:
+    bootswatch: flatly
+
+
+reference:
+  - title: Run and plot output from the SWAG algorithm
+    contents:
+    - swaglm
+    - compute_network
+    - plot.swaglm_network_obj
+    - my_test_fun
+navbar:
+  left:
+  - icon: fa-home
+    href: index.html
+  - text: Reference
+    href: reference/index.html
+  right:
+  - icon: fa-github
+    href: https://github.com/SMAC-Group/swaglm
