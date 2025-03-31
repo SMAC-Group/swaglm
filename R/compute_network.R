@@ -175,6 +175,7 @@ compute_network <- function(x, mode = "undirected") {
 #' @param scale_vertex a \code{double} that specify the size of the nodes of the graph representing variables
 #' @param ... Additional graphical parameters
 #' @importFrom igraph layout.circle E degree
+#' @importFrom fastglm fastglm
 #' @examples
 #' # Parameters for data generation
 #' set.seed(12345)
