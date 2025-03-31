@@ -135,7 +135,7 @@ compute_network <- function(x, mode = "undirected") {
   }
   relation_mat[,2]=bb
 
-  relation_mat[,3] = gdata::upperTriangle(intensity,byrow = T)
+  relation_mat[,3] = gdata::upperTriangle(intensity,byrow = TRUE)
 
   g <- igraph::graph_from_adjacency_matrix(intensity, mode = mode, weighted = NULL)
 
