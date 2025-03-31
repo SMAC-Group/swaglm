@@ -6,6 +6,7 @@
 #' @param mode Character string specifying the mode of the network. Default is "undirected".
 #' @importFrom igraph  graph_from_adjacency_matrix E
 #' @importFrom plyr rbind.fill.matrix
+#' @importFrom stats na.omit
 #' @importFrom gdata upperTriangle
 #' @return A list of class  \code{swaglm_network_obj} containing:
 #' 

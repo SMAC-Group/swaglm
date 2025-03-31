@@ -21,3 +21,5 @@ Imports:
     igraph,
     gdata,
     plyr
+Suggests: 
+    MASS
