@@ -52,7 +52,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Run the SWAG algorithm on Generalized Linear Models specified by a family object and using the fastglm library.</p>
+    <p>Run the SWAG algorithm on Generalized Linear Models specified by a <code>family</code> object and using the <code>fastglm</code> library.</p>
     </div>
 
     <div id="ref-usage">
@@ -89,7 +89,7 @@
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>An <code>integer</code> scalar with value 0 for the column-pivoted QR decomposition, 1 for the unpivoted QR decomposition, 2 for the LLT Cholesky, or 3 for the LDLT Cholesky</p></dd>
+<dd><p>An <code>integer</code> scalar with value 0 for the column-pivoted QR decomposition, 1 for the unpivoted QR decomposition, 2 for the LLT Cholesky, or 3 for the LDLT Cholesky. See <code><a href="https://rdrr.io/pkg/fastglm/man/fastglm.html" class="external-link">?fastglm::fastglm</a></code></p></dd>
 
 
 <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
@@ -106,10 +106,11 @@
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>list</code> of <code>list</code> containing:</p><ul><li><p>Estimated coefficients per model per dimension.</p></li>
-<li><p>AIC criterion values for models at each dimension.</p></li>
-<li><p>Matrices specifying variable combinations explored at each dimension.</p></li>
-<li><p>Index of selected models.</p></li>
+    <p>A <code>List</code> of <code>List</code> containing:</p><ul><li><p><code>lst_estimated_beta</code>: A <code>List</code> that contain the estimated coefficients for each estimated model. Each entry of this <code>List</code> is a matrix where in each rows are the estimated coefficients for the model.</p></li>
+<li><p><code>lst_AIC</code>: A <code>List</code> that contains the AIC values for each model at each dimension. Each entry of this list correspond to the AIC values for the models explored at this dimension.</p></li>
+<li><p><code>lst_var_mat</code>:  A <code>List</code> that that contain in each of its entries, a matrix that specify for each row a combination of variables that compose a model.</p></li>
+<li><p><code>lst_selected_models</code> A <code>List</code> that contain the selected models at each dimension.</p></li>
+<li><p><code>lst_index_selected_models</code> A <code>List</code> that contain the index of the rows corresponding to the selected models at each dimension.</p></li>
 </ul></div>
 
     <div id="ref-examples">
