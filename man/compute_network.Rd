@@ -2,17 +2,17 @@
 % Please edit documentation in R/compute_network.R
 \name{compute_network}
 \alias{compute_network}
-\title{Compute Network Representation of a \code{swaglm_obj} object}
+\title{compute_network}
 \usage{
 compute_network(x, mode = "undirected")
 }
 \arguments{
-\item{x}{An object of class \code{swaglm_obj}.}
+\item{x}{An object of class \code{swaglm}.}
 
 \item{mode}{Character string specifying the mode of the network. Default is "undirected".}
 }
 \value{
-A list of class  \code{swaglm_network_obj} containing:
+A list of class  \code{swaglm_network} containing:
 \itemize{
 \item \code{g}: The computed graph object.
 \item \code{models}: The selected models matrix.
@@ -20,7 +20,7 @@ A list of class  \code{swaglm_network_obj} containing:
 }
 }
 \description{
-This function computes a network representation of a  \code{swaglm_obj}, based on the selected models.
+Compute a network representation of the selected models from a \code{swaglm} object
 }
 \examples{
 # Parameters for data generation
@@ -46,4 +46,5 @@ swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
 alpha = quantile_alpha, verbose = TRUE, seed = 123)
 names(swag_obj)
 swag_network = compute_network(swag_obj)
+names(swag_network)
 }

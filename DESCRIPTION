@@ -22,4 +22,7 @@ Imports:
     gdata,
     plyr
 Suggests: 
-    MASS
+    knitr,
+    MASS,
+    rmarkdown
+VignetteBuilder: knitr

@@ -1,14 +1,14 @@
 #' compute_network
 #'
-#' Compute a network representation of the selected models from a \code{swaglm_obj} object
+#' Compute a network representation of the selected models from a \code{swaglm} object
 #'
-#' @param x An object of class \code{swaglm_obj}.
+#' @param x An object of class \code{swaglm}.
 #' @param mode Character string specifying the mode of the network. Default is "undirected".
 #' @importFrom igraph  graph_from_adjacency_matrix E
 #' @importFrom plyr rbind.fill.matrix
 #' @importFrom stats na.omit
 #' @importFrom gdata upperTriangle
-#' @return A list of class  \code{swaglm_network_obj} containing:
+#' @return A list of class  \code{swaglm_network} containing:
 #' 
 #' - \code{g}: The computed graph object.
 #' - \code{models}: The selected models matrix.
@@ -38,6 +38,7 @@
 #' alpha = quantile_alpha, verbose = TRUE, seed = 123)
 #' names(swag_obj)
 #' swag_network = compute_network(swag_obj)
+#' names(swag_network)
 #' @export
 compute_network <- function(x, mode = "undirected") {
   
@@ -46,8 +47,8 @@ compute_network <- function(x, mode = "undirected") {
   # weighted = F
   # show_net = T
   
-  if(!inherits(x, "swaglm_obj")){
-    stop("Provided object 'x' needs to be of class 'swaglm_obj'")
+  if(!inherits(x, "swaglm")){
+    stop("Provided object 'x' needs to be of class 'swaglm'")
   }
   
 
@@ -157,7 +158,7 @@ compute_network <- function(x, mode = "undirected") {
              "g_simplified_obs" = g_simplified_obs)
 
   # define class of return object
-  class(ret) = "swaglm_network_obj"
+  class(ret) = "swaglm_network"
   # if(show_net == T) plot(g_simplified_obs, layout = layout.circle, vertex.color = "skyblue", edge.color = "black", vertex.size = 0.1*degree(g), edge.width = 0.1*E(g_simplified_obs)$width )
 
   # return return object
@@ -169,11 +170,11 @@ compute_network <- function(x, mode = "undirected") {
 
 
 
-#' Plot a \code{swaglm_network_obj} object
+#' Plot a \code{swaglm_network} object
 #'
-#' This function plots a \code{swaglm_network_obj} object.
+#' This function plots a \code{swaglm_network} object.
 #'
-#' @param x An object of class \code{swaglm_network_obj}.
+#' @param x An object of class \code{swaglm_network}.
 #' @param scale_vertex a \code{double} that specify the size of the nodes of the graph representing variables
 #' @param ... Additional graphical parameters
 #' @importFrom igraph layout.circle E degree
@@ -205,10 +206,10 @@ compute_network <- function(x, mode = "undirected") {
 #' plot(swag_network, scale_vertex = .05)
 #' 
 #' @export
-plot.swaglm_network_obj = function(x, scale_vertex = .1, ...){
+plot.swaglm_network = function(x, scale_vertex = .1, ...){
   
-  if(!inherits(x, "swaglm_network_obj")){
-    stop("Provided object 'x' needs to be of class 'swaglm_network_obj'")
+  if(!inherits(x, "swaglm_network")){
+    stop("Provided object 'x' needs to be of class 'swaglm_network'")
   }
   
   

@@ -157,7 +157,7 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
   );
   
   // Assign a class name
-  ret.attr("class") = "swaglm_obj"; 
+  ret.attr("class") = "swaglm"; 
   
   
   // output return object

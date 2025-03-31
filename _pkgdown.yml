@@ -9,13 +9,17 @@ reference:
     contents:
     - swaglm
     - compute_network
-    - plot.swaglm_network_obj
+    - plot.swaglm_network
 navbar:
   left:
   - icon: fa-home
     href: index.html
   - text: Reference
     href: reference/index.html
+  - text: "Examples"
+    menu:
+    - text: "Run the SWAG algorithm for generalized linear models and plot results"
+      href: articles/run_swaglm.html
   right:
   - icon: fa-github
     href: https://github.com/SMAC-Group/swaglm
