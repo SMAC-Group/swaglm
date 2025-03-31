@@ -70,7 +70,8 @@ binomial_coefficient <- function(n, k) {
 #' # define swag parameters
 #' quantile_alpha = .15
 #' p_max = 20
-#' swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(), alpha = quantile_alpha, verbose = TRUE, seed = 123)
+#' swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(), 
+#' alpha = quantile_alpha, verbose = TRUE, seed = 123)
 #'
 #' @export
 swaglm <- function(X, y, p_max = 2L, family = NULL, method = 0L, alpha = 0.3, verbose = FALSE, seed = 123L) {

@@ -34,7 +34,8 @@
 #' # define swag parameters
 #' quantile_alpha = .15
 #' p_max = 20
-#' swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(), alpha = quantile_alpha, verbose = TRUE, seed = 123)
+#' swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(), 
+#' alpha = quantile_alpha, verbose = TRUE, seed = 123)
 #' names(swag_obj)
 #' swag_network = compute_network(swag_obj)
 #' @export
@@ -45,10 +46,11 @@ compute_network <- function(x, mode = "undirected") {
   # weighted = F
   # show_net = T
   
-  
-  if(class(x)!= "swaglm_obj"){
+  if(!inherits(x, "swaglm_obj")){
     stop("Provided object 'x' needs to be of class 'swaglm_obj'")
   }
+  
+
 
   # define number of maximum explored dimension
   p_max=length(x$lst_AIC)
@@ -196,13 +198,20 @@ compute_network <- function(x, mode = "undirected") {
 #' # define swag parameters
 #' quantile_alpha = .15
 #' p_max = 20
-#' swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(), alpha = quantile_alpha, verbose = TRUE, seed = 123)
+#' swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(), 
+#' alpha = quantile_alpha, verbose = TRUE, seed = 123)
 #' names(swag_obj)
 #' swag_network = compute_network(swag_obj)
 #' plot(swag_network, scale_vertex = .05)
 #' 
 #' @export
 plot.swaglm_network_obj = function(x, scale_vertex = .1, ...){
+  
+  if(!inherits(x, "plot.swaglm_network_obj")){
+    stop("Provided object 'x' needs to be of class 'plot.swaglm_network_obj'")
+  }
+  
+  
   # x = swag_network
   plot(x$g_simplified_obs, layout = igraph::layout_in_circle(x$g_simplified_obs) , 
        vertex.color = "#e3ddff", edge.color = "black",  vertex.size = scale_vertex*igraph::degree(x$g), 
