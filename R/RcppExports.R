@@ -33,19 +33,19 @@ binomial_coefficient <- function(n, k) {
     .Call(`_swaglm_binomial_coefficient`, n, k)
 }
 
-#' sawglm 
+#' swaglm 
 #'
-#' Run the SWAG algorithm supporting Generalized Linear Models specified by a family object and using fastglm library.
+#' Run the SWAG algorithm on Generalized Linear Models specified by a family object and using the fastglm library.
 #' @name swaglm
 #' @param X A numeric \code{matrix} of predictors.
 #' @param y A numeric \code{vector} of responses.
 #' @param family A \code{family} object. Default is binomial.
-#' @param p_max A \code{integer} specifying the maximum dimension to explore
+#' @param p_max An \code{integer} specifying the maximum dimension to explore
 #' @param method An \code{integer} scalar with value 0 for the column-pivoted QR decomposition, 1 for the unpivoted QR decomposition, 2 for the LLT Cholesky, or 3 for the LDLT Cholesky
-#' @param alpha a \code{double} specifying the quantile of the criterion used to select models which are employed to construct models to explore at the next dimension
+#' @param alpha A \code{double} specifying the quantile of the criterion used to select models which are employed to construct models to explore at the next dimension
 #' @param verbose A \code{boolean} used to control verbose
-#' @param seed A \code{int} that is the random seed used when creating the set of model to explore for the next dimension
-#' @return A \code{list} of lists containing:
+#' @param seed An \code{integer} that is the random seed used when creating the set of model to explore for the next dimension
+#' @return A \code{list} of \code{list} containing:
 #'   - Estimated coefficients per model per dimension.
 #'   - AIC criterion values for models at each dimension.
 #'   - Matrices specifying variable combinations explored at each dimension.

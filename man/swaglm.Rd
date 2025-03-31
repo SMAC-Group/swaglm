@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{swaglm}
 \alias{swaglm}
-\title{sawglm}
+\title{swaglm}
 \usage{
 swaglm(
   X,
@@ -20,20 +20,20 @@ swaglm(
 
 \item{y}{A numeric \code{vector} of responses.}
 
-\item{p_max}{A \code{integer} specifying the maximum dimension to explore}
+\item{p_max}{An \code{integer} specifying the maximum dimension to explore}
 
 \item{family}{A \code{family} object. Default is binomial.}
 
 \item{method}{An \code{integer} scalar with value 0 for the column-pivoted QR decomposition, 1 for the unpivoted QR decomposition, 2 for the LLT Cholesky, or 3 for the LDLT Cholesky}
 
-\item{alpha}{a \code{double} specifying the quantile of the criterion used to select models which are employed to construct models to explore at the next dimension}
+\item{alpha}{A \code{double} specifying the quantile of the criterion used to select models which are employed to construct models to explore at the next dimension}
 
 \item{verbose}{A \code{boolean} used to control verbose}
 
-\item{seed}{A \code{int} that is the random seed used when creating the set of model to explore for the next dimension}
+\item{seed}{An \code{integer} that is the random seed used when creating the set of model to explore for the next dimension}
 }
 \value{
-A \code{list} of lists containing:
+A \code{list} of \code{list} containing:
 \itemize{
 \item Estimated coefficients per model per dimension.
 \item AIC criterion values for models at each dimension.
@@ -42,7 +42,7 @@ A \code{list} of lists containing:
 }
 }
 \description{
-Run the SWAG algorithm supporting Generalized Linear Models specified by a family object and using fastglm library.
+Run the SWAG algorithm on Generalized Linear Models specified by a family object and using the fastglm library.
 }
 \examples{
 # Parameters for data generation
