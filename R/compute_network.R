@@ -1,6 +1,6 @@
-#' Compute Network Representation of a \code{swaglm_obj} object
+#' compute_network
 #'
-#' This function computes a network representation of a  \code{swaglm_obj}, based on the selected models.
+#' Compute a network representation of the selected models from a \code{swaglm_obj} object
 #'
 #' @param x An object of class \code{swaglm_obj}.
 #' @param mode Character string specifying the mode of the network. Default is "undirected".
