@@ -134,6 +134,12 @@ swag <- function(y, X, p_max, q, m = choose(floor(q*ncol(X)), 2), family = "gaus
 
 swag_network <- function(obj, mode = "undirected", weighted = F, show_net = T) {
   
+  
+  # obj = swag_obs
+  # mode = "undirected"
+  # weighted = F
+  # show_net = T
+  # 
   require(plyr)
   require(igraph)
   require(gdata)
@@ -237,6 +243,9 @@ swag_network <- function(obj, mode = "undirected", weighted = F, show_net = T) {
   return(list(g = g, models = models))
   
 }
+
+
+
 
 
 # Function to calculate optimal bandwidth using Silverman's rule of thumb
@@ -363,6 +372,14 @@ z <- 1 + X%*%beta
 pr <- 1/(1 + exp(-z))
 y <- as.factor(rbinom(n, 1, pr))
 
+
+
+# run procedure
 swag_obs = swag(y, X, p_max=5, q = 0.7, family = "binomial")
+swag_obs$group[[1]]
+swag_obs$group[[2]]
+
+
+
 swag_net = swag_network(swag_obs)
-swag_test = swag_significance_test(y,X, swag_obs = swag_obs, net_obs = swag_net,  p_max=5, q = 0.7, sign_level = 0.1, B=50)
+swag_test = swag_significance_test(y,X, swag_obs = swag_obs, net_obs = swag_net,  p_max=5, q = 0.7, sign_level = 0.1, B=10)

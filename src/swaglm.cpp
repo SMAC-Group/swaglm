@@ -27,6 +27,8 @@ using namespace Rcpp;
 
 // ------------------- create matrix of combinations of models to explore
 
+// compute_all_possible_variable_combinations_cpp
+
 #include "f4.h"
 
 // ---------------------------------- SWAG algorithm
@@ -43,10 +45,32 @@ using namespace Rcpp;
 //' @param alpha a \code{double} specifying the quantile of the criterion used to select models which are employed to construct models to explore at the next dimension
 //' @param verbose A \code{boolean} used to control verbose
 //' @param seed A \code{int} that is the random seed used when creating the set of model to explore for the next dimension
-//' @return A list of list of matrices. The first list corresponds to the estimated coefficients per models per dimension. At each dimension, the matrix of estimated coefficient including the intercept for each models.
-//' models are listed per lines and estimated coefficients on each columns. Second list is the list of AIC criterion values for evaluated models at eahc dimension. Each entries of that List is a matrix of a single column where for each row is indicated the criterion value evaluated at this models.
-//' Third list is the list of matrices that specify the combinations of variables explored at each dimension. On this list, each entry correspond to a dimension, the matrix for each dimension indicates on the row the combinations of variables explored and on the columns the variables composing each model represented per each row.
-//' Fouth entry on the List of Lists is the List corresponding to xxx.
+//' @return A \code{list} of lists containing:
+//'   - Estimated coefficients per model per dimension.
+//'   - AIC criterion values for models at each dimension.
+//'   - Matrices specifying variable combinations explored at each dimension.
+//'   - Index of selected models.
+//' @examples
+//' # Parameters for data generation
+//'  set.seed(12345)
+//'   n <- 2000
+//' p <- 100
+//' # create design matrix and vector of coefficients
+//' Sigma <- diag(rep(1/p, p))
+//'   X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)
+//'   beta = c(-15,-10,5,10,15, rep(0,p-5))
+//'   
+//' # --------------------- generate from logistic regression with an intercept of one
+//'   z <- 1 + X%*%beta
+//'   pr <- 1/(1 + exp(-z))
+//'     y <- as.factor(rbinom(n, 1, pr))
+//'     y = as.numeric(y)-1
+//'   
+//' # define swag parameters
+//'   quantile_alpha = .15
+//'   p_max = 20
+//'   swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(), alpha = quantile_alpha, verbose = T, seed = 123)
+//'
 //' @export
 // [[Rcpp::export]]
 List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> family = R_NilValue, int method = 0, double alpha=0.3, bool verbose = false, int seed  = 123) {
@@ -128,6 +152,11 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
                            Named("lst_selected_models") = lst_selected_models,
                            Named("lst_index_selected_models")= lst_index_selected_models
   );
+  
+  // Assign a class name
+  ret.attr("class") = "swaglm_obj"; 
+  
+  
   // output return object
   return(ret);
 }

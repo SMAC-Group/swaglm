@@ -17,4 +17,7 @@ LinkingTo:
 Imports: 
     Rcpp,
     fastglm,
-    stats
+    stats,
+    igraph,
+    gdata,
+    plyr
