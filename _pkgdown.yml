@@ -10,7 +10,6 @@ reference:
     - swaglm
     - compute_network
     - plot.swaglm_network_obj
-    - my_test_fun
 navbar:
   left:
   - icon: fa-home

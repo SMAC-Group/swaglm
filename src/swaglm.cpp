@@ -36,21 +36,22 @@ using namespace Rcpp;
 
 //' swaglm 
 //'
-//' Run the SWAG algorithm on Generalized Linear Models specified by a family object and using the fastglm library.
+//' Run the SWAG algorithm on Generalized Linear Models specified by a \code{family} object and using the \code{fastglm} library.
 //' @name swaglm
 //' @param X A numeric \code{matrix} of predictors.
 //' @param y A numeric \code{vector} of responses.
 //' @param family A \code{family} object. Default is binomial.
 //' @param p_max An \code{integer} specifying the maximum dimension to explore
-//' @param method An \code{integer} scalar with value 0 for the column-pivoted QR decomposition, 1 for the unpivoted QR decomposition, 2 for the LLT Cholesky, or 3 for the LDLT Cholesky
+//' @param method An \code{integer} scalar with value 0 for the column-pivoted QR decomposition, 1 for the unpivoted QR decomposition, 2 for the LLT Cholesky, or 3 for the LDLT Cholesky. See \code{?fastglm::fastglm}
 //' @param alpha A \code{double} specifying the quantile of the criterion used to select models which are employed to construct models to explore at the next dimension
 //' @param verbose A \code{boolean} used to control verbose
 //' @param seed An \code{integer} that is the random seed used when creating the set of model to explore for the next dimension
-//' @return A \code{list} of \code{list} containing:
-//'   - Estimated coefficients per model per dimension.
-//'   - AIC criterion values for models at each dimension.
-//'   - Matrices specifying variable combinations explored at each dimension.
-//'   - Index of selected models.
+//' @return A \code{List} of \code{List} containing:
+//'   - \code{lst_estimated_beta}: A \code{List} that contain the estimated coefficients for each estimated model. Each entry of this \code{List} is a matrix where in each rows are the estimated coefficients for the model.
+//'   - \code{lst_AIC}: A \code{List} that contains the AIC values for each model at each dimension. Each entry of this list correspond to the AIC values for the models explored at this dimension.
+//'   - \code{lst_var_mat}:  A \code{List} that that contain in each of its entries, a matrix that specify for each row a combination of variables that compose a model.
+//'   - \code{lst_selected_models} A \code{List} that contain the selected models at each dimension.
+//'   - \code{lst_index_selected_models} A \code{List} that contain the index of the rows corresponding to the selected models at each dimension.
 //' @examples
 //' # Parameters for data generation
 //' set.seed(12345)

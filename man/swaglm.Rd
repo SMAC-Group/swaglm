@@ -24,7 +24,7 @@ swaglm(
 
 \item{family}{A \code{family} object. Default is binomial.}
 
-\item{method}{An \code{integer} scalar with value 0 for the column-pivoted QR decomposition, 1 for the unpivoted QR decomposition, 2 for the LLT Cholesky, or 3 for the LDLT Cholesky}
+\item{method}{An \code{integer} scalar with value 0 for the column-pivoted QR decomposition, 1 for the unpivoted QR decomposition, 2 for the LLT Cholesky, or 3 for the LDLT Cholesky. See \code{?fastglm::fastglm}}
 
 \item{alpha}{A \code{double} specifying the quantile of the criterion used to select models which are employed to construct models to explore at the next dimension}
 
@@ -33,16 +33,17 @@ swaglm(
 \item{seed}{An \code{integer} that is the random seed used when creating the set of model to explore for the next dimension}
 }
 \value{
-A \code{list} of \code{list} containing:
+A \code{List} of \code{List} containing:
 \itemize{
-\item Estimated coefficients per model per dimension.
-\item AIC criterion values for models at each dimension.
-\item Matrices specifying variable combinations explored at each dimension.
-\item Index of selected models.
+\item \code{lst_estimated_beta}: A \code{List} that contain the estimated coefficients for each estimated model. Each entry of this \code{List} is a matrix where in each rows are the estimated coefficients for the model.
+\item \code{lst_AIC}: A \code{List} that contains the AIC values for each model at each dimension. Each entry of this list correspond to the AIC values for the models explored at this dimension.
+\item \code{lst_var_mat}:  A \code{List} that that contain in each of its entries, a matrix that specify for each row a combination of variables that compose a model.
+\item \code{lst_selected_models} A \code{List} that contain the selected models at each dimension.
+\item \code{lst_index_selected_models} A \code{List} that contain the index of the rows corresponding to the selected models at each dimension.
 }
 }
 \description{
-Run the SWAG algorithm on Generalized Linear Models specified by a family object and using the fastglm library.
+Run the SWAG algorithm on Generalized Linear Models specified by a \code{family} object and using the \code{fastglm} library.
 }
 \examples{
 # Parameters for data generation
