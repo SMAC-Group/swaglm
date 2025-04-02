@@ -18,7 +18,7 @@ navbar:
     href: reference/index.html
   - text: "Examples"
     menu:
-    - text: "Run the SWAG algorithm for generalized linear models and plot results"
+    - text: "Run the SWAG algorithm for generalized linear models"
       href: articles/run_swaglm.html
   right:
   - icon: fa-github
