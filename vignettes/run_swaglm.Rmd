@@ -1,8 +1,8 @@
 ---
-title: "Run the SWAG algorithm for generalized linear models and plot results"
+title: "Run the SWAG algorithm for generalized linear models"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Run the SWAG algorithm for generalized linear models and plot results}
+  %\VignetteIndexEntry{Run the SWAG algorithm for generalized linear models}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -75,3 +75,23 @@ alpha = quantile_alpha, verbose = TRUE, seed = 123)
 swag_network = compute_network(swag_obj)
 plot(swag_network, scale_vertex = .05)
 ```
+
+## Poisson regression
+```{r}
+eta <- 1 + X%*% beta
+lambda <- exp(eta)
+y <- rpois(n = n, lambda = lambda)
+
+# define swag parameters
+quantile_alpha = .15
+p_max = 20
+
+# Run swag procedure
+swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::poisson(),
+                          alpha = quantile_alpha, verbose = TRUE, seed = 123)
+
+swag_network = compute_network(swag_obj)
+plot(swag_network, scale_vertex = .08)
+```
+
+
