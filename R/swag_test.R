@@ -67,7 +67,7 @@ smoothed_bootstrap <- function(data, H = 1000, bandwidth = NULL) {
 }
 
 
-#' significance_test
+#' swag_test
 #'
 #' Compute significance of identified set of variables
 #'
