@@ -14,7 +14,7 @@ The `swaglm` package is a fast implementation of the Sparse Wrapper Algorithm (S
 
 ## Features
 - Efficiently finds a set of low-dimensional learners with high predictive accuracy.
-- Works on top of the `caret` package and follows a forward-step method to iteratively build strong learners.
+- Follows a forward-step method to iteratively build strong learners.
 - Provides a permutation-based statistical test (`swag_test`) to determine if the obtained models capture meaningful structure in the data.
 - Uses entropy-based network measures (entropy of frequency and entropy of eigenvalue centrality) to compare SWAG models against randomized models.
 
