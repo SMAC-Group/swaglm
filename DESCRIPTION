@@ -21,7 +21,8 @@ Imports:
     igraph,
     gdata,
     plyr,
-    progress
+    progress,
+    DescTools
 Suggests: 
     knitr,
     MASS,
