@@ -20,7 +20,8 @@ Imports:
     stats,
     igraph,
     gdata,
-    plyr
+    plyr,
+    progress
 Suggests: 
     knitr,
     MASS,

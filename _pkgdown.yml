@@ -5,11 +5,12 @@ template:
 
 
 reference:
-  - title: Run and plot output from the SWAG algorithm
+  - title: Run and plot output from the SWAG algorithm and perform test of hypothesis on the selected highly predictive variables
     contents:
     - swaglm
     - compute_network
     - plot.swaglm_network
+    - swag_test
 navbar:
   left:
   - icon: fa-home

@@ -4,7 +4,7 @@
 \alias{plot.swaglm_network}
 \title{Plot a \code{swaglm_network} object}
 \usage{
-\method{plot}{swaglm_network}(x, scale_vertex = 0.1, ...)
+\method{plot}{swaglm_network}(x, scale_vertex = 0.05, ...)
 }
 \arguments{
 \item{x}{An object of class \code{swaglm_network}.}

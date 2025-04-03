@@ -153,7 +153,13 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
                            Named("lst_AIC") = lst_AIC,
                            Named("lst_var_mat") = lst_var_mat,
                            Named("lst_selected_models") = lst_selected_models,
-                           Named("lst_index_selected_models")= lst_index_selected_models
+                           Named("lst_index_selected_models") = lst_index_selected_models,
+                           Named("y") = y,
+                           Named("X") = X,
+                           Named("p_max") = p_max,
+                           Named("alpha") = alpha,
+                           Named("family") = family,
+                           Named("method") = method
   );
   
   // Assign a class name
