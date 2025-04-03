@@ -93,8 +93,22 @@
 </h1></div>
 <!-- badges: start  -->
 
-<p>The <code>swaglm</code> <code>R</code> provides a fast implementation of the SWAG algorithm for Generalized Linear Models (GLM) and allows testing hypothesis on obtained network of variables with high predictive accuracy.</p>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p>The <code>swaglm</code> package is a fast implementation of the Sparse Wrapper Algorithm (SWAG) for Generalized Linear Models (GLM). SWAG is a meta-learning procedure that combines screening and wrapper methods to efficiently find strong low-dimensional attribute combinations for prediction. Additionally, the package provides a statistical test to assess whether the selected models (learners) extract meaningful information from the data.</p>
+</div>
+<div class="section level2">
+<h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
+</h2>
+<ul>
+<li>Efficiently finds a set of low-dimensional learners with high predictive accuracy.</li>
+<li>Works on top of the <code>caret</code> package and follows a forward-step method to iteratively build strong learners.</li>
+<li>Provides a permutation-based statistical test (<code>swag_test</code>) to determine if the obtained models capture meaningful structure in the data.</li>
+<li>Uses entropy-based network measures (entropy of frequency and entropy of eigenvalue centrality) to compare SWAG models against randomized models.</li>
+</ul>
 <p>Below are instructions on how to install and make use of the <code>swaglm</code> package.</p>
+</div>
 <div class="section level2">
 <h2 id="installation-instructions">Installation Instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
 </h2>
