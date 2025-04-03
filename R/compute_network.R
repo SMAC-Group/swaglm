@@ -206,7 +206,7 @@ compute_network <- function(x, mode = "undirected") {
 #' plot(swag_network, scale_vertex = .05)
 #' 
 #' @export
-plot.swaglm_network = function(x, scale_vertex = .05, ...){
+plot.swaglm_network = function(x, scale_vertex = .1, ...){
   
   if(!inherits(x, "swaglm_network")){
     stop("Provided object 'x' needs to be of class 'swaglm_network'")
