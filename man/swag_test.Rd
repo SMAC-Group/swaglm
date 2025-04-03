@@ -14,8 +14,6 @@ swag_test(swag_obj, significance_level = 0.05, B = 50, verbose = FALSE)
 \item{B}{a \code{integer} specifying the number of swaglm procedure to perform under the null.}
 
 \item{verbose}{A boolean xxx}
-
-\item{swag_network}{An object of class \code{swaglm_network}.}
 }
 \description{
 Compute significance of identified set of variables

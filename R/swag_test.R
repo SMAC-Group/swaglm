@@ -72,7 +72,6 @@ smoothed_bootstrap <- function(data, H = 1000, bandwidth = NULL) {
 #' Compute significance of identified set of variables
 #'
 #' @param swag_obj An object of class \code{swaglm}.
-#' @param swag_network An object of class \code{swaglm_network}.
 #' @importFrom igraph  eigen_centrality V delete_vertices degree
 #' @importFrom DescTools Entropy
 #' @importFrom progress progress_bar
