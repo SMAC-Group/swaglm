@@ -75,6 +75,7 @@ smoothed_bootstrap <- function(data, H = 1000, bandwidth = NULL) {
 #' @importFrom igraph  eigen_centrality V delete_vertices degree
 #' @importFrom DescTools Entropy
 #' @importFrom progress progress_bar
+#' @importFrom stats rnorm sd
 #' @param significance_level A \code{double} between 0 and 1 indicating the significance level. Default is 0.05.
 #' @param B a \code{integer} specifying the number of swaglm procedure to perform under the null.
 #' @param verbose A boolean xxx
