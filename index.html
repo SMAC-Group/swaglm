@@ -122,6 +122,11 @@
 <span></span>
 <span><span class="co"># Install the package with Vignettes/User Guides </span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"SMAC-Group/swaglm"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="external-r-libraries">External <code>R</code> libraries<a class="anchor" aria-label="anchor" href="#external-r-libraries"></a>
+</h3>
+<p>The <code>swaglm</code> package relies on a limited number of external libraries, but notably on <code>Rcpp</code> and <code>RcppArmadillo</code> which require a <code>C++</code> compiler for installation, such as for example <code>gcc</code>.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
@@ -158,21 +163,20 @@
 <div class="section level3">
 <h3 id="procedure">Procedure:<a class="anchor" aria-label="anchor" href="#procedure"></a>
 </h3>
-<p>-The response variable is shuffled to break its true relationship with predictors.</p>
-<p>-SWAG is applied to these shuffled datasets.</p>
-<p>-The entropy of variable frequency and eigenvalue centrality is computed for the null models.</p>
-<p>-P-values are computed by comparing the SWAG network with these null models.</p>
+<ul>
+<li><p>The response variable is shuffled to break its true relationship with predictors.</p></li>
+<li><p>SWAG is applied to these shuffled datasets.</p></li>
+<li><p>The entropy of variable frequency and eigenvalue centrality is computed for the null models.</p></li>
+<li><p>p-values are computed by comparing the SWAG network with these null models.</p></li>
+</ul>
 </div>
 <div class="section level3">
 <h3 id="interpretation">Interpretation:<a class="anchor" aria-label="anchor" href="#interpretation"></a>
 </h3>
-<p>-Small p-value (&lt; 0.05): The selected variables are likely informative.</p>
-<p>-Large p-value (≥ 0.05): The selection may be random.</p>
-</div>
-<div class="section level3">
-<h3 id="external-r-libraries">External <code>R</code> libraries<a class="anchor" aria-label="anchor" href="#external-r-libraries"></a>
-</h3>
-<p>The <code>swaglm</code> package relies on a limited number of external libraries, but notably on <code>Rcpp</code> and <code>RcppArmadillo</code> which require a <code>C++</code> compiler for installation, such as for example <code>gcc</code>.</p>
+<ul>
+<li><p>Small p-value (&lt; 0.05): The selected variables are likely informative.</p></li>
+<li><p>Large p-value (≥ 0.05): The selection may be random.</p></li>
+</ul>
 </div>
 </div>
 <div class="section level2">
