@@ -35,6 +35,14 @@ devtools::install_github("SMAC-Group/swaglm")
 devtools::install_github("SMAC-Group/swaglm", build_vignettes = TRUE)
 ```
 
+
+### External `R` libraries
+
+The `swaglm` package relies on a limited number of external libraries, but notably on `Rcpp` and `RcppArmadillo` which require a `C++` compiler for installation, such as for example `gcc`.
+
+
+
+
 ## Getting started
 
 ```r
@@ -70,23 +78,19 @@ Null Hypothesis: The selected models are no different from randomly chosen ones.
 
 ### Procedure:
 
--The response variable is shuffled to break its true relationship with predictors.
+- The response variable is shuffled to break its true relationship with predictors.
 
--SWAG is applied to these shuffled datasets.
+- SWAG is applied to these shuffled datasets.
 
--The entropy of variable frequency and eigenvalue centrality is computed for the null models.
+- The entropy of variable frequency and eigenvalue centrality is computed for the null models.
 
--P-values are computed by comparing the SWAG network with these null models.
+- p-values are computed by comparing the SWAG network with these null models.
 
 ### Interpretation:
 
--Small p-value (< 0.05): The selected variables are likely informative.
+- Small p-value (< 0.05): The selected variables are likely informative.
 
--Large p-value (≥ 0.05): The selection may be random.
-
-### External `R` libraries
-
-The `swaglm` package relies on a limited number of external libraries, but notably on `Rcpp` and `RcppArmadillo` which require a `C++` compiler for installation, such as for example `gcc`.
+- Large p-value (≥ 0.05): The selection may be random.
 
 
 ## License

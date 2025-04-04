@@ -6,7 +6,7 @@ rm(list=ls())
 library(swaglm)
 
 n <- 2000
-p <- 100
+p <- 20
 
 # create design matrix and vector of coefficients
 Sigma <- diag(rep(1/p, p))
@@ -23,6 +23,11 @@ quantile_alpha = .15
 p_max = 20
 swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
                           alpha = quantile_alpha, verbose = TRUE, seed = 123)
+
+
+swag_net = compute_network(swag_obj)
+plot(swag_net, scale_vertex = 10)
+
 
 lapply(X = swag_obj$lst_var_mat, FUN = dim)
 swag_obj2 = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),

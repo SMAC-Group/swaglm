@@ -213,6 +213,8 @@ plot.swaglm_network = function(x, scale_vertex = .1, ...){
   }
   
   
+  
+  
   # x = swag_network
   plot(x$g_simplified_obs, layout = igraph::layout_in_circle(x$g_simplified_obs) , 
        vertex.color = "#e3ddff", edge.color = "black",  vertex.size = scale_vertex*igraph::degree(x$g), 
