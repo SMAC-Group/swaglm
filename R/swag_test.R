@@ -76,9 +76,9 @@ smoothed_bootstrap <- function(data, H = 1000, bandwidth = NULL) {
 #' @importFrom DescTools Entropy
 #' @importFrom progress progress_bar
 #' @importFrom stats rnorm sd
-#' @param significance_level A \code{double} between 0 and 1 indicating the significance level. Default is 0.05.
-#' @param B a \code{integer} specifying the number of swaglm procedure to perform under the null.
-#' @param verbose A boolean xxx
+#' @param significance_level A \code{double} between 0 and 1 indicating the specified significance level. Default is 0.05.
+#' @param B a \code{integer} specifying the number of swag procedures to generate a distribution of the network statistics under the null.
+#' @param verbose A \code{boolean} used to control verbose
 #' @export
 #' @examples
 #' n <- 2000
@@ -100,7 +100,7 @@ smoothed_bootstrap <- function(data, H = 1000, bandwidth = NULL) {
 #' 
 swag_test <- function(swag_obj, significance_level = 0.05, B = 50, verbose = FALSE) {
 
-  # ------------------------------ extract parameters from swag object
+  # ------------------------------ extract parameters from swag object to provide them later 
   y = swag_obj$y
   X = swag_obj$X
   p_max = swag_obj$p_max
@@ -118,7 +118,7 @@ swag_test <- function(swag_obj, significance_level = 0.05, B = 50, verbose = FAL
   freq_obs <- cbind(variable, frequency)
   freq_obs <- freq_obs[order(-freq_obs[, "frequency"]), ]
 
-  # Compute observed statistics
+  # Compute observed statistics on network
   entropy_freq_obs <- DescTools::Entropy(freq_obs)
   entropy_eigen_obs <- DescTools::Entropy(igraph::eigen_centrality(net_obj$g)$vector)
 
@@ -126,27 +126,27 @@ swag_test <- function(swag_obj, significance_level = 0.05, B = 50, verbose = FAL
   entropy_freq_null <- numeric(B)
   entropy_eigen_null <- numeric(B)
   
-
   # start progress bar
   if(verbose){
     pb <- progress_bar$new(total = B)
   }
   
-  # start procedure
+  # start bootstrap procedure
   for (b in 1:B) {
     seed_b = 123 + b
 
-    # Generate response under null
+    # Generate response under null by resampling y 
     y_null <- sample(y, length(y), replace = TRUE)
 
     # Run SWAG under null
-    swag_null <- swaglm(y = y_null, X =  X, p_max = p_max, alpha =  alpha, family = family, method = method, seed= seed_b, verbose=FALSE)
+    swag_null <- swaglm(y = y_null, X =  X, p_max = p_max, alpha =  alpha, 
+                        family = family, method = method, seed = seed_b, verbose=FALSE)
     net_null <- compute_network(swag_null)
     net_null$g <- igraph::delete_vertices(net_null$g, igraph::V(net_null$g)[igraph::degree(net_null$g) == 0])
 
     # Frequency table under null
     frequency <- table(net_null$models)
-    variable <- swag_null$id_screening
+    variable <- swag_null$lst_selected_models[[1]]+1
     freq_null <- cbind(variable, frequency)
     freq_null <- freq_null[order(-freq_null[, "frequency"]), ]
 
@@ -154,6 +154,7 @@ swag_test <- function(swag_obj, significance_level = 0.05, B = 50, verbose = FAL
     entropy_freq_null[b] <- DescTools::Entropy(freq_null)
     entropy_eigen_null[b] <- DescTools::Entropy(igraph::eigen_centrality(net_null$g)$vector)
     
+    #- print verbose if specified
     if(verbose){
       pb$tick()
     }

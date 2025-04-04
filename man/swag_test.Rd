@@ -2,18 +2,18 @@
 % Please edit documentation in R/swag_test.R
 \name{swag_test}
 \alias{swag_test}
-\title{significance_test}
+\title{swag_test}
 \usage{
 swag_test(swag_obj, significance_level = 0.05, B = 50, verbose = FALSE)
 }
 \arguments{
 \item{swag_obj}{An object of class \code{swaglm}.}
 
-\item{significance_level}{A \code{double} between 0 and 1 indicating the significance level. Default is 0.05.}
+\item{significance_level}{A \code{double} between 0 and 1 indicating the specified significance level. Default is 0.05.}
 
-\item{B}{a \code{integer} specifying the number of swaglm procedure to perform under the null.}
+\item{B}{a \code{integer} specifying the number of swag procedures to generate a distribution of the network statistics under the null.}
 
-\item{verbose}{A boolean xxx}
+\item{verbose}{A \code{boolean} used to control verbose}
 }
 \description{
 Compute significance of identified set of variables
