@@ -1,4 +1,4 @@
-#include "f1.h"
+#include "run_estimation_model_one_dimension_cpp.h"
 
 #include <RcppArmadillo.h>
 #include <Rcpp.h>

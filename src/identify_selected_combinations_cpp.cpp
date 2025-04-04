@@ -1,4 +1,4 @@
-#include "f2.h"
+#include "identify_selected_combinations_cpp.h"
 
 #include <RcppArmadillo.h>
 #include <Rcpp.h>

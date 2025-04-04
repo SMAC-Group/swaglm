@@ -11,48 +11,6 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// run_estimation_model_one_dimension_cpp
-Rcpp::List run_estimation_model_one_dimension_cpp(const arma::mat& X, const arma::vec& y, Nullable<List> family, int method);
-RcppExport SEXP _swaglm_run_estimation_model_one_dimension_cpp(SEXP XSEXP, SEXP ySEXP, SEXP familySEXP, SEXP methodSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type y(ySEXP);
-    Rcpp::traits::input_parameter< Nullable<List> >::type family(familySEXP);
-    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
-    rcpp_result_gen = Rcpp::wrap(run_estimation_model_one_dimension_cpp(X, y, family, method));
-    return rcpp_result_gen;
-END_RCPP
-}
-// identify_selected_combinations_cpp
-List identify_selected_combinations_cpp(const arma::mat& mat_of_variables, const arma::mat& mat_criterion, double alpha);
-RcppExport SEXP _swaglm_identify_selected_combinations_cpp(SEXP mat_of_variablesSEXP, SEXP mat_criterionSEXP, SEXP alphaSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::mat& >::type mat_of_variables(mat_of_variablesSEXP);
-    Rcpp::traits::input_parameter< const arma::mat& >::type mat_criterion(mat_criterionSEXP);
-    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
-    rcpp_result_gen = Rcpp::wrap(identify_selected_combinations_cpp(mat_of_variables, mat_criterion, alpha));
-    return rcpp_result_gen;
-END_RCPP
-}
-// estimate_all_model_combinations_cpp
-List estimate_all_model_combinations_cpp(const arma::mat& X, const arma::vec& y, const arma::mat& matrix_of_variables, Nullable<List> family, int method);
-RcppExport SEXP _swaglm_estimate_all_model_combinations_cpp(SEXP XSEXP, SEXP ySEXP, SEXP matrix_of_variablesSEXP, SEXP familySEXP, SEXP methodSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type y(ySEXP);
-    Rcpp::traits::input_parameter< const arma::mat& >::type matrix_of_variables(matrix_of_variablesSEXP);
-    Rcpp::traits::input_parameter< Nullable<List> >::type family(familySEXP);
-    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
-    rcpp_result_gen = Rcpp::wrap(estimate_all_model_combinations_cpp(X, y, matrix_of_variables, family, method));
-    return rcpp_result_gen;
-END_RCPP
-}
 // removeRowsWithDuplicates
 arma::mat removeRowsWithDuplicates(const arma::mat& inputMatrix);
 RcppExport SEXP _swaglm_removeRowsWithDuplicates(SEXP inputMatrixSEXP) {
@@ -110,6 +68,71 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// estimate_all_model_combinations_cpp
+List estimate_all_model_combinations_cpp(const arma::mat& X, const arma::vec& y, const arma::mat& matrix_of_variables, Nullable<List> family, int method);
+RcppExport SEXP _swaglm_estimate_all_model_combinations_cpp(SEXP XSEXP, SEXP ySEXP, SEXP matrix_of_variablesSEXP, SEXP familySEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type matrix_of_variables(matrix_of_variablesSEXP);
+    Rcpp::traits::input_parameter< Nullable<List> >::type family(familySEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(estimate_all_model_combinations_cpp(X, y, matrix_of_variables, family, method));
+    return rcpp_result_gen;
+END_RCPP
+}
+// identify_selected_combinations_cpp
+List identify_selected_combinations_cpp(const arma::mat& mat_of_variables, const arma::mat& mat_criterion, double alpha);
+RcppExport SEXP _swaglm_identify_selected_combinations_cpp(SEXP mat_of_variablesSEXP, SEXP mat_criterionSEXP, SEXP alphaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type mat_of_variables(mat_of_variablesSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type mat_criterion(mat_criterionSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
+    rcpp_result_gen = Rcpp::wrap(identify_selected_combinations_cpp(mat_of_variables, mat_criterion, alpha));
+    return rcpp_result_gen;
+END_RCPP
+}
+// run_estimation_model_one_dimension_cpp
+Rcpp::List run_estimation_model_one_dimension_cpp(const arma::mat& X, const arma::vec& y, Nullable<List> family, int method);
+RcppExport SEXP _swaglm_run_estimation_model_one_dimension_cpp(SEXP XSEXP, SEXP ySEXP, SEXP familySEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< Nullable<List> >::type family(familySEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(run_estimation_model_one_dimension_cpp(X, y, family, method));
+    return rcpp_result_gen;
+END_RCPP
+}
+// my_set_seed
+void my_set_seed(unsigned int seed);
+RcppExport SEXP _swaglm_my_set_seed(SEXP seedSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< unsigned int >::type seed(seedSEXP);
+    my_set_seed(seed);
+    return R_NilValue;
+END_RCPP
+}
+// generate_permutation
+arma::uvec generate_permutation(int n, int m, int seed);
+RcppExport SEXP _swaglm_generate_permutation(SEXP nSEXP, SEXP mSEXP, SEXP seedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< int >::type m(mSEXP);
+    Rcpp::traits::input_parameter< int >::type seed(seedSEXP);
+    rcpp_result_gen = Rcpp::wrap(generate_permutation(n, m, seed));
+    return rcpp_result_gen;
+END_RCPP
+}
 // swaglm
 List swaglm(const arma::mat& X, const arma::vec& y, int p_max, Nullable<List> family, int method, double alpha, bool verbose, int seed);
 RcppExport SEXP _swaglm_swaglm(SEXP XSEXP, SEXP ySEXP, SEXP p_maxSEXP, SEXP familySEXP, SEXP methodSEXP, SEXP alphaSEXP, SEXP verboseSEXP, SEXP seedSEXP) {
@@ -130,14 +153,16 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_swaglm_run_estimation_model_one_dimension_cpp", (DL_FUNC) &_swaglm_run_estimation_model_one_dimension_cpp, 4},
-    {"_swaglm_identify_selected_combinations_cpp", (DL_FUNC) &_swaglm_identify_selected_combinations_cpp, 3},
-    {"_swaglm_estimate_all_model_combinations_cpp", (DL_FUNC) &_swaglm_estimate_all_model_combinations_cpp, 5},
     {"_swaglm_removeRowsWithDuplicates", (DL_FUNC) &_swaglm_removeRowsWithDuplicates, 1},
     {"_swaglm_removeDuplicateRowsRegardlessOfOrder", (DL_FUNC) &_swaglm_removeDuplicateRowsRegardlessOfOrder, 1},
     {"_swaglm_sort_rows", (DL_FUNC) &_swaglm_sort_rows, 1},
     {"_swaglm_compute_all_possible_variable_combinations_cpp", (DL_FUNC) &_swaglm_compute_all_possible_variable_combinations_cpp, 2},
     {"_swaglm_binomial_coefficient", (DL_FUNC) &_swaglm_binomial_coefficient, 2},
+    {"_swaglm_estimate_all_model_combinations_cpp", (DL_FUNC) &_swaglm_estimate_all_model_combinations_cpp, 5},
+    {"_swaglm_identify_selected_combinations_cpp", (DL_FUNC) &_swaglm_identify_selected_combinations_cpp, 3},
+    {"_swaglm_run_estimation_model_one_dimension_cpp", (DL_FUNC) &_swaglm_run_estimation_model_one_dimension_cpp, 4},
+    {"_swaglm_my_set_seed", (DL_FUNC) &_swaglm_my_set_seed, 1},
+    {"_swaglm_generate_permutation", (DL_FUNC) &_swaglm_generate_permutation, 3},
     {"_swaglm_swaglm", (DL_FUNC) &_swaglm_swaglm, 8},
     {NULL, NULL, 0}
 };

@@ -10,27 +10,49 @@ using namespace Rcpp;
 
 // run_estimation_model_one_dimension_cpp
 
-#include "f1.h"
+#include "run_estimation_model_one_dimension_cpp.h"
  
 // ------------------------------------------------------- identify selected models to keep for next dimension
  
 // identify_selected_combinations_cpp
 
 
-#include "f2.h"
+#include "identify_selected_combinations_cpp.h"
  
 // ---------------------------------------------------------------- estimate all models combinations provided
 
 // estimate_all_model_combinations_cpp
 
-#include "f3.h"
+#include "estimate_all_model_combinations_cpp.h"
 
 
 // ------------------- create matrix of combinations of models to explore
 
 // compute_all_possible_variable_combinations_cpp
 
-#include "f4.h"
+#include "compute_all_possible_variable_combinations_cpp.h"
+
+
+
+
+
+
+
+// --------------------------- generate permutation with seed
+// set seed
+// [[Rcpp::export]]
+void my_set_seed(unsigned int seed) {
+  Rcpp::Environment base_env("package:base");
+  Rcpp::Function set_seed_r = base_env["set.seed"];
+  set_seed_r(seed);  
+}
+
+// [[Rcpp::export]]
+arma::uvec generate_permutation(int n, int m, int seed=123){
+  my_set_seed(seed);
+  arma::uvec random_indices = arma::randperm(n, m);
+  return(random_indices);
+}
 
 // ---------------------------------- SWAG algorithm
 
@@ -113,12 +135,12 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
   for (int dimension_model = 2; dimension_model <= p_max; ++dimension_model) {
     // create matrix of new combinations of models to explore
     arma::mat res3 = compute_all_possible_variable_combinations_cpp(as<arma::mat>(res2["mat_of_variables_selected_models"]), variables_screening);
+    
     // Select at most m models to evaluate randomly
     if (res3.n_rows > m) {
-      // Set the seed for reproducibility
-      arma::arma_rng::set_seed(seed + dimension_model);
       // Generate random indices for sampling `m` rows
-      arma::uvec random_indices = arma::randperm(res3.n_rows, m);
+      arma::uvec random_indices = generate_permutation(res3.n_rows, m, seed);
+      // subset matrix of model to explore
       res3 = res3.rows(random_indices); // Select random rows based on indices
     }
     

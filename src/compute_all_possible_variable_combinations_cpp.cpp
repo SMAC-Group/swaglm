@@ -1,4 +1,4 @@
-#include "f4.h"
+#include "compute_all_possible_variable_combinations_cpp.h"
 #include <RcppArmadillo.h>
 #include <Rcpp.h>
 using namespace Rcpp;

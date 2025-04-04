@@ -38,6 +38,7 @@ beta = c(-15,-10,5,10,15, rep(0,p-5))
 # --------------------- generate from logistic regression with an intercept of one
 z <- 1 + X%*%beta
 pr <- 1/(1 + exp(-z))
+set.seed(12345)
 y <- as.factor(rbinom(n, 1, pr))
 y = as.numeric(y)-1
 
@@ -47,6 +48,8 @@ p_max = 20
 swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
 alpha = quantile_alpha, verbose = TRUE, seed = 123)
 ```
+
+
 
 
 ```{r}
@@ -59,6 +62,7 @@ plot(swag_network, scale_vertex = .05)
 ```{r}
 # --------------------- generate from logistic regression with an intercept of one
 sigma2 = 4
+set.seed(12345)
 y <- 1 + X%*%beta + rnorm(n = n, mean = 0, sd = sqrt(sigma2))
 
 # define swag parameters
@@ -80,6 +84,7 @@ plot(swag_network, scale_vertex = .05)
 ```{r}
 eta <- 1 + X%*% beta
 lambda <- exp(eta)
+set.seed(12345)
 y <- rpois(n = n, lambda = lambda)
 
 # define swag parameters

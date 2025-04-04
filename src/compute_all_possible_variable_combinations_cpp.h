@@ -1,5 +1,5 @@
-#ifndef F4_H
-#define F4_H
+#ifndef compute_all_possible_variable_combinations_cpp_H
+#define compute_all_possible_variable_combinations_cpp_H
 
 #include <RcppArmadillo.h>
 
@@ -10,4 +10,4 @@ arma::mat sort_rows(const arma::mat& X);
 arma::mat compute_all_possible_variable_combinations_cpp(const arma::mat& originalMatrix, const arma::vec& idScreening);
 int binomial_coefficient(int n, int k);
 
-#endif // F4_H
+#endif // compute_all_possible_variable_combinations_cpp_H

@@ -1,4 +1,4 @@
-#include "f3.h"
+#include "estimate_all_model_combinations_cpp.h"
 
 #include <RcppArmadillo.h>
 #include <Rcpp.h>
