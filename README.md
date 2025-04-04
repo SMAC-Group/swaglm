@@ -35,6 +35,54 @@ devtools::install_github("SMAC-Group/swaglm")
 devtools::install_github("SMAC-Group/swaglm", build_vignettes = TRUE)
 ```
 
+## Getting started
+
+```r
+library(swaglm)
+
+# Simulated data
+n <- 2000
+p <- 50
+X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = diag(rep(1/p, p)))
+beta <- c(-15, -10, 5, 10, 15, rep(0, p-5))
+z <- 1 + X %*% beta
+pr <- 1 / (1 + exp(-z))
+y <- as.factor(rbinom(n, 1, pr))
+y <- as.numeric(y) - 1
+
+# Run SWAG
+swag_obj <- swaglm(X = X, y = y, p_max = 20, family = binomial(),
+                   alpha = 0.15, verbose = TRUE, seed = 123)
+
+
+# Run statistical test
+test_results <- swag_test(swag_obj, significance_level = 0.05, B = 50, verbose = TRUE)
+
+# View p-values for both entropy-based measures
+print(test_results)
+```
+
+## How the statistical test works
+
+The function `swag_test()` performs a permutation test to evaluate whether the selected variables contain meaningful information or are randomly selected.
+
+Null Hypothesis: The selected models are no different from randomly chosen ones.
+
+### Procedure:
+
+-The response variable is shuffled to break its true relationship with predictors.
+
+-SWAG is applied to these shuffled datasets.
+
+-The entropy of variable frequency and eigenvalue centrality is computed for the null models.
+
+-P-values are computed by comparing the SWAG network with these null models.
+
+### Interpretation:
+
+-Small p-value (< 0.05): The selected variables are likely informative.
+
+-Large p-value (≥ 0.05): The selection may be random.
 
 ### External `R` libraries
 
