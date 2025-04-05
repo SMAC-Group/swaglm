@@ -22,8 +22,7 @@ Imports:
     gdata,
     plyr,
     progress,
-    DescTools,
-    stats
+    DescTools
 Suggests: 
     knitr,
     MASS,
