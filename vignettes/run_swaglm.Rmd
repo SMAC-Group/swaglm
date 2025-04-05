@@ -24,7 +24,7 @@ library(swaglm)
 
 
 
-## Define covariates
+## Define covariates and parameters
 ```{r}
 n <- 2000
 p <- 100
