@@ -125,6 +125,10 @@ print(test_results)
     ## p-value (Eigen): 0.03115 
     ## p-value (Freq): 0
 
+
+
+Find vignettes with detailed examples as well as the user's manual at the [package website](https://smac-group.github.io/swaglm/index.html).
+
 ## How the statistical test works
 
 The function `swag_test()` performs a permutation test to evaluate
