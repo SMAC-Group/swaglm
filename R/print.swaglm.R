@@ -3,6 +3,7 @@
 #' Print a \code{swaglm} object
 #'
 #' @param x An object of class \code{swaglm}.
+#' @param ... Additional arguments
 #' @export
 #' @examples
 #' n <- 2000

@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{An object of class \code{swaglm}.}
+
+\item{...}{Additional arguments}
 }
 \description{
 Print a \code{swaglm} object

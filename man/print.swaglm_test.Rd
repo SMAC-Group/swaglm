@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{An object of class \code{swaglm_test}.}
+
+\item{...}{Additional arguments}
 }
 \description{
 Print a \code{swaglm_test} object
@@ -27,7 +29,7 @@ quantile_alpha = .15
 p_max = 20
 swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
                           alpha = quantile_alpha, verbose = TRUE, seed = 123)
-res_test = swag_test(swag_obj, significance_level = .05, B = 50, verbose = TRUE)
+res_test = swag_test(swag_obj, B = 50, verbose = TRUE)
 print(res_test)
 
 
