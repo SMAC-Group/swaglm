@@ -64,7 +64,7 @@ swag_obj <- swaglm(X = X, y = y, p_max = 20, family = binomial(),
 
 
 # Run statistical test
-test_results <- swag_test(swag_obj, significance_level = 0.05, B = 50, verbose = TRUE)
+test_results <- swag_test(swag_obj, B = 50, verbose = TRUE)
 
 # View p-values for both entropy-based measures
 print(test_results)
