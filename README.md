@@ -107,6 +107,10 @@ plot(swaglm_network_obj, scale_vertex = 1)
 
 
 <img src="man/figures/unnamed-chunk-2-1.png" width="100%" />
+
+
+
+
 ``` r
 # Run statistical test
 B=20
