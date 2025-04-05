@@ -107,8 +107,8 @@ models</h1>
 <h2 id="define-covariates">Define covariates<a class="anchor" aria-label="anchor" href="#define-covariates"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">1000</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">50</span></span>
+<code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">2000</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span></span>
 <span><span class="co"># create design matrix and vector of coefficients</span></span>
 <span><span class="va">Sigma</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">p</span>, <span class="va">p</span><span class="op">)</span><span class="op">)</span></span>
@@ -125,14 +125,14 @@ models</h1>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">1</span>, <span class="va">pr</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="define-swag-hyperparameters">Define SWAG hyperparameters<a class="anchor" aria-label="anchor" href="#define-swag-hyperparameters"></a>
-</h2>
+<div class="section level3">
+<h3 id="define-swag-hyperparameters">Define SWAG hyperparameters<a class="anchor" aria-label="anchor" href="#define-swag-hyperparameters"></a>
+</h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># define swag parameters</span></span>
 <span><span class="va">quantile_alpha</span> <span class="op">&lt;-</span> <span class="fl">.15</span></span>
 <span><span class="va">p_max</span> <span class="op">&lt;-</span> <span class="fl">20</span></span></code></pre></div>
+</div>
 <div class="section level3">
 <h3 id="run-swag-algorithm">Run SWAG algorithm<a class="anchor" aria-label="anchor" href="#run-swag-algorithm"></a>
 </h3>
@@ -149,13 +149,20 @@ models</h1>
 <span><span class="co">#&gt; Completed models of dimension 6</span></span>
 <span><span class="co">#&gt; Completed models of dimension 7</span></span>
 <span><span class="co">#&gt; Completed models of dimension 8</span></span>
+<span><span class="co">#&gt; Completed models of dimension 9</span></span>
+<span><span class="co">#&gt; Completed models of dimension 10</span></span>
+<span><span class="co">#&gt; Completed models of dimension 11</span></span>
+<span><span class="co">#&gt; Completed models of dimension 12</span></span>
+<span><span class="co">#&gt; Completed models of dimension 13</span></span>
+<span><span class="co">#&gt; Completed models of dimension 14</span></span>
+<span><span class="co">#&gt; Completed models of dimension 15</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">swag_obj</span><span class="op">)</span></span>
 <span><span class="co">#&gt; SWAGLM results :</span></span>
 <span><span class="co">#&gt; -----------------------------------------</span></span>
-<span><span class="co">#&gt; Input matrix dimension:  1000 50 </span></span>
-<span><span class="co">#&gt; Number of explored models:  136 </span></span>
-<span><span class="co">#&gt; Number of selected models:  25 </span></span>
-<span><span class="co">#&gt; Number of dimensions explored:  8</span></span></code></pre></div>
+<span><span class="co">#&gt; Input matrix dimension:  2000 100 </span></span>
+<span><span class="co">#&gt; Number of explored models:  851 </span></span>
+<span><span class="co">#&gt; Number of selected models:  133 </span></span>
+<span><span class="co">#&gt; Number of dimensions explored:  15</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="compute-and-plot-network">Compute and plot network<a class="anchor" aria-label="anchor" href="#compute-and-plot-network"></a>
@@ -174,7 +181,7 @@ models</h1>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res_test</span><span class="op">)</span></span>
 <span><span class="co">#&gt; SWAG Test Results:</span></span>
 <span><span class="co">#&gt; ----------------------</span></span>
-<span><span class="co">#&gt; p-value (Eigen): 0.173 </span></span>
+<span><span class="co">#&gt; p-value (Eigen): 1 </span></span>
 <span><span class="co">#&gt; p-value (Freq): 0</span></span></code></pre></div>
 </div>
 </div>
@@ -201,13 +208,20 @@ models</h1>
 <span><span class="co">#&gt; Completed models of dimension 6</span></span>
 <span><span class="co">#&gt; Completed models of dimension 7</span></span>
 <span><span class="co">#&gt; Completed models of dimension 8</span></span>
+<span><span class="co">#&gt; Completed models of dimension 9</span></span>
+<span><span class="co">#&gt; Completed models of dimension 10</span></span>
+<span><span class="co">#&gt; Completed models of dimension 11</span></span>
+<span><span class="co">#&gt; Completed models of dimension 12</span></span>
+<span><span class="co">#&gt; Completed models of dimension 13</span></span>
+<span><span class="co">#&gt; Completed models of dimension 14</span></span>
+<span><span class="co">#&gt; Completed models of dimension 15</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">swag_obj</span><span class="op">)</span></span>
 <span><span class="co">#&gt; SWAGLM results :</span></span>
 <span><span class="co">#&gt; -----------------------------------------</span></span>
-<span><span class="co">#&gt; Input matrix dimension:  1000 50 </span></span>
-<span><span class="co">#&gt; Number of explored models:  129 </span></span>
-<span><span class="co">#&gt; Number of selected models:  23 </span></span>
-<span><span class="co">#&gt; Number of dimensions explored:  8</span></span></code></pre></div>
+<span><span class="co">#&gt; Input matrix dimension:  2000 100 </span></span>
+<span><span class="co">#&gt; Number of explored models:  837 </span></span>
+<span><span class="co">#&gt; Number of selected models:  131 </span></span>
+<span><span class="co">#&gt; Number of dimensions explored:  15</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="compute-and-plot-network-1">Compute and plot network<a class="anchor" aria-label="anchor" href="#compute-and-plot-network-1"></a>
@@ -225,8 +239,8 @@ models</h1>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res_test</span><span class="op">)</span></span>
 <span><span class="co">#&gt; SWAG Test Results:</span></span>
 <span><span class="co">#&gt; ----------------------</span></span>
-<span><span class="co">#&gt; p-value (Eigen): 0.2969 </span></span>
-<span><span class="co">#&gt; p-value (Freq): 0</span></span></code></pre></div>
+<span><span class="co">#&gt; p-value (Eigen): 0.8907 </span></span>
+<span><span class="co">#&gt; p-value (Freq): 2e-04</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -254,13 +268,20 @@ models</h1>
 <span><span class="co">#&gt; Completed models of dimension 6</span></span>
 <span><span class="co">#&gt; Completed models of dimension 7</span></span>
 <span><span class="co">#&gt; Completed models of dimension 8</span></span>
+<span><span class="co">#&gt; Completed models of dimension 9</span></span>
+<span><span class="co">#&gt; Completed models of dimension 10</span></span>
+<span><span class="co">#&gt; Completed models of dimension 11</span></span>
+<span><span class="co">#&gt; Completed models of dimension 12</span></span>
+<span><span class="co">#&gt; Completed models of dimension 13</span></span>
+<span><span class="co">#&gt; Completed models of dimension 14</span></span>
+<span><span class="co">#&gt; Completed models of dimension 15</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">swag_obj</span><span class="op">)</span></span>
 <span><span class="co">#&gt; SWAGLM results :</span></span>
 <span><span class="co">#&gt; -----------------------------------------</span></span>
-<span><span class="co">#&gt; Input matrix dimension:  1000 50 </span></span>
-<span><span class="co">#&gt; Number of explored models:  128 </span></span>
-<span><span class="co">#&gt; Number of selected models:  23 </span></span>
-<span><span class="co">#&gt; Number of dimensions explored:  8</span></span></code></pre></div>
+<span><span class="co">#&gt; Input matrix dimension:  2000 100 </span></span>
+<span><span class="co">#&gt; Number of explored models:  870 </span></span>
+<span><span class="co">#&gt; Number of selected models:  135 </span></span>
+<span><span class="co">#&gt; Number of dimensions explored:  15</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="compute-and-plot-network-2">Compute and plot network<a class="anchor" aria-label="anchor" href="#compute-and-plot-network-2"></a>
@@ -278,8 +299,8 @@ models</h1>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res_test</span><span class="op">)</span></span>
 <span><span class="co">#&gt; SWAG Test Results:</span></span>
 <span><span class="co">#&gt; ----------------------</span></span>
-<span><span class="co">#&gt; p-value (Eigen): 0.7448 </span></span>
-<span><span class="co">#&gt; p-value (Freq): 0</span></span></code></pre></div>
+<span><span class="co">#&gt; p-value (Eigen): 0.7324 </span></span>
+<span><span class="co">#&gt; p-value (Freq): 0.0288</span></span></code></pre></div>
 </div>
 </div>
   </div>
