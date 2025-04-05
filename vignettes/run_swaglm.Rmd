@@ -26,8 +26,8 @@ library(swaglm)
 
 ## Define covariates
 ```{r}
-n <- 1000
-p <- 50
+n <- 2000
+p <- 100
 
 # create design matrix and vector of coefficients
 Sigma <- diag(rep(1 / p, p))
@@ -45,7 +45,7 @@ y <- as.factor(rbinom(n, 1, pr))
 y <- as.numeric(y) - 1
 ```
 
-## Define SWAG hyperparameters
+### Define SWAG hyperparameters
 ```{r}
 # define swag parameters
 quantile_alpha <- .15
