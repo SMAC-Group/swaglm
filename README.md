@@ -1,28 +1,41 @@
+
 # `swaglm` Overview <img src="man/figures/logo.png" align="right" style="width: 15%; height: 15%"/>
 
 <!-- badges: start  -->
-![](https://img.shields.io/github/last-commit/SMAC-Group/swaglm) 
-[<img src="https://s-a.github.io/license/img/agpl-3.0.svg" />](https://s-a.github.io/license/?license=agpl-3.0&fullname=Stephan%20Ahlf&year=2015&profile=https://github.com/s-a&projectUrl=https://github.com/s-a/license&projectName=License%20Demo "")
+
+![](https://img.shields.io/github/last-commit/SMAC-Group/swaglm)
+[<img src="https://s-a.github.io/license/img/agpl-3.0.svg" />](https://s-a.github.io/license/?license=agpl-3.0&fullname=Stephan%20Ahlf&year=2015&profile=https://github.com/s-a&projectUrl=https://github.com/s-a/license&projectName=License%20Demo)
 ![R-CMD-check](https://github.com/SMAC-Group/swaglm/actions/workflows/R-CMD-check.yaml/badge.svg)
 <!-- badges: end -->
 
-
-
-
 ## Overview
-The `swaglm` package is a fast implementation of the Sparse Wrapper Algorithm (SWAG) for Generalized Linear Models (GLM). SWAG is a meta-learning procedure that combines screening and wrapper methods to efficiently find strong low-dimensional attribute combinations for prediction. Additionally, the package provides a statistical test to assess whether the selected models (learners) extract meaningful information from the data.
+
+The `swaglm` package is a fast implementation of the Sparse Wrapper
+Algorithm (SWAG) for Generalized Linear Models (GLM). SWAG is a
+meta-learning procedure that combines screening and wrapper methods to
+efficiently find strong low-dimensional attribute combinations for
+prediction. Additionally, the package provides a statistical test to
+assess whether the selected models (learners) extract meaningful
+information from the data.
 
 ## Features
-- Efficiently finds a set of low-dimensional learners with high predictive accuracy.
-- Follows a forward-step method to iteratively build strong learners.
-- Provides a permutation-based statistical test (`swag_test`) to determine if the obtained models capture meaningful structure in the data.
-- Uses entropy-based network measures (entropy of frequency and entropy of eigenvalue centrality) to compare SWAG models against randomized models.
 
-Below are instructions on how to install and make use of the `swaglm` package.
+- Efficiently finds a set of low-dimensional learners with high
+  predictive accuracy.
+- Follows a forward-step method to iteratively build strong learners.
+- Provides a permutation-based statistical test (`swag_test`) to
+  determine if the obtained models capture meaningful structure in the
+  data.
+- Uses entropy-based network measures (entropy of frequency and entropy
+  of eigenvalue centrality) to compare SWAG models against randomized
+  models.
+
+Below are instructions on how to install and make use of the `swaglm`
+package.
 
 ## Installation Instructions
 
-The `swaglm` package is currently only available on  GitHub.
+The `swaglm` package is currently only available on GitHub.
 
 ``` r
 # Install dependencies
@@ -35,70 +48,114 @@ devtools::install_github("SMAC-Group/swaglm")
 devtools::install_github("SMAC-Group/swaglm", build_vignettes = TRUE)
 ```
 
-
 ### External `R` libraries
 
-The `swaglm` package relies on a limited number of external libraries, but notably on `Rcpp` and `RcppArmadillo` which require a `C++` compiler for installation, such as for example `gcc`.
-
-
-
+The `swaglm` package relies on a limited number of external libraries,
+but notably on `Rcpp` and `RcppArmadillo` which require a `C++` compiler
+for installation, such as for example `gcc`.
 
 ## Getting started
 
-```r
+``` r
 library(swaglm)
+```
 
+``` r
 # Simulated data
 n <- 2000
 p <- 50
 X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = diag(rep(1/p, p)))
 beta <- c(-15, -10, 5, 10, 15, rep(0, p-5))
+
+# generate from logistic regression model
 z <- 1 + X %*% beta
 pr <- 1 / (1 + exp(-z))
+set.seed(12345)
 y <- as.factor(rbinom(n, 1, pr))
 y <- as.numeric(y) - 1
 
 # Run SWAG
-swag_obj <- swaglm(X = X, y = y, p_max = 20, family = binomial(),
+swaglm_obj <- swaglm(X = X, y = y, p_max = 20, family = binomial(),
                    alpha = 0.15, verbose = TRUE, seed = 123)
+```
 
+    ## Completed models of dimension 1
+    ## Completed models of dimension 2
+    ## Completed models of dimension 3
+    ## Completed models of dimension 4
+    ## Completed models of dimension 5
+    ## Completed models of dimension 6
+    ## Completed models of dimension 7
+    ## Completed models of dimension 8
 
+``` r
+print(swaglm_obj)
+```
+
+    ## SWAGLM results :
+    ## -----------------------------------------
+    ## Input matrix dimension:  2000 50 
+    ## Number of explored models:  137 
+    ## Number of selected models:  25 
+    ## Number of dimensions explored:  8
+
+``` r
+# plot network
+swaglm_network_obj = compute_network(swaglm_obj)
+plot(swaglm_network_obj, scale_vertex = 1)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
+``` r
 # Run statistical test
-test_results <- swag_test(swag_obj, B = 50, verbose = TRUE)
+B=20
+test_results <- swag_test(swaglm_obj, B = B, verbose = TRUE)
 
 # View p-values for both entropy-based measures
 print(test_results)
 ```
 
+    ## SWAG Test Results:
+    ## ----------------------
+    ## p-value (Eigen): 0.03115 
+    ## p-value (Freq): 0
+
 ## How the statistical test works
 
-The function `swag_test()` performs a permutation test to evaluate whether the selected variables contain meaningful information or are randomly selected.
+The function `swag_test()` performs a permutation test to evaluate
+whether the selected variables contain meaningful information or are
+randomly selected.
 
-Null Hypothesis: The selected models are no different from randomly chosen ones.
+Null Hypothesis: The selected models are no different from randomly
+chosen ones.
 
 ### Procedure:
 
-- The response variable is shuffled to break its true relationship with predictors.
+- The response variable is shuffled to break its true relationship with
+  predictors.
 
 - SWAG is applied to these shuffled datasets.
 
-- The entropy of variable frequency and eigenvalue centrality is computed for the null models.
+- The entropy of variable frequency and eigenvalue centrality is
+  computed for the null models.
 
-- p-values are computed by comparing the SWAG network with these null models.
+- p-values are computed by comparing the SWAG network with these null
+  models.
 
 ### Interpretation:
 
-- Small p-value (< 0.05): The selected variables are likely informative.
+- Small p-value (\< 0.05): The selected variables are likely
+  informative.
 
 - Large p-value (≥ 0.05): The selection may be random.
 
-
 ## License
 
-This source code is released under is the GNU AFFERO GENERAL PUBLIC LICENSE (AGPL) v3.0. 
+This source code is released under is the GNU AFFERO GENERAL PUBLIC
+LICENSE (AGPL) v3.0.
 
 ## References
 
-[Molinari, R. et al. SWAG: A Wrapper Method for Sparse Learning (2021) ](https://arxiv.org/abs/2006.12837)
-
-
+[Molinari, R. et al. SWAG: A Wrapper Method for Sparse Learning
+(2021)](https://arxiv.org/abs/2006.12837)
