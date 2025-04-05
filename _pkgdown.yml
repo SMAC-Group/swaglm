@@ -12,7 +12,7 @@ reference:
     - compute_network
     - plot.swaglm_network
     - swag_test
-    - print.swag_test
+    - print.swaglm_test
 
 navbar:
   left:
