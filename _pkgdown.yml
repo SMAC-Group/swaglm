@@ -11,6 +11,7 @@ reference:
     - compute_network
     - plot.swaglm_network
     - swag_test
+    - print.swag_test
 navbar:
   left:
   - icon: fa-home

@@ -76,7 +76,6 @@ smoothed_bootstrap <- function(data, H = 1000, bandwidth = NULL) {
 #' @importFrom DescTools Entropy
 #' @importFrom progress progress_bar
 #' @importFrom stats rnorm sd
-#' @param significance_level A \code{double} between 0 and 1 indicating the specified significance level. Default is 0.05.
 #' @param B a \code{integer} specifying the number of swag procedures to generate a distribution of the network statistics under the null.
 #' @param verbose A \code{boolean} used to control verbose
 #' @export
@@ -96,9 +95,10 @@ smoothed_bootstrap <- function(data, H = 1000, bandwidth = NULL) {
 #' p_max = 20
 #' swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
 #'                           alpha = quantile_alpha, verbose = TRUE, seed = 123)
-#' swag_test(swag_obj, significance_level = .05, B = 50, verbose = TRUE)
+#' res_test = swag_test(swag_obj, B = 50, verbose = TRUE)
+#' res_test
 #' 
-swag_test <- function(swag_obj, significance_level = 0.05, B = 50, verbose = FALSE) {
+swag_test <- function(swag_obj, B = 50, verbose = FALSE) {
 
   # ------------------------------ extract parameters from swag object to provide them later 
   y = swag_obj$y
@@ -176,9 +176,47 @@ swag_test <- function(swag_obj, significance_level = 0.05, B = 50, verbose = FAL
   # Return results
   ret = list(
     "p_value_eigen" = p_value_eigen,
-    "p_value_freq" = p_value_freq,
-    "significance_level" = significance_level
+    "p_value_freq" = p_value_freq
+
   )
+  
+  # assign class to ret
+  class(ret) = "swaglm_test"
   # return
   return(ret)
+}
+
+
+
+
+#' print.swaglm_test
+#'
+#' Print a \code{swaglm_test} object
+#'
+#' @param x An object of class \code{swaglm_test}.
+#' @export
+#' @examples
+#' n <- 2000
+#' p <- 50
+#' # create design matrix and vector of coefficients
+#' Sigma <- diag(rep(1/p, p))
+#' X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)
+#' beta = c(-15,-10,5,10,15, rep(0,p-5))
+#' z <- 1 + X%*%beta
+#' pr <- 1/(1 + exp(-z))
+#' y <- as.factor(rbinom(n, 1, pr))
+#' y = as.numeric(y)-1
+#' quantile_alpha = .15
+#' p_max = 20
+#' swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
+#'                           alpha = quantile_alpha, verbose = TRUE, seed = 123)
+#' res_test = swag_test(swag_obj, significance_level = .05, B = 50, verbose = TRUE)
+#' print(res_test)
+#' 
+#' 
+print.swaglm_test <- function(x, ...) {
+  cat("SWAG Test Results:\n")
+  cat("----------------------\n")
+  cat("p-value (Eigen):", x$p_value_eigen, "\n")
+  cat("p-value (Freq):", x$p_value_freq, "\n")
 }

@@ -6,7 +6,7 @@ rm(list=ls())
 library(swaglm)
 
 n <- 2000
-p <- 20
+p <- 50
 
 # create design matrix and vector of coefficients
 Sigma <- diag(rep(1/p, p))
@@ -23,21 +23,21 @@ quantile_alpha = .15
 p_max = 20
 swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
                           alpha = quantile_alpha, verbose = TRUE, seed = 123)
-
-
 swag_net = compute_network(swag_obj)
-plot(swag_net, scale_vertex = 10)
+plot(swag_net, scale_vertex = .05)
+test_obj = swag_test(swag_obj = swag_obj, B = 10, verbose =TRUE)
+class(test_obj)
+print(test_obj)
 
-
-lapply(X = swag_obj$lst_var_mat, FUN = dim)
-swag_obj2 = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
-                           alpha = quantile_alpha, verbose = TRUE, seed = 123)
-lapply(X = swag_obj$lst_var_mat, FUN = dim)
-all.equal(swag_obj, swag_obj2)
-swag_obj3 = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
-                           alpha = quantile_alpha, verbose = TRUE, seed = 12345)
-
-all.equal(swag_obj, swag_obj3)
+# lapply(X = swag_obj$lst_var_mat, FUN = dim)
+# swag_obj2 = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
+#                            alpha = quantile_alpha, verbose = TRUE, seed = 123)
+# lapply(X = swag_obj$lst_var_mat, FUN = dim)
+# all.equal(swag_obj, swag_obj2)
+# swag_obj3 = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
+#                            alpha = quantile_alpha, verbose = TRUE, seed = 12345)
+# 
+# all.equal(swag_obj, swag_obj3)
 
 
 

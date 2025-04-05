@@ -16,87 +16,118 @@ knitr::opts_chunk$set(
 knitr::opts_chunk$set(fig.width = 5, fig.height = 5, fig.align = "center")
 ```
 
-```{r setup}
+
+## Load package
+```{r setup, warning=FALSE, message=FALSE}
 library(swaglm)
 ```
 
 
 
-
+## Define covariates
 ```{r}
-n <- 2000
-p <- 100
+n <- 1000
+p <- 50
 
 # create design matrix and vector of coefficients
-Sigma <- diag(rep(1/p, p))
+Sigma <- diag(rep(1 / p, p))
 X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)
-beta = c(-15,-10,5,10,15, rep(0,p-5))
+beta <- c(-15, -10, 5, 10, 15, rep(0, p - 5))
 ```
 
 ## Logistic regression
 ```{r}
 # --------------------- generate from logistic regression with an intercept of one
-z <- 1 + X%*%beta
-pr <- 1/(1 + exp(-z))
+z <- 1 + X %*% beta
+pr <- 1 / (1 + exp(-z))
 set.seed(12345)
 y <- as.factor(rbinom(n, 1, pr))
-y = as.numeric(y)-1
-
-# define swag parameters
-quantile_alpha = .15
-p_max = 20
-swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
-alpha = quantile_alpha, verbose = TRUE, seed = 123)
+y <- as.numeric(y) - 1
 ```
 
-
-
-
+## Define SWAG hyperparameters
 ```{r}
-swag_network = compute_network(swag_obj)
-plot(swag_network, scale_vertex = .05)
+# define swag parameters
+quantile_alpha <- .15
+p_max <- 20
 ```
+
+### Run SWAG algorithm
+```{r}
+swag_obj <- swaglm::swaglm(
+  X = X, y = y, p_max = p_max, family = stats::binomial(),
+  alpha = quantile_alpha, verbose = TRUE, seed = 123
+)
+```
+
+### Compute and plot network
+```{r}
+swag_network <- compute_network(swag_obj)
+plot(swag_network, scale_vertex = 1)
+```
+
+### Perform test
+```{r}
+B <- 10
+res_test <- swag_test(swag_obj, B = B)
+print(res_test)
+```
+
 
 ## Linear regression
 
 ```{r}
-# --------------------- generate from logistic regression with an intercept of one
-sigma2 = 4
+sigma2 <- 4
 set.seed(12345)
-y <- 1 + X%*%beta + rnorm(n = n, mean = 0, sd = sqrt(sigma2))
-
-# define swag parameters
-quantile_alpha = .15
-p_max = 20
-
-# Run swag procedure
-swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::gaussian(),
-alpha = quantile_alpha, verbose = TRUE, seed = 123)
+y <- 1 + X %*% beta + rnorm(n = n, mean = 0, sd = sqrt(sigma2))
 ```
 
-
+### Run SWAG algorithm
 ```{r}
-swag_network = compute_network(swag_obj)
-plot(swag_network, scale_vertex = .05)
+swag_obj <- swaglm::swaglm(
+  X = X, y = y, p_max = p_max, family = stats::gaussian(),
+  alpha = quantile_alpha, verbose = TRUE, seed = 123
+)
 ```
+
+### Compute and plot network
+```{r}
+swag_network <- compute_network(swag_obj)
+plot(swag_network, scale_vertex = 1)
+```
+
+### Perform test
+```{r}
+res_test <- swag_test(swag_obj, B = B)
+print(res_test)
+```
+
 
 ## Poisson regression
 ```{r}
-eta <- 1 + X%*% beta
+eta <- 1 + X %*% beta
 lambda <- exp(eta)
 set.seed(12345)
 y <- rpois(n = n, lambda = lambda)
-
-# define swag parameters
-quantile_alpha = .15
-p_max = 20
-
-# Run swag procedure
-swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::poisson(),
-                          alpha = quantile_alpha, verbose = TRUE, seed = 123)
-
-swag_network = compute_network(swag_obj)
-plot(swag_network, scale_vertex = .08)
 ```
 
+### Run SWAG algorithm
+```{r}
+# Run swag procedure
+swag_obj <- swaglm::swaglm(
+  X = X, y = y, p_max = p_max, family = stats::poisson(),
+  alpha = quantile_alpha, verbose = TRUE, seed = 123
+)
+```
 
+### Compute and plot network
+```{r}
+swag_network <- compute_network(swag_obj)
+plot(swag_network, scale_vertex = 1)
+```
+
+### Perform test
+```{r}
+res_test <- swag_test(swag_obj, B = B)
+print(res_test)
+```
