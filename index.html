@@ -104,7 +104,7 @@
 <ul>
 <li>Efficiently finds a set of low-dimensional learners with high predictive accuracy.</li>
 <li>Follows a forward-step method to iteratively build strong learners.</li>
-<li>Provides a permutation-based statistical test (<code>swag_test</code>) to determine if the obtained models capture meaningful structure in the data.</li>
+<li>Provides a permutation-based statistical test (<code>swaglm_test</code>) to determine if the obtained models capture meaningful structure in the data.</li>
 <li>Uses entropy-based network measures (entropy of frequency and entropy of eigenvalue centrality) to compare SWAG models against randomized models.</li>
 </ul>
 <p>Below are instructions on how to install and make use of the <code>swaglm</code> package.</p>
@@ -163,31 +163,31 @@
 <div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="do">## SWAGLM results :</span></span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="do">## -----------------------------------------</span></span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="do">## Input matrix dimension:  2000 50 </span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="do">## Number of explored models:  137 </span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="do">## Number of explored models:  136 </span></span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="do">## Number of selected models:  25 </span></span>
 <span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="do">## Number of dimensions explored:  8</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot network</span></span>
 <span><span class="va">swaglm_network_obj</span> <span class="op">=</span> <span class="fu"><a href="reference/compute_network.html">compute_network</a></span><span class="op">(</span><span class="va">swaglm_obj</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">swaglm_network_obj</span>, scale_vertex <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-2-1.png" width="100%"></p>
+<p><img src="reference/figures/unnamed-chunk-2-1.png" width="80%"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run statistical test</span></span>
 <span><span class="va">B</span><span class="op">=</span><span class="fl">20</span></span>
-<span><span class="va">test_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/swag_test.html">swag_test</a></span><span class="op">(</span><span class="va">swaglm_obj</span>, B <span class="op">=</span> <span class="va">B</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">test_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/swaglm_test.html">swaglm_test</a></span><span class="op">(</span><span class="va">swaglm_obj</span>, B <span class="op">=</span> <span class="va">B</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># View p-values for both entropy-based measures</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">test_results</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="do">## SWAG Test Results:</span></span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="do">## SWAGLM Test Results:</span></span>
 <span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="do">## ----------------------</span></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="do">## p-value (Eigen): 0.03115 </span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="do">## p-value (Eigen): 0.1306 </span></span>
 <span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="do">## p-value (Freq): 0</span></span></code></pre></div>
 <p>Find vignettes with detailed examples as well as the user’s manual at the <a href="https://smac-group.github.io/swaglm/index.html" class="external-link">package website</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="how-the-statistical-test-works">How the statistical test works<a class="anchor" aria-label="anchor" href="#how-the-statistical-test-works"></a>
 </h2>
-<p>The function <code><a href="reference/swag_test.html">swag_test()</a></code> performs a permutation test to evaluate whether the selected variables contain meaningful information or are randomly selected.</p>
+<p>The function <code><a href="reference/swaglm_test.html">swaglm_test()</a></code> performs a permutation test to evaluate whether the selected variables contain meaningful information or are randomly selected.</p>
 <p>Null Hypothesis: The selected models are no different from randomly chosen ones.</p>
 <div class="section level3">
 <h3 id="procedure">Procedure:<a class="anchor" aria-label="anchor" href="#procedure"></a>
