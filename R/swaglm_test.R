@@ -69,7 +69,7 @@ smoothed_bootstrap <- function(data, H = 1000, bandwidth = NULL) {
 }
 
 
-#' swag_test
+#' swaglm_test
 #'
 #' Compute significance of identified set of variables
 #'
@@ -97,10 +97,10 @@ smoothed_bootstrap <- function(data, H = 1000, bandwidth = NULL) {
 #' p_max = 20
 #' swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
 #'                           alpha = quantile_alpha, verbose = TRUE, seed = 123)
-#' res_test = swag_test(swag_obj, B = 50, verbose = TRUE)
+#' res_test = swaglm_test(swag_obj, B = 50, verbose = TRUE)
 #' res_test
 #' 
-swag_test <- function(swag_obj, B = 50, verbose = FALSE) {
+swaglm_test <- function(swag_obj, B = 50, verbose = FALSE) {
 
   # ------------------------------ extract parameters from swag object to provide them later 
   y = swag_obj$y
@@ -213,7 +213,7 @@ swag_test <- function(swag_obj, B = 50, verbose = FALSE) {
 #' p_max = 20
 #' swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
 #'                           alpha = quantile_alpha, verbose = TRUE, seed = 123)
-#' res_test = swag_test(swag_obj, B = 50, verbose = TRUE)
+#' res_test = swaglm_test(swag_obj, B = 50, verbose = TRUE)
 #' print(res_test)
 #' 
 #' 

@@ -70,7 +70,7 @@ plot(swag_network, scale_vertex=0.05)
 ### Perform test
 ```{r}
 B <- 10
-res_test <- swag_test(swag_obj, B = B)
+res_test <- swaglm_test(swag_obj, B = B)
 print(res_test)
 ```
 
@@ -100,7 +100,7 @@ plot(swag_network, scale_vertex=0.05)
 
 ### Perform test
 ```{r}
-res_test <- swag_test(swag_obj, B = B)
+res_test <- swaglm_test(swag_obj, B = B)
 print(res_test)
 ```
 
@@ -131,6 +131,6 @@ plot(swag_network, scale_vertex=0.05)
 
 ### Perform test
 ```{r}
-res_test <- swag_test(swag_obj, B = B)
+res_test <- swaglm_test(swag_obj, B = B)
 print(res_test)
 ```

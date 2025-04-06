@@ -23,7 +23,7 @@ information from the data.
 - Efficiently finds a set of low-dimensional learners with high
   predictive accuracy.
 - Follows a forward-step method to iteratively build strong learners.
-- Provides a permutation-based statistical test (`swag_test`) to
+- Provides a permutation-based statistical test (`swaglm_test`) to
   determine if the obtained models capture meaningful structure in the
   data.
 - Uses entropy-based network measures (entropy of frequency and entropy
@@ -95,7 +95,7 @@ print(swaglm_obj)
     ## SWAGLM results :
     ## -----------------------------------------
     ## Input matrix dimension:  2000 50 
-    ## Number of explored models:  137 
+    ## Number of explored models:  136 
     ## Number of selected models:  25 
     ## Number of dimensions explored:  8
 
@@ -105,33 +105,30 @@ swaglm_network_obj = compute_network(swaglm_obj)
 plot(swaglm_network_obj, scale_vertex = 1)
 ```
 
-
-<img src="man/figures/unnamed-chunk-2-1.png" width="100%" />
-
+<img src="man/figures/unnamed-chunk-2-1.png" width="80%" />
 
 
 
 ``` r
 # Run statistical test
 B=20
-test_results <- swag_test(swaglm_obj, B = B, verbose = TRUE)
+test_results <- swaglm_test(swaglm_obj, B = B, verbose = TRUE)
 
 # View p-values for both entropy-based measures
 print(test_results)
 ```
 
-    ## SWAG Test Results:
+    ## SWAGLM Test Results:
     ## ----------------------
-    ## p-value (Eigen): 0.03115 
+    ## p-value (Eigen): 0.1306 
     ## p-value (Freq): 0
 
-
-
-Find vignettes with detailed examples as well as the user's manual at the [package website](https://smac-group.github.io/swaglm/index.html).
+Find vignettes with detailed examples as well as the user’s manual at
+the [package website](https://smac-group.github.io/swaglm/index.html).
 
 ## How the statistical test works
 
-The function `swag_test()` performs a permutation test to evaluate
+The function `swaglm_test()` performs a permutation test to evaluate
 whether the selected variables contain meaningful information or are
 randomly selected.
 

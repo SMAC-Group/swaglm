@@ -11,7 +11,7 @@ reference:
     - print.swaglm
     - compute_network
     - plot.swaglm_network
-    - swag_test
+    - swaglm_test
     - print.swaglm_test
 
 navbar:
