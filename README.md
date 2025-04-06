@@ -105,6 +105,7 @@ swaglm_network_obj = compute_network(swaglm_obj)
 plot(swaglm_network_obj, scale_vertex = 1)
 ```
 
+
 <img src="man/figures/unnamed-chunk-2-1.png" width="80%" />
 
 
