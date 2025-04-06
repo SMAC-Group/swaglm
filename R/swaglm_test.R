@@ -218,7 +218,7 @@ swag_test <- function(swag_obj, B = 50, verbose = FALSE) {
 #' 
 #' 
 print.swaglm_test <- function(x, ...) {
-  cat("SWAG Test Results:\n")
+  cat("SWAGLM Test Results:\n")
   cat("----------------------\n")
   cat("p-value (Eigen):", x$p_value_eigen, "\n")
   cat("p-value (Freq):", x$p_value_freq, "\n")
