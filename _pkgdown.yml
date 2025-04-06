@@ -5,7 +5,7 @@ template:
 
 
 reference:
-  - title: Run and plot output from the SWAG algorithm and perform test of hypothesis on the selected highly predictive variables
+  - title: Functions and methods
     contents:
     - swaglm
     - print.swaglm
