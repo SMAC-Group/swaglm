@@ -2,25 +2,25 @@
 % Please edit documentation in R/plot.swaglm_network.R
 \name{plot.swaglm_network}
 \alias{plot.swaglm_network}
-\title{plot.swaglm_network}
-\usage{
-\method{plot}{swaglm_network}(x, scale_vertex = 0.1, ...)
-}
+\title{Plot method for swaglm_network objects}
 \arguments{
-\item{x}{An object of class \code{swaglm_network}.}
+\item{x}{An object of class \code{swaglm_network}}
 
-\item{scale_vertex}{a \code{double} that specify the size of the nodes of the graph representing variables}
+\item{scale_vertex}{Optional vertex scaling parameter}
 
-\item{...}{Additional graphical parameters}
+\item{bins}{Number of bins for vertex size discretization (default = 5)}
+
+\item{...}{Additional arguments passed to \code{igraph::plot}}
 }
 \description{
-This function plots a \code{swaglm_network} object.
+Visualizes a SWAG network with discretized vertex size, optional edge width scaling,
+and edge coloring based on a correlation matrix.
 }
 \examples{
 # Parameters for data generation
 set.seed(12345)
 n <- 2000
-p <- 100
+p <- 50
 
 # create design matrix and vector of coefficients
 Sigma <- diag(rep(1/p, p))
@@ -33,6 +33,8 @@ pr <- 1/(1 + exp(-z))
 y <- as.factor(rbinom(n, 1, pr))
 y = as.numeric(y)-1
 
+cor_matrix = cor(X)
+
 # define swag parameters
 quantile_alpha = .15
 p_max = 20
@@ -40,6 +42,6 @@ swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
 alpha = quantile_alpha, verbose = TRUE, seed = 123)
 names(swag_obj)
 swag_network = compute_network(swag_obj)
-plot(swag_network, scale_vertex = .05)
+plot(swag_network)
 
 }
