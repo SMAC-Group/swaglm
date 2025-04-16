@@ -3,7 +3,6 @@
 S3method(print,swaglm)
 S3method(print,swaglm_test)
 export(compute_network)
-export(plot.swaglm_network)
 export(swaglm)
 export(swaglm_test)
 importFrom(DescTools,Entropy)

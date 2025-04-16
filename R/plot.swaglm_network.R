@@ -27,8 +27,6 @@
 #' y <- as.factor(rbinom(n, 1, pr))
 #' y = as.numeric(y)-1
 #' 
-#' cor_matrix = cor(X)
-#' 
 #' # define swag parameters
 #' quantile_alpha = .15
 #' p_max = 20
