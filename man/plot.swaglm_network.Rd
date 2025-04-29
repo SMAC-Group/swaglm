@@ -11,9 +11,11 @@
 
 \item{bins}{Number of bins for vertex size discretization (default = 5)}
 
-\item{...}{Additional arguments passed to \code{igraph::plot}}
+\item{scale_edge}{Logical; whether to scale the edge width}
 
-\item{scale_vertex}{Optional vertex scaling parameter}
+\item{size_range}{A numeric vector of length 2 specifying the range of node sizes.}
+
+\item{...}{Additional arguments passed to \code{igraph::plot}}
 }
 \description{
 Visualizes a SWAG network with discretized vertex size, optional edge width scaling,

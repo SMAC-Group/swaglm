@@ -4,13 +4,15 @@
 #' and edge coloring based on a correlation matrix.
 #'
 #' @param x An object of class \code{swaglm_network}
-#' @param scale_vertex Optional vertex scaling parameter
+#'@param size_range A numeric vector of length 2 specifying the range of node sizes.
+#' @param scale_edge Logical; whether to scale the edge width
 #' @param bins Number of bins for vertex size discretization (default = 5)
 #' @param ... Additional arguments passed to \code{igraph::plot}
 #' @importFrom igraph layout.circle E degree
 #' @importFrom scales rescale
 #' @importFrom fields image.plot
 #' @importFrom fastglm fastglm
+#' @importFrom stats quantile
 #' @name plot.swaglm_network
 #' @method plot swaglm_network
 #' @export
