@@ -3,13 +3,17 @@
 #' Visualizes a SWAG network with discretized vertex size, optional edge width scaling,
 #' and edge coloring based on a correlation matrix.
 #'
-#'
 #' @param x An object of class \code{swaglm_network}
 #' @param scale_vertex Optional vertex scaling parameter
 #' @param bins Number of bins for vertex size discretization (default = 5)
 #' @param ... Additional arguments passed to \code{igraph::plot}
 #' @importFrom igraph layout.circle E degree
+#' @importFrom scales rescale
+#' @importFrom fields image.plot
 #' @importFrom fastglm fastglm
+#' @name plot.swaglm_network
+#' @method plot swaglm_network
+#' @export
 #' @examples
 #' # Parameters for data generation
 #' set.seed(12345)
@@ -35,18 +39,12 @@
 #' names(swag_obj)
 #' swag_network = compute_network(swag_obj)
 #' plot(swag_network)
+#'
 #' 
-#' @export
-#' @export
 #' 
 #
 #' 
 #' 
-library(igraph)
-library(scales)  # for rescale
-library(RColorBrewer)
-library(fields)  # for image.plot
-
 plot.swaglm_network = function(x, bins = 5, scale_edge = NULL, size_range = c(8, 30), ...) {
   
   if (!inherits(x, "swaglm_network")) {
