@@ -23,7 +23,8 @@ Imports:
     plyr,
     progress,
     DescTools,
-    scales
+    scales,
+    fields
 Suggests: 
     knitr,
     MASS,
