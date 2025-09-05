@@ -34,10 +34,6 @@ using namespace Rcpp;
 
 
 
-
-
-
-
 // --------------------------- generate permutation with seed
 // set seed
 // [[Rcpp::export]]
@@ -170,6 +166,13 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
       Rcpp::Rcout << "Completed models of dimension " << dimension_model << "\n";
     }
   }
+  
+  
+  // Add one to each list of arma::mat of indices before export for easier treatment in R later on
+  //TODO 
+  
+  
+  
   // create return object
   List ret =  List::create(Named("lst_estimated_beta") = lst_estimated_beta,
                            Named("lst_AIC") = lst_AIC,
