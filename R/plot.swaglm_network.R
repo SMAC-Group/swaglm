@@ -14,8 +14,9 @@
 #' @importFrom fastglm fastglm
 #' @importFrom stats quantile
 #' @name plot.swaglm_network
-#' @return todo
 #' @method plot swaglm_network
+#' @return None.
+#' @example /inst/examples/eg_plot.swaglm_network.R
 #' @export
 plot.swaglm_network = function(x, bins = 5, scale_edge = NULL, size_range = c(8, 30), ...) {
   

@@ -80,6 +80,7 @@ smoothed_bootstrap <- function(data, H = 1000, bandwidth = NULL) {
 #' @importFrom stats rnorm sd
 #' @param B a \code{integer} specifying the number of swag procedures to generate a distribution of the network statistics under the null.
 #' @param verbose A \code{boolean} used to control verbose
+#' @example  /inst/examples/eg_swaglm_test.R
 #' @export
 swaglm_test <- function(swag_obj, B = 50, verbose = FALSE) {
 

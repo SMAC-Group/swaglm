@@ -59,6 +59,7 @@ generate_permutation <- function(n, m, seed = 123L) {
 #'   - \code{lst_var_mat}:  A \code{List} that that contain in each of its entries, a matrix that specify for each row a combination of variables that compose a model.
 #'   - \code{lst_selected_models} A \code{List} that contain the selected models at each dimension.
 #'   - \code{lst_index_selected_models} A \code{List} that contain the index of the rows corresponding to the selected models at each dimension.
+#' @example  /inst/examples/eg_swaglm.R
 #' @export
 swaglm <- function(X, y, p_max = 2L, family = NULL, method = 0L, alpha = 0.3, verbose = FALSE, seed = 123L) {
     .Call(`_swaglm_swaglm`, X, y, p_max, family, method, alpha, verbose, seed)

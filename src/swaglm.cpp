@@ -70,6 +70,7 @@ arma::uvec generate_permutation(int n, int m, int seed=123){
 //'   - \code{lst_var_mat}:  A \code{List} that that contain in each of its entries, a matrix that specify for each row a combination of variables that compose a model.
 //'   - \code{lst_selected_models} A \code{List} that contain the selected models at each dimension.
 //'   - \code{lst_index_selected_models} A \code{List} that contain the index of the rows corresponding to the selected models at each dimension.
+//' @example  /inst/examples/eg_swaglm.R
 //' @export
 // [[Rcpp::export]]
 List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> family = R_NilValue, int method = 0, double alpha=0.3, bool verbose = false, int seed  = 123) {

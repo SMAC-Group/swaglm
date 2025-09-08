@@ -8,8 +8,9 @@
 #' @importFrom plyr rbind.fill.matrix
 #' @importFrom stats na.omit
 #' @importFrom gdata upperTriangle
-#' @return test
-#' @export
+#' @return A list of class  \code{swaglm_network}.
+#' @example  /inst/examples/eg_compute_network.R
+#' @export 
 compute_network <- function(x, mode = "undirected") {
   
   # x = res
