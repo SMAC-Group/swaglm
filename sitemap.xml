@@ -1,15 +1,15 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
-<url><loc>/404.html</loc></url>
-<url><loc>/articles/index.html</loc></url>
-<url><loc>/articles/run_swaglm.html</loc></url>
-<url><loc>/authors.html</loc></url>
-<url><loc>/index.html</loc></url>
-<url><loc>/reference/compute_network.html</loc></url>
-<url><loc>/reference/index.html</loc></url>
-<url><loc>/reference/plot.swaglm_network.html</loc></url>
-<url><loc>/reference/print.swaglm.html</loc></url>
-<url><loc>/reference/print.swaglm_test.html</loc></url>
-<url><loc>/reference/swaglm.html</loc></url>
-<url><loc>/reference/swaglm_test.html</loc></url>
+<url><loc>https://github.com/SMAC-Group/swaglm/404.html</loc></url>
+<url><loc>https://github.com/SMAC-Group/swaglm/articles/index.html</loc></url>
+<url><loc>https://github.com/SMAC-Group/swaglm/articles/run_swaglm.html</loc></url>
+<url><loc>https://github.com/SMAC-Group/swaglm/authors.html</loc></url>
+<url><loc>https://github.com/SMAC-Group/swaglm/index.html</loc></url>
+<url><loc>https://github.com/SMAC-Group/swaglm/reference/compute_network.html</loc></url>
+<url><loc>https://github.com/SMAC-Group/swaglm/reference/index.html</loc></url>
+<url><loc>https://github.com/SMAC-Group/swaglm/reference/plot.swaglm_network.html</loc></url>
+<url><loc>https://github.com/SMAC-Group/swaglm/reference/print.swaglm.html</loc></url>
+<url><loc>https://github.com/SMAC-Group/swaglm/reference/print.swaglm_test.html</loc></url>
+<url><loc>https://github.com/SMAC-Group/swaglm/reference/swaglm.html</loc></url>
+<url><loc>https://github.com/SMAC-Group/swaglm/reference/swaglm_test.html</loc></url>
 </urlset>
 
