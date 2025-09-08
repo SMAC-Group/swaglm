@@ -13,6 +13,9 @@ swaglm_test(swag_obj, B = 50, verbose = FALSE)
 
 \item{verbose}{A \code{boolean} used to control verbose}
 }
+\value{
+A \code{swaglm_test} object.
+}
 \description{
 Compute significance of identified set of variables
 }

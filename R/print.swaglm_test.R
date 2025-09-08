@@ -5,6 +5,7 @@
 #' @param ... Additional arguments
 #' @example  /inst/examples/eg_print.swaglm_test.R
 #' @export
+#' @return None.
 #' 
 print.swaglm_test <- function(x, ...) {
   cat("SWAGLM Test Results:\n")

@@ -11,6 +11,9 @@
 
 \item{...}{Additional arguments}
 }
+\value{
+None.
+}
 \description{
 Print a \code{swaglm} object
 }

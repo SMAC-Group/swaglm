@@ -9,7 +9,10 @@
 \arguments{
 \item{x}{An object of class \code{swaglm_test}.}
 
-\item{...}{Additional arguments$}
+\item{...}{Additional arguments}
+}
+\value{
+None.
 }
 \description{
 Print a \code{swaglm_test} object

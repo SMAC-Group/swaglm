@@ -12,7 +12,7 @@ compute_network(x, mode = "undirected")
 \item{mode}{Character string specifying the mode of the network. Default is "undirected".}
 }
 \value{
-A list of class  \code{swaglm_network}.
+A list of class \code{swaglm_network}.
 }
 \description{
 Compute a network representation of the selected models from a \code{swaglm} object
