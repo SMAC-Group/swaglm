@@ -1,4 +1,4 @@
-#' Plot method for swaglm_network objects
+#' plot.swaglm_network
 #'
 #' Visualizes a SWAG network with discretized vertex size, optional edge width scaling,
 #' and edge coloring based on a correlation matrix.

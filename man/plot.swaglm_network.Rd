@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.swaglm_network.R
 \name{plot.swaglm_network}
 \alias{plot.swaglm_network}
-\title{Plot method for swaglm_network objects}
+\title{plot.swaglm_network}
 \usage{
 \method{plot}{swaglm_network}(x, bins = 5, scale_edge = NULL, size_range = c(8, 30), ...)
 }
