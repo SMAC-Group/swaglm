@@ -172,18 +172,3 @@ swaglm_test <- function(swag_obj, B = 50, verbose = FALSE) {
 
 
 
-
-#' print.swaglm_test
-#'
-#' Print a \code{swaglm_test} object
-#'
-#' @param x An object of class \code{swaglm_test}.
-#' @param ... Additional arguments
-#' @export
-#' 
-print.swaglm_test <- function(x, ...) {
-  cat("SWAGLM Test Results:\n")
-  cat("----------------------\n")
-  cat("p-value (Eigen):", x$p_value_eigen, "\n")
-  cat("p-value (Freq):", x$p_value_freq, "\n")
-}

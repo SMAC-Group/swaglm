@@ -13,4 +13,5 @@ quantile_alpha = .15
 p_max = 20
 swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
                           alpha = quantile_alpha, verbose = TRUE, seed = 123)
-swaglm::swaglm_test(swag_obj, B = 10, verbose = TRUE)
+swag_test = swaglm::swaglm_test(swag_obj, B = 10, verbose = TRUE)
+swag_test
