@@ -4,8 +4,8 @@
 #' @param x An object of class \code{swaglm_test}.
 #' @param ... Additional arguments
 #' @example  /inst/examples/eg_print.swaglm_test.R
-#' @export
 #' @return None.
+#' @export
 #' 
 print.swaglm_test <- function(x, ...) {
   cat("SWAGLM Test Results:\n")
