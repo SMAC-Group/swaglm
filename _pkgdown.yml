@@ -1,4 +1,4 @@
-url: ~
+url: https://github.com/SMAC-Group/swaglm
 template:
   params:
     bootswatch: flatly

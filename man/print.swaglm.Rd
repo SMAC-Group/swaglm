@@ -24,12 +24,10 @@ beta = c(-15,-10,5,10,15, rep(0,p-5))
 z <- 1 + X\%*\%beta
 pr <- 1/(1 + exp(-z))
 y <- as.factor(rbinom(n, 1, pr))
-y = as.numeric(y)-1
-quantile_alpha = .15
-p_max = 20
-swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
+y <- as.numeric(y)-1
+quantile_alpha <- .15
+p_max <- 20
+swag_obj <- swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
                           alpha = quantile_alpha, verbose = TRUE, seed = 123)
 print(swag_obj)
-
-
 }

@@ -81,25 +81,6 @@ smoothed_bootstrap <- function(data, H = 1000, bandwidth = NULL) {
 #' @param B a \code{integer} specifying the number of swag procedures to generate a distribution of the network statistics under the null.
 #' @param verbose A \code{boolean} used to control verbose
 #' @export
-#' @examples
-#' n <- 2000
-#' p <- 50
-#' 
-#' # create design matrix and vector of coefficients
-#' Sigma <- diag(rep(1/p, p))
-#' X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)
-#' beta = c(-15,-10,5,10,15, rep(0,p-5))
-#' z <- 1 + X%*%beta
-#' pr <- 1/(1 + exp(-z))
-#' y <- as.factor(rbinom(n, 1, pr))
-#' y = as.numeric(y)-1
-#' quantile_alpha = .15
-#' p_max = 20
-#' swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
-#'                           alpha = quantile_alpha, verbose = TRUE, seed = 123)
-#' res_test = swaglm_test(swag_obj, B = 50, verbose = TRUE)
-#' res_test
-#' 
 swaglm_test <- function(swag_obj, B = 50, verbose = FALSE) {
 
   # ------------------------------ extract parameters from swag object to provide them later 
@@ -198,24 +179,6 @@ swaglm_test <- function(swag_obj, B = 50, verbose = FALSE) {
 #' @param x An object of class \code{swaglm_test}.
 #' @param ... Additional arguments
 #' @export
-#' @examples
-#' n <- 2000
-#' p <- 50
-#' # create design matrix and vector of coefficients
-#' Sigma <- diag(rep(1/p, p))
-#' X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)
-#' beta = c(-15,-10,5,10,15, rep(0,p-5))
-#' z <- 1 + X%*%beta
-#' pr <- 1/(1 + exp(-z))
-#' y <- as.factor(rbinom(n, 1, pr))
-#' y = as.numeric(y)-1
-#' quantile_alpha = .15
-#' p_max = 20
-#' swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
-#'                           alpha = quantile_alpha, verbose = TRUE, seed = 123)
-#' res_test = swaglm_test(swag_obj, B = 50, verbose = TRUE)
-#' print(res_test)
-#' 
 #' 
 print.swaglm_test <- function(x, ...) {
   cat("SWAGLM Test Results:\n")

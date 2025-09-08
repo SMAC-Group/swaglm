@@ -59,28 +59,6 @@ generate_permutation <- function(n, m, seed = 123L) {
 #'   - \code{lst_var_mat}:  A \code{List} that that contain in each of its entries, a matrix that specify for each row a combination of variables that compose a model.
 #'   - \code{lst_selected_models} A \code{List} that contain the selected models at each dimension.
 #'   - \code{lst_index_selected_models} A \code{List} that contain the index of the rows corresponding to the selected models at each dimension.
-#' @examples
-#' # Parameters for data generation
-#' set.seed(12345)
-#' n <- 2000
-#' p <- 100
-#' # create design matrix and vector of coefficients
-#' Sigma <- diag(rep(1/p, p))
-#' X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)
-#' beta = c(-15,-10,5,10,15, rep(0,p-5))
-#' 
-#' # --------------------- generate from logistic regression with an intercept of one
-#' z <- 1 + X%*%beta
-#' pr <- 1/(1 + exp(-z))
-#' y <- as.factor(rbinom(n, 1, pr))
-#' y = as.numeric(y)-1
-#' 
-#' # define swag parameters
-#' quantile_alpha = .15
-#' p_max = 20
-#' swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(), 
-#' alpha = quantile_alpha, verbose = TRUE, seed = 123)
-#'
 #' @export
 swaglm <- function(X, y, p_max = 2L, family = NULL, method = 0L, alpha = 0.3, verbose = FALSE, seed = 123L) {
     .Call(`_swaglm_swaglm`, X, y, p_max, family, method, alpha, verbose, seed)
