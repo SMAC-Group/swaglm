@@ -9,6 +9,14 @@ postprocessing_swaglm(x)
 \arguments{
 \item{x}{An object of class \code{swaglm}.}
 }
+\value{
+A list with three elements:
+\describe{
+\item{mat_selected_model}{A matrix where each row represents a selected model and the columns indicate the indices of the variables included in that model.}
+\item{vec_aic_selected_model}{A numeric vector containing the AIC values corresponding to each selected model in \code{mat_selected_model}.}
+\item{estimated_beta_per_variable}{A named list where each element corresponds to a variable (named \code{V<index>}) and contains a numeric vector of estimated beta coefficients for that variable across all selected models in which it appears.}
+}
+}
 \description{
 postprocessing_swaglm
 }
