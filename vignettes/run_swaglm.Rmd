@@ -64,7 +64,7 @@ print(swag_obj)
 ### Compute and plot network
 ```{r}
 swag_network <- compute_network(swag_obj)
-plot(swag_network, scale_vertex=0.05)
+plot(swag_network, scale_vertex = 0.05)
 ```
 
 ### Perform test
@@ -95,7 +95,7 @@ print(swag_obj)
 ### Compute and plot network
 ```{r}
 swag_network <- compute_network(swag_obj)
-plot(swag_network, scale_vertex=0.05)
+plot(swag_network, scale_vertex = 0.05)
 ```
 
 ### Perform test
@@ -126,7 +126,7 @@ print(swag_obj)
 ### Compute and plot network
 ```{r}
 swag_network <- compute_network(swag_obj)
-plot(swag_network, scale_vertex=0.05)
+plot(swag_network, scale_vertex = 0.05)
 ```
 
 ### Perform test

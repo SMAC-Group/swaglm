@@ -6,7 +6,7 @@
 #' @example  /inst/examples/eg_print.swaglm_test.R
 #' @return None.
 #' @export
-#' 
+#'
 print.swaglm_test <- function(x, ...) {
   cat("SWAGLM Test Results:\n")
   cat("----------------------\n")
