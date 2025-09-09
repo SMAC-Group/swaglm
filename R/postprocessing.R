@@ -22,6 +22,7 @@ extract_by_index <- function(lst_values, lst_index) {
 #' postprocessing_swaglm
 #' @param x An object of class \code{swaglm}.
 #' @example /inst/examples/eg_postprocessing_swaglm.R
+#' @importFrom stats median
 #' @export
 postprocessing_swaglm <- function(x) {
   # # Parameters for data generation

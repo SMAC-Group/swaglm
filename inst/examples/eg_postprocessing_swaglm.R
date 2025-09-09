@@ -25,5 +25,6 @@ for(i in seq_along(swaglm_postprocess$estimated_beta_per_variable)){
   # get variable name
   var_name_i = names(swaglm_postprocess$estimated_beta_per_variable)[i]
   var_index_i =  as.numeric(substr(var_name_i, 2, nchar(var_name_i)))
-  boxplot(swaglm_postprocess$estimated_beta_per_variable[[i]], main=paste0(var_name_i, " ", "true value=", beta[i]))
+  boxplot(swaglm_postprocess$estimated_beta_per_variable[[i]], 
+          main=paste0(var_name_i, " ", "true value=", beta[i]))
 }
