@@ -96,7 +96,6 @@ print(swaglm_obj)
     ## -----------------------------------------
     ## Input matrix dimension:  2000 50 
     ## Number of explored models:  136 
-    ## Number of selected models:  25 
     ## Number of dimensions explored:  8
 
 ``` r
