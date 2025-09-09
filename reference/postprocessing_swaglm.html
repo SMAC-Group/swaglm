@@ -77,6 +77,19 @@
 <dd><p>An object of class <code>swaglm</code>.</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    <p>A list with three elements:</p><dl><dt>mat_selected_model</dt>
+<dd><p>A matrix where each row represents a selected model and the columns indicate the indices of the variables included in that model.</p></dd>
+
+<dt>vec_aic_selected_model</dt>
+<dd><p>A numeric vector containing the AIC values corresponding to each selected model in <code>mat_selected_model</code>.</p></dd>
+
+<dt>estimated_beta_per_variable</dt>
+<dd><p>A named list where each element corresponds to a variable (named <code>V&lt;index&gt;</code>) and contains a numeric vector of estimated beta coefficients for that variable across all selected models in which it appears.</p></dd>
+
+
+</dl></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
