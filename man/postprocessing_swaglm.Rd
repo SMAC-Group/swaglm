@@ -2,11 +2,7 @@
 % Please edit documentation in R/postprocessing.R
 \name{postprocessing_swaglm}
 \alias{postprocessing_swaglm}
-\title{postprocessing_swaglm
-This function takes the output of \code{\link[=swaglm]{swaglm()}} and performs a
-post-processing step to extract the subset of models with an AIC below or equal to the minimum median AIC over all dimensions
-stack the selected models into a single matrix, and collect all
-estimated regression coefficients (betas) by variable across the selected models.}
+\title{postprocessing_swaglm}
 \usage{
 postprocessing_swaglm(x)
 }
@@ -15,10 +11,6 @@ postprocessing_swaglm(x)
 }
 \description{
 postprocessing_swaglm
-This function takes the output of \code{\link[=swaglm]{swaglm()}} and performs a
-post-processing step to extract the subset of models with an AIC below or equal to the minimum median AIC over all dimensions
-stack the selected models into a single matrix, and collect all
-estimated regression coefficients (betas) by variable across the selected models.
 }
 \examples{
 set.seed(12345)

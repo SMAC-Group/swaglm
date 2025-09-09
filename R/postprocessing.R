@@ -20,10 +20,6 @@ extract_by_index <- function(lst_values, lst_index) {
 
 
 #' postprocessing_swaglm
-#' This function takes the output of [swaglm::swaglm()] and performs a
-#' post-processing step to extract the subset of models with an AIC below or equal to the minimum median AIC over all dimensions
-#' stack the selected models into a single matrix, and collect all
-#' estimated regression coefficients (betas) by variable across the selected models.
 #' @param x An object of class \code{swaglm}.
 #' @example /inst/examples/eg_postprocessing_swaglm.R
 #' @export
