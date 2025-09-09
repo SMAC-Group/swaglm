@@ -13,6 +13,7 @@ reference:
     - plot.swaglm_network
     - swaglm_test
     - print.swaglm_test
+    - postprocessing_swaglm
 
 navbar:
   left:
