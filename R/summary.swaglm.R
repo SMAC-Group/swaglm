@@ -26,17 +26,17 @@ extract_by_index <- function(lst_values, lst_index) {
 #' @method summary swaglm
 #' @example /inst/examples/eg_summary.swaglm.R
 #' @importFrom stats median
-#' 
+#'
 #' @return A list of class \code{summary_swaglm} with five elements:
 #' \describe{
 #'   \item{mat_selected_model}{A matrix where each row represents a selected model. Columns give the indices of the variables included in that model. Models are padded with \code{NA} to match the largest model size.}
 #'   \item{mat_beta_selected_model}{A matrix containing the estimated regression coefficients (including intercept) of the selected models, stacked across all dimensions. Only models with AIC less than or equal to the **lowest median AIC across all dimensions** are included. Each row corresponds to a model, columns correspond to the coefficients. Rows are padded with \code{NA} to match the largest model size.}
-#'   \item{mat_p_value_selected_model}{A matrix containing the p-values associated with the estimated regression coefficients in \code{beta_selected_model}, stacked in the same order. Each row corresponds to a model, columns correspond to the coefficients. Rows are padded with \code{NA} to match the largest model size.} 
+#'   \item{mat_p_value_selected_model}{A matrix containing the p-values associated with the estimated regression coefficients in \code{beta_selected_model}, stacked in the same order. Each row corresponds to a model, columns correspond to the coefficients. Rows are padded with \code{NA} to match the largest model size.}
 #'   \item{vec_aic_selected_model}{A numeric vector containing the AIC values of all models in \code{mat_selected_model}, stacked across dimensions. These are the AIC values for the selected models that passed the threshold described above.}
 #'   \item{lst_estimated_beta_per_variable}{A named list where each element corresponds to a variable (named \code{V<index>}). Each element is a numeric vector containing all estimated beta coefficients for that variable across all selected models in which it appears. This summarizes the distribution of effects for each variable across the selected models.}
 #' }
-#' 
-#' \strong{Model selection criterion:}  
+#'
+#' \strong{Model selection criterion:}
 #' For each model dimension (number of variables in the model), the median AIC across all models of that dimension is computed. The **smallest median AIC across all dimensions** is identified. Then, **all models with AIC less than or equal to this value** are selected. This ensures that only relatively well-performing models across all dimensions are retained for summarization.
 #' @export
 summary.swaglm <- function(object, ...) {
@@ -48,13 +48,13 @@ summary.swaglm <- function(object, ...) {
   # Sigma <- diag(rep(1/p, p))
   # X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)
   # beta = c(-15,-10,5,10,15, rep(0,p-5))
-  # 
+  #
   # # --------------------- generate from logistic regression with an intercept of one
   # z <- 1 + X%*%beta
   # pr <- 1/(1 + exp(-z))
   # y <- as.factor(rbinom(n, 1, pr))
   # y = as.numeric(y)-1
-  # 
+  #
   # # define swag parameters
   # quantile_alpha = .15
   # p_max = 20
@@ -81,15 +81,13 @@ summary.swaglm <- function(object, ...) {
   selected_models <- list()
   beta_selected_model <- list()
   p_value_selected_model <- list()
-  
-  for (dim_i in seq(max_dim)) {
 
+  for (dim_i in seq(max_dim)) {
     if (length(index_model_below_median_aic[[dim_i]]) == 0) {
       selected_models[[dim_i]] <- NULL
       beta_selected_model[[dim_i]] <- NULL
       p_value_selected_model[[dim_i]] <- NULL
     } else {
-      
       # create matrix to store variables of the selected model at that dimension
       # mat_selected_model_dim_i <- matrix(NA, nrow = length(index_model_below_median_aic[[dim_i]]), ncol = dim_i)
       mat_selected_model_dim_i <- object$lst_var_mat[[dim_i]][index_model_below_median_aic[[dim_i]], ] + 1
@@ -100,7 +98,7 @@ summary.swaglm <- function(object, ...) {
       # create matrix to store beta
       # beta_selected_model_dim_i = matrix(NA, nrow = length(index_model_below_median_aic[[dim_i]]), ncol = dim_i+1)
       beta_selected_model_dim_i <- object$lst_estimated_beta[[dim_i]][index_model_below_median_aic[[dim_i]], ]
-      p_value_selected_model_dim_i = object$lst_p_value[[dim_i]][index_model_below_median_aic[[dim_i]], ]
+      p_value_selected_model_dim_i <- object$lst_p_value[[dim_i]][index_model_below_median_aic[[dim_i]], ]
       if (is.vector(beta_selected_model_dim_i)) {
         beta_selected_model_dim_i <- t(as.matrix(beta_selected_model_dim_i, nrow = 1))
         p_value_selected_model_dim_i <- t(as.matrix(p_value_selected_model_dim_i, nrow = 1))
@@ -111,59 +109,59 @@ summary.swaglm <- function(object, ...) {
       selected_models[[dim_i]] <- mat_selected_model_dim_i
     }
   }
-  
-  
+
+
   # create stacked matrix of selected models
   mat_stacked_model <- stack_models(selected_models)
-  
+
   # get AIC of selected models
   vec_aic_selected_model <- unlist(extract_by_index(object$lst_AIC, index_model_below_median_aic))
 
-  
+
   # --------------------------------------------------test
   # n_models <- nrow(mat_stacked_model)
-  # 
+  #
   # vec_aic_refit   <- numeric(n_models)
   # beta_refit_list <- vector("list", n_models)
   # pval_refit_list <- vector("list", n_models)
-  # 
+  #
   # for (i_model in seq_len(n_models)) {
   #   # i_model = 1
   #   selected_var_i_model <- na.omit(mat_stacked_model[i_model, ])
   #   X_mat <- cbind(1, x$X[, selected_var_i_model, drop = FALSE])
-  #   
+  #
   #   fit <- fastglm::fastglm(
   #     x = X_mat,
   #     y = x$y,
   #     family = binomial()
   #   )
-  #   
+  #
   #   # AIC
   #   vec_aic_refit[i_model] <- fit$aic
-  #   
+  #
   #   # coefficients & p-values
   #   summ <- summary(fit)
   #   beta_refit_list[[i_model]] <- summ$coefficients[, 1]   # estimates
   #   pval_refit_list[[i_model]] <- summ$coefficients[, 4]   # p-values
   # }
-  # 
+  #
   # # Compare AIC
   # all.equal(vec_aic_selected_model, vec_aic_refit)
-  # 
-  # 
+  #
+  #
   # stack_matrices <- function(lst, fill = NA_real_) {
   #   if (!is.list(lst)) stop("'lst' must be a list")
-  #   
+  #
   #   # remove NULL entries
   #   lst2 <- lst[!vapply(lst, is.null, logical(1))]
   #   if (length(lst2) == 0) return(matrix(nrow = 0, ncol = 0))
-  #   
+  #
   #   # reject nested lists (ask user to convert them)
   #   is_bad <- vapply(lst2, function(el) is.list(el) && !is.data.frame(el), logical(1))
   #   if (any(is_bad)) {
   #     stop("List contains nested lists. Convert those elements to a matrix, data.frame or numeric vector first.")
   #   }
-  #   
+  #
   #   # coerce each element to a matrix:
   #   mats <- lapply(lst2, function(el) {
   #     if (is.data.frame(el)) return(as.matrix(el))
@@ -171,7 +169,7 @@ summary.swaglm <- function(object, ...) {
   #     if (is.numeric(el) && is.null(dim(el))) return(matrix(el, nrow = 1))
   #     stop("Unsupported element type: ", paste(class(el), collapse = ", "))
   #   })
-  #   
+  #
   #   # pad to the maximum number of columns
   #   max_cols <- max(vapply(mats, ncol, integer(1)))
   #   padded <- lapply(mats, function(m) {
@@ -180,22 +178,22 @@ summary.swaglm <- function(object, ...) {
   #       cbind(m, matrix(fill, nrow = nrow(m), ncol = max_cols - nc))
   #     } else m
   #   })
-  #   
+  #
   #   # bind and return
   #   do.call(rbind, padded)
   # }
-  # 
+  #
   # test1 = stack_matrices(beta_selected_model)
   # test2 = stack_matrices(beta_refit_list)
   # all.equal(test1,test2)
-  # 
-  # 
+  #
+  #
   # # Compare p-values
   # test1 = stack_matrices(p_value_selected_model)
   # test2 = stack_matrices(pval_refit_list)
   # all.equal(test1,test2)
   # --------------------------------------------------test
-  
+
 
   # Get all unique variable indices used across selected models
   all_vars <- unique(na.omit(as.vector(mat_stacked_model)))
@@ -229,11 +227,11 @@ summary.swaglm <- function(object, ...) {
     }
     lst_estimated_beta_per_variable[[paste0("V", v)]] <- vals
   }
-  
+
   # stack estimated beta and estimated p value
-  mat_beta_selected_model = stack_models(beta_selected_model)
-  mat_p_value_selected_model = stack_models(p_value_selected_model)
-  
+  mat_beta_selected_model <- stack_models(beta_selected_model)
+  mat_p_value_selected_model <- stack_models(p_value_selected_model)
+
   # return object
   res <- list(
     "mat_selected_model" = mat_stacked_model,
@@ -243,17 +241,17 @@ summary.swaglm <- function(object, ...) {
     "lst_estimated_beta_per_variable" = lst_estimated_beta_per_variable
   )
   # define class
-  class(res) = "summary_swaglm"
-  
-  #return
+  class(res) <- "summary_swaglm"
+
+  # return
   return(res)
 }
 
 
 
 
-# 
-# 
+#
+#
 # # # Parameters for data generation
 # set.seed(12345)
 # n <- 2000
@@ -262,13 +260,13 @@ summary.swaglm <- function(object, ...) {
 # Sigma <- diag(rep(1/p, p))
 # X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)
 # beta = c(-15,-10,5,10,15, rep(0,p-5))
-# 
+#
 # # --------------------- generate from logistic regression with an intercept of one
 # z <- 1 + X%*%beta
 # pr <- 1/(1 + exp(-z))
 # y <- as.factor(rbinom(n, 1, pr))
 # y = as.numeric(y)-1
-# 
+#
 # # define swag parameters
 # quantile_alpha = .15
 # p_max = 20
