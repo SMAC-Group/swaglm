@@ -20,6 +20,11 @@ swaglm_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(
 swaglm_obj
 swaglm_summ = summary(swaglm_obj)
 swaglm_summ$mat_selected_model
+swaglm_summ$mat_beta_selected_model
+swaglm_summ$mat_p_value_selected_model
+swaglm_summ$vec_aic_selected_model
+
+
 
 # plot distribution of estimated beta with respect to true value
 for(i in seq_along(swaglm_summ$estimated_beta_per_variable)){
