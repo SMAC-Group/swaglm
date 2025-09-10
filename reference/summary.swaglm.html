@@ -85,18 +85,18 @@
     <div id="value">
     <h2>Value</h2>
     <p>A list of class <code>summary_swaglm</code> with five elements:</p><dl><dt>mat_selected_model</dt>
-<dd><p>A matrix where each row represents a selected model. Columns give the indices of the variables included in that model. Models with fewer variables are padded with <code>NA</code> to match the largest model size.</p></dd>
+<dd><p>A matrix where each row represents a selected model. Columns give the indices of the variables included in that model. Models are padded with <code>NA</code> to match the largest model size.</p></dd>
 
-<dt>beta_selected_model</dt>
-<dd><p>A list of matrices. Each element corresponds to a model dimension and contains the estimated regression coefficients (including intercept) for the models selected at that dimension. Only models with AIC less than or equal to the <strong>lowest median AIC across all dimensions</strong> are included.</p></dd>
+<dt>mat_beta_selected_model</dt>
+<dd><p>A matrix containing the estimated regression coefficients (including intercept) of the selected models, stacked across all dimensions. Only models with AIC less than or equal to the <strong>lowest median AIC across all dimensions</strong> are included. Each row corresponds to a model, columns correspond to the coefficients. Rows are padded with <code>NA</code> to match the largest model size.</p></dd>
 
-<dt>p_value_selected_model</dt>
-<dd><p>A list of matrices. Each element corresponds to a model dimension and contains the p-values associated with the regression coefficients in <code>beta_selected_model</code>.</p></dd>
+<dt>mat_p_value_selected_model</dt>
+<dd><p>A matrix containing the p-values associated with the estimated regression coefficients in <code>beta_selected_model</code>, stacked in the same order. Each row corresponds to a model, columns correspond to the coefficients. Rows are padded with <code>NA</code> to match the largest model size.</p></dd>
 
 <dt>vec_aic_selected_model</dt>
 <dd><p>A numeric vector containing the AIC values of all models in <code>mat_selected_model</code>, stacked across dimensions. These are the AIC values for the selected models that passed the threshold described above.</p></dd>
 
-<dt>estimated_beta_per_variable</dt>
+<dt>lst_estimated_beta_per_variable</dt>
 <dd><p>A named list where each element corresponds to a variable (named <code>V&lt;index&gt;</code>). Each element is a numeric vector containing all estimated beta coefficients for that variable across all selected models in which it appears. This summarizes the distribution of effects for each variable across the selected models.</p></dd>
 
 
@@ -178,21 +178,6 @@ For each model dimension (number of variables in the model), the median AIC acro
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html" class="external-link">boxplot</a></span><span class="op">(</span><span class="va">swaglm_summ</span><span class="op">$</span><span class="va">estimated_beta_per_variable</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, </span></span>
 <span class="r-in"><span>          main<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">var_name_i</span>, <span class="st">" "</span>, <span class="st">"true value="</span>, <span class="va">beta</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="summary.swaglm-1.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="summary.swaglm-2.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="summary.swaglm-3.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="summary.swaglm-4.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="summary.swaglm-5.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="summary.swaglm-6.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="summary.swaglm-7.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="summary.swaglm-8.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="summary.swaglm-9.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="summary.swaglm-10.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="summary.swaglm-11.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="summary.swaglm-12.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="summary.swaglm-13.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="summary.swaglm-14.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="summary.swaglm-15.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </div>
