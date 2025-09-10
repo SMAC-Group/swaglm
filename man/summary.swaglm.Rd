@@ -14,11 +14,11 @@
 \value{
 A list of class \code{summary_swaglm} with five elements:
 \describe{
-\item{mat_selected_model}{A matrix where each row represents a selected model. Columns give the indices of the variables included in that model. Models with fewer variables are padded with \code{NA} to match the largest model size.}
-\item{beta_selected_model}{A list of matrices. Each element corresponds to a model dimension and contains the estimated regression coefficients (including intercept) for the models selected at that dimension. Only models with AIC less than or equal to the \strong{lowest median AIC across all dimensions} are included.}
-\item{p_value_selected_model}{A list of matrices. Each element corresponds to a model dimension and contains the p-values associated with the regression coefficients in \code{beta_selected_model}.}
+\item{mat_selected_model}{A matrix where each row represents a selected model. Columns give the indices of the variables included in that model. Models are padded with \code{NA} to match the largest model size.}
+\item{mat_beta_selected_model}{A matrix containing the estimated regression coefficients (including intercept) of the selected models, stacked across all dimensions. Only models with AIC less than or equal to the \strong{lowest median AIC across all dimensions} are included. Each row corresponds to a model, columns correspond to the coefficients. Rows are padded with \code{NA} to match the largest model size.}
+\item{mat_p_value_selected_model}{A matrix containing the p-values associated with the estimated regression coefficients in \code{beta_selected_model}, stacked in the same order. Each row corresponds to a model, columns correspond to the coefficients. Rows are padded with \code{NA} to match the largest model size.}
 \item{vec_aic_selected_model}{A numeric vector containing the AIC values of all models in \code{mat_selected_model}, stacked across dimensions. These are the AIC values for the selected models that passed the threshold described above.}
-\item{estimated_beta_per_variable}{A named list where each element corresponds to a variable (named \code{V<index>}). Each element is a numeric vector containing all estimated beta coefficients for that variable across all selected models in which it appears. This summarizes the distribution of effects for each variable across the selected models.}
+\item{lst_estimated_beta_per_variable}{A named list where each element corresponds to a variable (named \code{V<index>}). Each element is a numeric vector containing all estimated beta coefficients for that variable across all selected models in which it appears. This summarizes the distribution of effects for each variable across the selected models.}
 }
 
 \strong{Model selection criterion:}

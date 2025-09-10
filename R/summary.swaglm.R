@@ -26,13 +26,14 @@ extract_by_index <- function(lst_values, lst_index) {
 #' @method summary swaglm
 #' @example /inst/examples/eg_summary.swaglm.R
 #' @importFrom stats median
+#' 
 #' @return A list of class \code{summary_swaglm} with five elements:
 #' \describe{
-#'   \item{mat_selected_model}{A matrix where each row represents a selected model. Columns give the indices of the variables included in that model. Models with fewer variables are padded with \code{NA} to match the largest model size.}
-#'   \item{beta_selected_model}{A list of matrices. Each element corresponds to a model dimension and contains the estimated regression coefficients (including intercept) for the models selected at that dimension. Only models with AIC less than or equal to the **lowest median AIC across all dimensions** are included.}
-#'   \item{p_value_selected_model}{A list of matrices. Each element corresponds to a model dimension and contains the p-values associated with the regression coefficients in \code{beta_selected_model}.}
+#'   \item{mat_selected_model}{A matrix where each row represents a selected model. Columns give the indices of the variables included in that model. Models are padded with \code{NA} to match the largest model size.}
+#'   \item{mat_beta_selected_model}{A matrix containing the estimated regression coefficients (including intercept) of the selected models, stacked across all dimensions. Only models with AIC less than or equal to the **lowest median AIC across all dimensions** are included. Each row corresponds to a model, columns correspond to the coefficients. Rows are padded with \code{NA} to match the largest model size.}
+#'   \item{mat_p_value_selected_model}{A matrix containing the p-values associated with the estimated regression coefficients in \code{beta_selected_model}, stacked in the same order. Each row corresponds to a model, columns correspond to the coefficients. Rows are padded with \code{NA} to match the largest model size.} 
 #'   \item{vec_aic_selected_model}{A numeric vector containing the AIC values of all models in \code{mat_selected_model}, stacked across dimensions. These are the AIC values for the selected models that passed the threshold described above.}
-#'   \item{estimated_beta_per_variable}{A named list where each element corresponds to a variable (named \code{V<index>}). Each element is a numeric vector containing all estimated beta coefficients for that variable across all selected models in which it appears. This summarizes the distribution of effects for each variable across the selected models.}
+#'   \item{lst_estimated_beta_per_variable}{A named list where each element corresponds to a variable (named \code{V<index>}). Each element is a numeric vector containing all estimated beta coefficients for that variable across all selected models in which it appears. This summarizes the distribution of effects for each variable across the selected models.}
 #' }
 #' 
 #' \strong{Model selection criterion:}  
@@ -57,10 +58,10 @@ summary.swaglm <- function(object, ...) {
   # # define swag parameters
   # quantile_alpha = .15
   # p_max = 20
-  # x = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
+  # object = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
   #                           alpha = quantile_alpha, verbose = TRUE, seed = 123)
-  # 
-  # x$lst_p_value
+
+
 
   # check that it is indeed a swaglm object
   if (!inherits(object, "swaglm")) {
@@ -114,13 +115,10 @@ summary.swaglm <- function(object, ...) {
   
   # create stacked matrix of selected models
   mat_stacked_model <- stack_models(selected_models)
-  # mat_stacked_model =  stack_models(lst_selected_models)
-
+  
   # get AIC of selected models
   vec_aic_selected_model <- unlist(extract_by_index(object$lst_AIC, index_model_below_median_aic))
 
-  
-  
   
   # --------------------------------------------------test
   # n_models <- nrow(mat_stacked_model)
@@ -204,8 +202,8 @@ summary.swaglm <- function(object, ...) {
   all_vars <- sort(all_vars)
 
   # Initialize result list
-  estimated_beta_per_variable <- vector("list", length(all_vars))
-  names(estimated_beta_per_variable) <- paste0("V", all_vars)
+  lst_estimated_beta_per_variable <- vector("list", length(all_vars))
+  names(lst_estimated_beta_per_variable) <- paste0("V", all_vars)
 
   # iterate over each variable
   for (v in all_vars) {
@@ -229,19 +227,24 @@ summary.swaglm <- function(object, ...) {
         }
       }
     }
-    estimated_beta_per_variable[[paste0("V", v)]] <- vals
+    lst_estimated_beta_per_variable[[paste0("V", v)]] <- vals
   }
-
+  
+  # stack estimated beta and estimated p value
+  mat_beta_selected_model = stack_models(beta_selected_model)
+  mat_p_value_selected_model = stack_models(p_value_selected_model)
+  
   # return object
   res <- list(
     "mat_selected_model" = mat_stacked_model,
-    "beta_selected_model" = beta_selected_model,
-    "p_value_selected_model" = p_value_selected_model,
+    "mat_beta_selected_model" = mat_beta_selected_model,
+    "mat_p_value_selected_model" = mat_p_value_selected_model,
     "vec_aic_selected_model" = vec_aic_selected_model,
-    "estimated_beta_per_variable" = estimated_beta_per_variable
+    "lst_estimated_beta_per_variable" = lst_estimated_beta_per_variable
   )
   # define class
   class(res) = "summary_swaglm"
+  
   #return
   return(res)
 }
