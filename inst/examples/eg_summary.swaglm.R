@@ -18,13 +18,14 @@ p_max = 20
 swaglm_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
                           alpha = quantile_alpha, verbose = TRUE, seed = 123)
 swaglm_obj
-swaglm_postprocess = postprocessing_swaglm(swaglm_obj)
+swaglm_summ = summary(swaglm_obj)
+swaglm_summ$mat_selected_model
 
 # plot distribution of estimated beta with respect to true value
-for(i in seq_along(swaglm_postprocess$estimated_beta_per_variable)){
+for(i in seq_along(swaglm_summ$estimated_beta_per_variable)){
   # get variable name
-  var_name_i = names(swaglm_postprocess$estimated_beta_per_variable)[i]
+  var_name_i = names(swaglm_summ$estimated_beta_per_variable)[i]
   var_index_i =  as.numeric(substr(var_name_i, 2, nchar(var_name_i)))
-  boxplot(swaglm_postprocess$estimated_beta_per_variable[[i]], 
+  boxplot(swaglm_summ$estimated_beta_per_variable[[i]], 
           main=paste0(var_name_i, " ", "true value=", beta[i]))
 }

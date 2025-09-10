@@ -36,11 +36,17 @@ swaglm(
 A \code{List} of \code{List} containing:
 \itemize{
 \item \code{lst_estimated_beta}: A \code{List} that contain the estimated coefficients for each estimated model. Each entry of this \code{List} is a matrix where in each rows are the estimated coefficients for the model.
+\item \code{lst_p_value} A \code{List} that contain the p-value associated with each estimated coefficients for each estimated model. Each entry of this \code{List} is a matrix where in each rows are the p-value for the model.
 \item \code{lst_AIC}: A \code{List} that contains the AIC values for each model at each dimension. Each entry of this list correspond to the AIC values for the models explored at this dimension.
 \item \code{lst_var_mat}:  A \code{List} that that contain in each of its entries, a matrix that specify for each row a combination of variables that compose a model.
 \item \code{lst_selected_models} A \code{List} that contain the selected models at each dimension.
 \item \code{lst_index_selected_models} A \code{List} that contain the index of the rows corresponding to the selected models at each dimension.
-\item \code{lst_p_value} A \code{List} that contain the p-value associated with each estimated coefficients for each estimated model. Each entry of this \code{List} is a matrix where in each rows are the p-value for the model.
+\item \code{y} The response vector used in the estimation.
+\item \code{X} The predictor matrix used in the estimation.
+\item \code{p_max} The maximum dimension explored by the algorithm.
+\item \code{alpha} The selection quantile used at each step.
+\item \code{family} The GLM family used in the estimation (e.g. \code{binomial()}).
+\item \code{method} The method used by \code{fastglm} for estimation.
 }
 }
 \description{
@@ -67,5 +73,5 @@ quantile_alpha = .15
 p_max = 20
 swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(), 
 alpha = quantile_alpha, verbose = TRUE, seed = 123)
-swag_obj
+str(swag_obj)
 }

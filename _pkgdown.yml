@@ -9,11 +9,11 @@ reference:
     contents:
     - swaglm
     - print.swaglm
+    - summary.swaglm
     - compute_network
     - plot.swaglm_network
     - swaglm_test
     - print.swaglm_test
-    - postprocessing_swaglm
 
 navbar:
   left:
