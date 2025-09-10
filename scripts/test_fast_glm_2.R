@@ -17,6 +17,11 @@ fit1
 AIC(fit1)
 
 fit2 = fastglm(x = X, y=as.numeric(y)-1, family=binomial())
+test = summary(fit2)
+test$coefficients[, 4]
+summary(fit2)
+fit2$coefficientsfit2$se
+fit2$
 ?family
 ?fastglm
 fit2

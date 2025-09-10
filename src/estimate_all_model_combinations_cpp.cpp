@@ -12,6 +12,7 @@ List estimate_all_model_combinations_cpp(const arma::mat& X, const arma::vec& y,
   // Load the fastglm function from the fastglm package
   Environment fastglm_env = Environment::namespace_env("fastglm");
   Function fastglm = fastglm_env["fastglm"];
+  Function summary_fastglm = fastglm_env["summary.fastglm"];
   
   // Load the binomial function from the stats package
   Environment stats_env = Environment::namespace_env("stats");
@@ -39,6 +40,7 @@ List estimate_all_model_combinations_cpp(const arma::mat& X, const arma::vec& y,
   // Initialize matrices to store AIC values and beta coefficients
   arma::mat mat_AIC(n_models, 1);
   arma::mat mat_beta(n_models, dimension_of_models + 1);
+  arma::mat mat_p_value(n_models, dimension_of_models + 1);
   
   // Iterate over each model combination
   for (int i = 0; i < n_models; ++i) {
@@ -60,14 +62,22 @@ List estimate_all_model_combinations_cpp(const arma::mat& X, const arma::vec& y,
     
     // Fit the model using fastglm
     List fit = fastglm(Named("x") = X_mat_mod_i, Named("y") = y, Named("family") = family_obj, Named("method") = method);
+    // compute summary
+    List summary_fit = summary_fastglm(fit);
     
-    // Store the AIC and coefficients
+    // Extract coefficients matrix as arma::mat
+    arma::mat coef_mat = as<arma::mat>(summary_fit["coefficients"]);
+    
+    // Store the AIC, pvalue and estimated coefficients
     mat_AIC(i, 0) = as<double>(fit["aic"]);
     mat_beta.row(i) = as<arma::vec>(fit["coefficients"]).t();
+    mat_p_value.row(i) = (coef_mat.col(3)).t();
   }
   
   // Return the results as a list
-  return List::create(Named("mat_AIC") = mat_AIC, Named("mat_beta") = mat_beta);
+  return List::create(Named("mat_AIC") = mat_AIC, 
+                      Named("mat_beta") = mat_beta,
+                      Named("mat_p_value") =  mat_p_value);
 }
 
 
@@ -83,79 +93,83 @@ List estimate_all_model_combinations_cpp(const arma::mat& X, const arma::vec& y,
 
 
 
-// 
-// /*** R
-// 
-// 
-// # Parameters for data generation
-// set.seed(1)
-// n <- 2000
-// p <- 20
-// Sigma <- diag(rep(1/p, p))
-// 
-// X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)
-// beta = c(-10,5,6,19,70,rep(0,15))
-// 
-// # --------------------- logistic reg
-// z <- 1 + X%*%beta
-// pr <- 1/(1 + exp(-z))
-// y <- as.factor(rbinom(n, 1, pr))
-// y = as.numeric(y)-1
-// 
-// matrix_of_variables = matrix(c(sample(x = 1:p, size=14)), ncol=2, byrow = T)
-// 
-// estimate_all_model_combinations = function(X, y, matrix_of_variables, family=stats::binomial(), method=0){
-// 
-// 
-// 
-// 
-// 
-//   # each row of matrix_of_variable is a combination of variables, there are nrow(matrix_of_variable) models to evaluate
-//   n_models = nrow(matrix_of_variables)
-//   dimension_of_models = ncol(matrix_of_variables)
-//   n=dim(X)[1]
-//   # Initialize beta matrices to store beta coef and AIC values
-//   mat_AIC = matrix(nrow=n_models, ncol=1)
-//   mat_beta = matrix(nrow=n_models, ncol=dimension_of_models+1)
-// 
-//   for(i in 1:n_models){
-//     # i=1
-//     variables_mod_i = matrix_of_variables[i,]
-// 
-//     # create X matrix
-//     X_mat_mod_i = cbind(rep(1, n),
-//                         X[,variables_mod_i])
-//     fit = fastglm::fastglm(x =X_mat_mod_i, y=y, family=family, method = method)
-//     mat_AIC[i,1] = fit$aic
-//     mat_beta[i, ] = fit$coefficients
-//   }
-// 
-//   ret=list("mat_AIC" = mat_AIC,
-//            "mat_beta" = mat_beta)
-// 
-// 
-//   return(ret)
-// 
-// 
-// }
-// 
-// 
-// 
-// 
-// res1 = estimate_all_model_combinations(X = X, y, matrix_of_variables = (matrix_of_variables+1), family =binomial(), method = 0)
-// res2 = estimate_all_model_combinations_cpp(X = X, y, matrix_of_variables = matrix_of_variables, family =binomial(), method = 0)
-// 
-// all.equal(res1, res2)
-// res1$mat_AIC
-// res2$mat_AIC
-// all.equal(res1, res2)
-// # 
-// # microbenchmark::microbenchmark(res1 = estimate_all_model_combinations(X = X, y, matrix_of_variables = matrix_of_variables, family =binomial(), method = 0),
-// #                                res2 = estimate_all_model_combinations_cpp(X = X, y, matrix_of_variables = matrix_of_variables, family =binomial(), method = 0))
-// 
-// 
-// 
-// 
-// 
-// */
+
+/*** R
+
+# 
+# # Parameters for data generation
+# set.seed(1)
+# n <- 2000
+# p <- 20
+# Sigma <- diag(rep(1/p, p))
+# 
+# X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)
+# beta = c(-10,5,6,19,70,rep(0,15))
+# 
+# # --------------------- logistic reg
+# z <- 1 + X%*%beta
+# pr <- 1/(1 + exp(-z))
+# y <- as.factor(rbinom(n, 1, pr))
+# y = as.numeric(y)-1
+# 
+# matrix_of_variables = matrix(c(sample(x = 1:(p-1), size=14)), ncol=2, byrow = T)
+# 
+# 
+# 
+# 
+# estimate_all_model_combinations = function(X, y, matrix_of_variables, family=stats::binomial(), method=0){
+# 
+# 
+# 
+# 
+# 
+#    # each row of matrix_of_variable is a combination of variables, there are nrow(matrix_of_variable) models to evaluate
+#    n_models = nrow(matrix_of_variables)
+#    dimension_of_models = ncol(matrix_of_variables)
+#    n=dim(X)[1]
+#    # Initialize beta matrices to store beta coef and AIC values
+#    mat_AIC = matrix(nrow=n_models, ncol=1)
+#    mat_beta = matrix(nrow=n_models, ncol=dimension_of_models+1)
+#    mat_p_value  = matrix(nrow=n_models, ncol=dimension_of_models+1)
+# 
+#    for(i in 1:n_models){
+#      # i=1
+#      variables_mod_i = matrix_of_variables[i,]
+# 
+#      # create X matrix
+#      X_mat_mod_i = cbind(rep(1, n),
+#                          X[,variables_mod_i])
+#      fit = fastglm::fastglm(x =X_mat_mod_i, y=y, family=family, method = method)
+#      mat_AIC[i,1] = fit$aic
+#      mat_beta[i, ] = fit$coefficients
+#      mat_p_value[i,] = summary(fit)$coefficients[,4]
+#    }
+# 
+#    ret=list("mat_AIC" = mat_AIC,
+#             "mat_beta" = mat_beta,
+#             "mat_p_value" = mat_p_value)
+# 
+# 
+#    return(ret)
+# 
+# 
+#  }
+# 
+# 
+# 
+# #
+# res1 = estimate_all_model_combinations(X = X, y, matrix_of_variables = (matrix_of_variables)+1, family =binomial(), method = 0)
+# res2 = estimate_all_model_combinations_cpp(X = X, y, matrix_of_variables = matrix_of_variables, family =binomial(), method = 0)
+# 
+# all.equal(res1, res2)
+
+ #
+ # microbenchmark::microbenchmark(res1 = estimate_all_model_combinations(X = X, y, matrix_of_variables = matrix_of_variables, family =binomial(), method = 0),
+ #                                res2 = estimate_all_model_combinations_cpp(X = X, y, matrix_of_variables = matrix_of_variables, family =binomial(), method = 0))
+
+
+
+
+
+*/
 

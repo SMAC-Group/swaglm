@@ -14,10 +14,12 @@ Rcpp::List run_estimation_model_one_dimension_cpp(const arma::mat& X, const arma
   // Initialize matrices to store AIC and beta coefficients
   arma::mat mat_AIC_dim_1(p, 1);
   arma::mat mat_beta_dim_1(p, 2);
+  arma::mat mat_p_value_dim_1(p, 2);
   
   // Load the fastglm function from the fastglm package
   Environment fastglm_env = Environment::namespace_env("fastglm");
   Function fastglm = fastglm_env["fastglm"];
+  Function summary_fastglm = fastglm_env["summary.fastglm"];
   
   // Load the binomial function from the stats package
   Environment stats_env = Environment::namespace_env("stats");
@@ -45,11 +47,23 @@ Rcpp::List run_estimation_model_one_dimension_cpp(const arma::mat& X, const arma
     // Fit the model using fastglm
     // This is not optimal, fastglm is a R function implemented in Rcpp Eigen, but still we call its R implementation
     List fit = fastglm(Named("x") = X_mat_i, Named("y") = y, Named("family") = family_obj, Named("method") = method);
+    List summary_fit = summary_fastglm(fit);
     
-    // Extract AIC and coefficients
+    // Extract coefficients matrix as arma::mat
+    arma::mat coef_mat = as<arma::mat>(summary_fit["coefficients"]);
+    
+    
+    // Extract AIC, estimated coefficients and p value
     mat_AIC_dim_1(i, 0) = as<double>(fit["aic"]);
     mat_beta_dim_1(i, 0) = as<arma::vec>(fit["coefficients"])(0);
     mat_beta_dim_1(i, 1) = as<arma::vec>(fit["coefficients"])(1);
+    
+    // P-values (last column of coefficients matrix)
+    mat_p_value_dim_1(i, 0) = coef_mat(0, 3); // intercept p-value
+    mat_p_value_dim_1(i, 1) = coef_mat(1, 3); // slope p-value
+    
+    
+    
   }
   
   // create matrix of variables for that dimension
@@ -60,7 +74,8 @@ Rcpp::List run_estimation_model_one_dimension_cpp(const arma::mat& X, const arma
   
   return List::create(Named("mat_AIC_dim_1") = mat_AIC_dim_1,
                       Named("mat_beta_dim_1") = mat_beta_dim_1,
-                      Named("matrix_of_variables") = matrix_variables);
+                      Named("matrix_of_variables") = matrix_variables,
+                      Named("mat_p_value_dim_1") = mat_p_value_dim_1);
 }
 
 
@@ -68,28 +83,27 @@ Rcpp::List run_estimation_model_one_dimension_cpp(const arma::mat& X, const arma
 
 
 
-// 
-// 
-// 
 /*** R
 
 
-# Parameters for data generation
+# # Parameters for data generation
 # set.seed(1)
 # n <- 2000
 # p <- 20
 # Sigma <- diag(rep(1/p, p))
-# 
+# # 
 # X = MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)
 # beta = c(3,5,6,19,70,rep(0,15))
 # z <- 1 + X%*%beta
 # pr <- 1/(1 + exp(-z))
 # y <- as.factor(rbinom(n, 1, pr))
 # y = as.numeric(y)-1
-# 
-# 
-# 
-# 
+# test = run_estimation_model_one_dimension_cpp(X = X, y = y, family = binomial(), method =0 )
+# test$mat_p_value_dim_1
+# # 
+# # 
+# # 
+# # 
 # run_estimation_model_one_dimension = function(X, y, family=binomial()){
 # 
 #   # X=X_mat_predictors
@@ -99,7 +113,7 @@ Rcpp::List run_estimation_model_one_dimension_cpp(const arma::mat& X, const arma
 #   # Initialize beta matrices to store beta coef and AIC values
 #   mat_AIC_dim_1 = matrix(nrow=p, ncol=1)
 #   mat_beta_dim_1 = matrix(nrow=p, ncol=2)
-# 
+#   mat_p_value_dim_1 = matrix(nrow=p, ncol=2)
 # 
 # 
 # 
@@ -108,21 +122,25 @@ Rcpp::List run_estimation_model_one_dimension_cpp(const arma::mat& X, const arma
 #     fit = fastglm(x =X_mat_i, y=y, family=family)
 #     mat_AIC_dim_1[i,1] = fit$aic
 #     mat_beta_dim_1[i, ] = fit$coefficients
+#     mat_p_value_dim_1[i,] = summary(fit)$coefficients[,4]
+#     
 #   }
 #   ret=list("mat_AIC_dim_1" = mat_AIC_dim_1,
-#            "mat_beta_dim_1" = mat_beta_dim_1)
+#            "mat_beta_dim_1" = mat_beta_dim_1,
+#            "mat_p_value_dim_1" =mat_p_value_dim_1)
 #   return(
 #     ret
 #   )
 # }
-# 
-# 
-# res1 = run_estimation_model_one_dimension(X=X_mat_predictors, y = y, family=binomial())
-# res2 = run_estimation_model_one_dimension_cpp(X=X_mat_predictors, y = y, family = binomial(), method = 0)
+# # 
+# # 
+# res1 = run_estimation_model_one_dimension(X=X, y = y, family=binomial())
+# res2 = run_estimation_model_one_dimension_cpp(X=X, y = y, family = binomial(), method = 0)
 # res1$mat_AIC_dim_1
 # res2$mat_AIC_dim_1
 # all.equal(res1$mat_AIC_dim_1, res2$mat_AIC_dim_1)
 # all.equal(res1$mat_beta_dim_1, res2$mat_beta_dim_1)
+# all.equal(res1$mat_p_value_dim_1,res2$mat_p_value_dim_1)
 # # res3 = run_estimation_model_one_dimension_cpp(X=X_mat_predictors, y = y)
 # #
 # # all.equal(res1, res2)

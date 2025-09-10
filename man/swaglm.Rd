@@ -40,6 +40,7 @@ A \code{List} of \code{List} containing:
 \item \code{lst_var_mat}:  A \code{List} that that contain in each of its entries, a matrix that specify for each row a combination of variables that compose a model.
 \item \code{lst_selected_models} A \code{List} that contain the selected models at each dimension.
 \item \code{lst_index_selected_models} A \code{List} that contain the index of the rows corresponding to the selected models at each dimension.
+\item \code{lst_p_value} A \code{List} that contain the p-value associated with each estimated coefficients for each estimated model. Each entry of this \code{List} is a matrix where in each rows are the p-value for the model.
 }
 }
 \description{

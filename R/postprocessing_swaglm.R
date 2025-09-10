@@ -111,13 +111,6 @@ postprocessing_swaglm <- function(x) {
   # }
   # all.equal(vec_aic_selected_model, vec_aic_refit)
 
-
-  # extract beta
-  # beta_selected_model
-  # selected_models
-  #
-  # create a list that contain the estimated beta for each variable that is part of the selected models
-
   # Get all unique variable indices used across selected models
   all_vars <- unique(na.omit(as.vector(mat_stacked_model)))
   all_vars <- sort(all_vars)
@@ -151,7 +144,7 @@ postprocessing_swaglm <- function(x) {
     estimated_beta_per_variable[[paste0("V", v)]] <- vals
   }
 
-
+  # return object
   res <- list(
     "mat_selected_model" = mat_stacked_model,
     "vec_aic_selected_model" = vec_aic_selected_model,

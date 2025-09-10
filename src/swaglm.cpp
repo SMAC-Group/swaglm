@@ -66,10 +66,17 @@ arma::uvec generate_permutation(int n, int m, int seed=123){
 //' @param seed An \code{integer} that is the random seed used when creating the set of model to explore for the next dimension
 //' @return A \code{List} of \code{List} containing:
 //'   - \code{lst_estimated_beta}: A \code{List} that contain the estimated coefficients for each estimated model. Each entry of this \code{List} is a matrix where in each rows are the estimated coefficients for the model.
+//'   - \code{lst_p_value} A \code{List} that contain the p-value associated with each estimated coefficients for each estimated model. Each entry of this \code{List} is a matrix where in each rows are the p-value for the model.
 //'   - \code{lst_AIC}: A \code{List} that contains the AIC values for each model at each dimension. Each entry of this list correspond to the AIC values for the models explored at this dimension.
 //'   - \code{lst_var_mat}:  A \code{List} that that contain in each of its entries, a matrix that specify for each row a combination of variables that compose a model.
 //'   - \code{lst_selected_models} A \code{List} that contain the selected models at each dimension.
 //'   - \code{lst_index_selected_models} A \code{List} that contain the index of the rows corresponding to the selected models at each dimension.
+//'   - \code{y} The response vector used in the estimation.
+//'   - \code{X} The predictor matrix used in the estimation.
+//'   - \code{p_max} The maximum dimension explored by the algorithm.
+//'   - \code{alpha} The selection quantile used at each step.
+//'   - \code{family} The GLM family used in the estimation (e.g. \code{binomial()}).
+//'   - \code{method} The method used by \code{fastglm} for estimation.
 //' @example  /inst/examples/eg_swaglm.R
 //' @export
 // [[Rcpp::export]]
@@ -81,6 +88,7 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
   List lst_var_mat;
   List lst_selected_models;
   List lst_index_selected_models;
+  List lst_p_value;
   
   //-------------- first we run screening procedure
   List res_screening = run_estimation_model_one_dimension_cpp(X, y, family, method);
@@ -88,12 +96,13 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
   // identify the selected variables from screening
   List res2 = identify_selected_combinations_cpp(as<arma::mat>(res_screening["matrix_of_variables"]),  as<arma::mat>(res_screening["mat_AIC_dim_1"]), alpha);
   
-  // //  Store estimated beta and AIC for dimension 1
+  // //  Store estimated beta, AIC and p value for dimension 1
   lst_estimated_beta.push_back(res_screening["mat_beta_dim_1"]);
   lst_AIC.push_back(res_screening["mat_AIC_dim_1"]);
   lst_var_mat.push_back(res_screening["matrix_of_variables"]);
   lst_selected_models.push_back(res2["mat_of_variables_selected_models"]);
   lst_index_selected_models.push_back(res2["id_selected_models"]);
+  lst_p_value.push_back(res_screening["mat_p_value_dim_1"]);
   
   // save variables identified in screening
   arma::vec variables_screening = as<arma::vec>(res2["mat_of_variables_selected_models"]).col(0);
@@ -139,6 +148,7 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
     lst_var_mat.push_back(res3);
     lst_selected_models.push_back(res2["mat_of_variables_selected_models"]);
     lst_index_selected_models.push_back(res2["id_selected_models"]);
+    lst_p_value.push_back(res4["mat_p_value"]);
     
     // print verbose 
     if (verbose) {
@@ -154,6 +164,7 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
   
   // create return object
   List ret =  List::create(Named("lst_estimated_beta") = lst_estimated_beta,
+                           Named("lst_p_value") = lst_p_value,
                            Named("lst_AIC") = lst_AIC,
                            Named("lst_var_mat") = lst_var_mat,
                            Named("lst_selected_models") = lst_selected_models,
