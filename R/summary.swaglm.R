@@ -82,7 +82,7 @@ summary.swaglm <- function(object, ...) {
   p_value_selected_model <- list()
   
   for (dim_i in seq(max_dim)) {
-    # dim_i=9
+
     if (length(index_model_below_median_aic[[dim_i]]) == 0) {
       selected_models[[dim_i]] <- NULL
       beta_selected_model[[dim_i]] <- NULL
