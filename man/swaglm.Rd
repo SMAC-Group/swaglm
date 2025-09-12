@@ -74,4 +74,5 @@ p_max = 20
 swag_obj = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(), 
 alpha = quantile_alpha, verbose = TRUE, seed = 123)
 str(swag_obj)
+
 }

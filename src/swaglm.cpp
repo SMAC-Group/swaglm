@@ -3,6 +3,36 @@
 using namespace Rcpp;
 
 
+// functio that add 1 to all elements of a List
+List add_one_to_list(List x) {
+  int n = x.size();
+  
+  for(int i = 0; i < n; i++) {
+    // Check if element is a matrix
+    if (Rf_isMatrix(x[i])) {
+      IntegerMatrix mat(x[i]);
+      int nr = mat.nrow(), nc = mat.ncol();
+      for(int r = 0; r < nr; r++) {
+        for(int c = 0; c < nc; c++) {
+          mat(r, c) += 1;
+        }
+      }
+      x[i] = mat; // store back
+    } else { // assume it's a vector
+      IntegerVector vec(x[i]);
+      int nv = vec.size();
+      for(int j = 0; j < nv; j++) {
+        vec[j] += 1;
+      }
+      x[i] = vec;
+    }
+  }
+  
+  return x;
+}
+
+
+
 // Load all required functions
 
 // ------------------------------------------------ estimation model one dimension / screening
@@ -158,8 +188,9 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
   
   
   // Add one to each list of arma::mat of indices before export for easier treatment in R later on
-  //TODO 
-  
+  lst_var_mat = add_one_to_list(lst_var_mat);
+  lst_selected_models = add_one_to_list(lst_selected_models);
+  lst_index_selected_models = add_one_to_list(lst_index_selected_models);
   
   
   // create return object
@@ -202,8 +233,9 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
 # pr <- 1/(1 + exp(-z))
 # y <- as.factor(rbinom(n, 1, pr))
 # y = as.numeric(y)-1
-
+# test=swaglm(y=y, X=X, p_max = 10, family = binomial())
 # 
+
 # 
 # 
 # # 
