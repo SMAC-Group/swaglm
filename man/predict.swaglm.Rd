@@ -7,13 +7,16 @@
 \method{predict}{swaglm}(object, newdata)
 }
 \arguments{
-\item{newdata}{A data.frame that contains the same variable as the training dataset}
+\item{object}{An object of class \code{swaglm}.}
 
-\item{x}{An object of class \code{swaglm}.}
+\item{newdata}{A data.frame that contains the same variable as the training dataset}
 }
 \value{
 TODO.
 }
 \description{
 Predict method for a \code{swaglm} object
+}
+\examples{
+1+1
 }
