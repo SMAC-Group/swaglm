@@ -101,6 +101,7 @@ arma::uvec generate_permutation(int n, int m, int seed=123){
 //'   - \code{lst_var_mat}:  A \code{List} that that contain in each of its entries, a matrix that specify for each row a combination of variables that compose a model.
 //'   - \code{lst_selected_models} A \code{List} that contain the selected models at each dimension.
 //'   - \code{lst_index_selected_models} A \code{List} that contain the index of the rows corresponding to the selected models at each dimension.
+//'   - \code{vec_selected_variables_dimension_1} A \code{vector} that contain the index of the selected variables at the screening step.
 //'   - \code{y} The response vector used in the estimation.
 //'   - \code{X} The predictor matrix used in the estimation.
 //'   - \code{p_max} The maximum dimension explored by the algorithm.
@@ -192,7 +193,11 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
   lst_selected_models = add_one_to_list(lst_selected_models);
   lst_index_selected_models = add_one_to_list(lst_index_selected_models);
   
-  
+  //  create vector of selected variable at dimension 1
+  IntegerVector myvec = lst_index_selected_models[0];
+  // Convert this IntegerVector into an Armadillo ivec
+  arma::ivec vec_selected_variables_dimension_1 = as<arma::ivec>(myvec);
+
   // create return object
   List ret =  List::create(Named("lst_estimated_beta") = lst_estimated_beta,
                            Named("lst_p_value") = lst_p_value,
@@ -200,6 +205,7 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
                            Named("lst_var_mat") = lst_var_mat,
                            Named("lst_selected_models") = lst_selected_models,
                            Named("lst_index_selected_models") = lst_index_selected_models,
+                           Named("vec_selected_variables_dimension_1") = vec_selected_variables_dimension_1,
                            Named("y") = y,
                            Named("X") = X,
                            Named("p_max") = p_max,
@@ -220,23 +226,24 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
 
 /*** R
 # Parameters for data generation
-# set.seed(1)
-# n <- 2000
-# p <- 50
-# Sigma <- diag(rep(1/p, p))
-# 
-# X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)
-# beta = c(-10,5,6,19,70,rep(0,p-5))
-# 
-# # --------------------- logistic reg
-# z <- 1 + X%*%beta
-# pr <- 1/(1 + exp(-z))
-# y <- as.factor(rbinom(n, 1, pr))
-# y = as.numeric(y)-1
-# test=swaglm(y=y, X=X, p_max = 10, family = binomial())
-# 
+set.seed(1)
+n <- 2000
+p <- 50
+Sigma <- diag(rep(1/p, p))
 
-# 
+X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)
+beta = c(-10,5,6,19,70,rep(0,p-5))
+
+# --------------------- logistic reg
+z <- 1 + X%*%beta
+pr <- 1/(1 + exp(-z))
+y <- as.factor(rbinom(n, 1, pr))
+y = as.numeric(y)-1
+test=swaglm(y=y, X=X, p_max = 10, family = binomial())
+str(test$vec_selected_variables_dimension_1)
+test2 = summary(test)
+test2$lst_estimated_beta_per_variable
+# # test
 # 
 # # 
 # # 

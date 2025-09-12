@@ -60,6 +60,7 @@ generate_permutation <- function(n, m, seed = 123L) {
 #'   - \code{lst_var_mat}:  A \code{List} that that contain in each of its entries, a matrix that specify for each row a combination of variables that compose a model.
 #'   - \code{lst_selected_models} A \code{List} that contain the selected models at each dimension.
 #'   - \code{lst_index_selected_models} A \code{List} that contain the index of the rows corresponding to the selected models at each dimension.
+#'   - \code{vec_selected_variables_dimension_1} A \code{vector} that contain the index of the selected variables at the screening step.
 #'   - \code{y} The response vector used in the estimation.
 #'   - \code{X} The predictor matrix used in the estimation.
 #'   - \code{p_max} The maximum dimension explored by the algorithm.
