@@ -19,6 +19,7 @@ A list of class \code{summary_swaglm} with five elements:
 \item{mat_p_value_selected_model}{A matrix containing the p-values associated with the estimated regression coefficients in \code{beta_selected_model}, stacked in the same order. Each row corresponds to a model, columns correspond to the coefficients. Rows are padded with \code{NA} to match the largest model size.}
 \item{vec_aic_selected_model}{A numeric vector containing the AIC values of all models in \code{mat_selected_model}, stacked across dimensions. These are the AIC values for the selected models that passed the threshold described above.}
 \item{lst_estimated_beta_per_variable}{A named list where each element corresponds to a variable (named \code{V<index>}). Each element is a numeric vector containing all estimated beta coefficients for that variable across all selected models in which it appears. This summarizes the distribution of effects for each variable across the selected models.}
+\item{lst_p_value_per_variable}{A named list where each element corresponds to a variable (named \code{V<index>}). Each element is a numeric vector containing all estimated p-values for that variable across all selected models in which it appears.}
 }
 
 \strong{Model selection criterion:}
