@@ -2,23 +2,73 @@
 % Please edit documentation in R/predict.swaglm.R
 \name{predict.swaglm}
 \alias{predict.swaglm}
-\title{print.swaglm}
+\title{predict.swaglm}
 \usage{
 \method{predict}{swaglm}(object, newdata, ...)
 }
 \arguments{
-\item{object}{An object of class \code{swaglm}.}
+\item{object}{An object of class \code{swaglm} returned by \code{\link[swaglm]{swaglm}}.}
 
-\item{newdata}{A data.frame that contains the same variable as the training dataset}
+\item{newdata}{A data.frame or matrix containing the same predictors (columns) as used in the original training dataset.}
 
-\item{...}{further arguments passed to or from other methods.}
+\item{...}{Further arguments passed to or from other methods.}
 }
 \value{
-TODO.
+A list with two elements:
+\describe{
+\item{mat_eta_prediction}{A numeric matrix of linear predictors (\eqn{\eta = X \beta}) with rows corresponding to observations in \code{newdata} and columns to the selected models.}
+\item{mat_reponse_prediction}{A numeric matrix of predicted responses (after applying the inverse link function) with the same dimensions as \code{mat_eta_prediction}.}
+}
 }
 \description{
 Predict method for a \code{swaglm} object
 }
+\details{
+Computes predictions from a fitted \code{swaglm} object on new data.
+The function returns the linear predictors (eta) for each selected model
+and the corresponding predicted responses using the model's inverse link function.
+
+The function performs the following steps:
+\itemize{
+\item Checks that \code{newdata} has the same number of columns as the design matrix used in the fitted \code{swaglm} object.
+\item Computes the linear predictors (\eqn{\eta = X \beta}) for each selected model in the swaglm object.
+\item Applies the inverse of the model's link function to compute predicted responses.
+}
+}
 \examples{
-1+1
+# set.seed(12345)
+# n <- 2000
+# p <- 100
+# # create design matrix and vector of coefficients
+# Sigma <- diag(rep(1/p, p))
+# X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)
+# beta = c(10, rep(0,p-1))
+# sigma2=2
+# y <- 1 + X\%*\%beta + rnorm(n, mean = 0, sd = sqrt(sigma2))
+# 
+# # subset data
+# n_data_train = n-5
+# X_sub = X[1:n_data_train, ]
+# y_sub = y[1:n_data_train]
+# 
+# # plot train data
+# plot(X_sub[,1], y_sub)
+# abline(a=1, b=beta[1])
+# 
+# # run swag
+# swaglm_obj = swaglm(X = X_sub, y = y_sub, p_max = 15, family = gaussian(), method = 0, alpha = .15)
+# 
+# # compute prediction
+# X_to_predict = X[(n_data_train+1):(dim(X)[1]), ]
+# y_pred = predict(swaglm_obj, newdata = X_to_predict)
+# 
+# 
+# # define swag parameters
+# quantile_alpha = .15
+# p_max = 20
+# object = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),
+#                         alpha = quantile_alpha, verbose = TRUE, seed = 123)
+# 
+# 
+# newdata = X
 }
