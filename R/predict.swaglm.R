@@ -9,7 +9,8 @@
 #' @param object An object of class \code{swaglm} returned by \code{\link[swaglm]{swaglm}}.
 #' @param newdata A data.frame or matrix containing the same predictors (columns) as used in the original training dataset.
 #' @param ... Further arguments passed to or from other methods.
-#'
+#' @name predict.swaglm
+#' @method predict swaglm
 #' @return A list with two elements:
 #' \describe{
 #'   \item{mat_eta_prediction}{A numeric matrix of linear predictors (\eqn{\eta = X \beta}) with rows corresponding to observations in \code{newdata} and columns to the selected models.}

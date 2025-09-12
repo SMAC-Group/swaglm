@@ -3,6 +3,8 @@
 #' Print a \code{swaglm_test} object
 #' @param x An object of class \code{swaglm_test}.
 #' @param ... Additional arguments
+#' @name print.swaglm_test
+#' @method print swaglm_test
 #' @example  /inst/examples/eg_print.swaglm_test.R
 #' @return None.
 #' @export

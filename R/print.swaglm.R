@@ -1,6 +1,8 @@
 #' print.swaglm
 #'
 #' Print a \code{swaglm} object
+#' @name print.swaglm
+#' @method print swaglm
 #' @param x An object of class \code{swaglm}.
 #' @param ... Additional arguments
 #' @example /inst/examples/eg_print.swaglm.R
