@@ -18,7 +18,8 @@ plot(X_sub[,1], y_sub)
 abline(a=1, b=beta[1])
 
 # run swag
-swaglm_obj = swaglm(X = X_sub, y = y_sub, p_max = 15, family = gaussian(), method = 0, alpha = .15, verbose = TRUE)
+swaglm_obj = swaglm(X = X_sub, y = y_sub, p_max = 15, family = gaussian(),
+                    method = 0, alpha = .15, verbose = TRUE)
 
 # compute prediction
 X_to_predict = X[(n_data_train+1):(dim(X)[1]), ]
@@ -37,7 +38,8 @@ plot(X_to_predict[,1], y_to_predict, col="red", ylim=c(-4,4), ylab="y", xlab="X"
 # add all prediction
 for(i in seq(dim(X_to_predict)[1])){
   # i=1
-  points(x = rep(X_to_predict[i,1],n_selected_model ), y = y_pred$mat_reponse_prediction[i,])
+  points(x = rep(X_to_predict[i,1],n_selected_model ),
+         y = y_pred$mat_reponse_prediction[i,])
 }
 points(x =X_to_predict[,1], y = y_pred_mean, col="orange")
 abline(a=1, b=beta[1])
