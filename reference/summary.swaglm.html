@@ -99,6 +99,9 @@
 <dt>lst_estimated_beta_per_variable</dt>
 <dd><p>A named list where each element corresponds to a variable (named <code>V&lt;index&gt;</code>). Each element is a numeric vector containing all estimated beta coefficients for that variable across all selected models in which it appears. This summarizes the distribution of effects for each variable across the selected models.</p></dd>
 
+<dt>lst_p_value_per_variable</dt>
+<dd><p>A named list where each element corresponds to a variable (named <code>V&lt;index&gt;</code>). Each element is a numeric vector containing all estimated p-values for that variable across all selected models in which it appears.</p></dd>
+
 
 </dl><p><strong>Model selection criterion:</strong>
 For each model dimension (number of variables in the model), the median AIC across all models of that dimension is computed. The <strong>smallest median AIC across all dimensions</strong> is identified. Then, <strong>all models with AIC less than or equal to this value</strong> are selected. This ensures that only relatively well-performing models across all dimensions are retained for summarization.</p>
@@ -149,26 +152,26 @@ For each model dimension (number of variables in the model), the median AIC acro
 <span class="r-in"><span><span class="va">swaglm_summ</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">swaglm_obj</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">swaglm_summ</span><span class="op">$</span><span class="va">mat_selected_model</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]    2    3    4    5    6    9   17   87   NA    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]    2    3    4    5    6    9   17   51   87    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,]    2    3    4    5    6    9   17   64   87    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,]    2    3    4    5    6    9   17   36   87    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,]    2    3    4    5    6    9   17   87   96    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,]    2    3    4    5    6    9   17   35   87    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,]    2    3    4    5    6    9   17   52   87    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]    2    3    4    5    6    9   17   78   87    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]    2    3    4    5    6    9   17   35   51    87    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10,]    2    3    4    5    6    9   17   35   64    87    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11,]    2    3    4    5    6    9   17   36   51    87    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [12,]    2    3    4    5    6    9   17   36   64    87    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13,]    2    3    4    5    6    9   17   51   64    87    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [14,]    2    3    4    5    6    9   17   51   87    96    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15,]    2    3    4    5    6    9   17   51   52    87    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16,]    2    3    4    5    6    9   17   51   78    87    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17,]    2    3    4    5    6    9   17   52   64    87    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [18,]    2    3    4    5    6    9   17   64   87    96    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19,]    2    3    4    5    6    9   17   64   78    87    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20,]    2    3    4    5    6    9   17   36   51    64    87</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]    1    2    3    4    5    8   16   86   NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]    1    2    3    4    5    8   16   50   86    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,]    1    2    3    4    5    8   16   63   86    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,]    1    2    3    4    5    8   16   35   86    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,]    1    2    3    4    5    8   16   86   95    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,]    1    2    3    4    5    8   16   34   86    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,]    1    2    3    4    5    8   16   51   86    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]    1    2    3    4    5    8   16   77   86    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]    1    2    3    4    5    8   16   34   50    86    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,]    1    2    3    4    5    8   16   34   63    86    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11,]    1    2    3    4    5    8   16   35   50    86    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [12,]    1    2    3    4    5    8   16   35   63    86    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13,]    1    2    3    4    5    8   16   50   63    86    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [14,]    1    2    3    4    5    8   16   50   86    95    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15,]    1    2    3    4    5    8   16   50   51    86    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16,]    1    2    3    4    5    8   16   50   77    86    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17,]    1    2    3    4    5    8   16   51   63    86    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [18,]    1    2    3    4    5    8   16   63   86    95    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19,]    1    2    3    4    5    8   16   63   77    86    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [20,]    1    2    3    4    5    8   16   35   50    63    86</span>
 <span class="r-in"><span><span class="va">swaglm_summ</span><span class="op">$</span><span class="va">mat_beta_selected_model</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]      [,2]      [,3]     [,4]     [,5]     [,6]      [,7]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 1.010497 -15.42298 -10.88880 5.866387 10.50399 14.56981 -1.757739</span>
@@ -281,67 +284,67 @@ For each model dimension (number of variables in the model), the median AIC acro
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 1495.877 1496.094 1495.283 1495.565 1494.571 1495.602 1495.973 1495.879</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [17] 1496.171 1495.784 1496.098 1495.975</span>
 <span class="r-in"><span><span class="va">swaglm_summ</span><span class="op">$</span><span class="va">lst_estimated_beta_per_variable</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -15.42298 -15.41904 -15.39433 -15.42253 -15.41751 -15.41548 -15.42189</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8] -15.41399 -15.40975 -15.38601 -15.41957 -15.39480 -15.39200 -15.41335</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [15] -15.41891 -15.40986 -15.39299 -15.38835 -15.38618 -15.39331</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -10.88880 -10.91069 -10.87565 -10.85719 -10.87506 -10.88462 -10.88661</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8] -10.88503 -10.90536 -10.87101 -10.88042 -10.84705 -10.89722 -10.89594</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [15] -10.91043 -10.90658 -10.87300 -10.86145 -10.87202 -10.86969</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 5.866387 5.861586 5.850753 5.853032 5.857510 5.871796 5.865727 5.861812</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 5.868274 5.856846 5.848506 5.838658 5.847248 5.852137 5.861513 5.856654</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [17] 5.849975 5.842569 5.846146 5.835279</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 10.50399 10.48690 10.48362 10.50980 10.47527 10.51064 10.50329 10.50079</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 10.49464 10.49089 10.49341 10.48865 10.46782 10.45853 10.48682 10.48360</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [17] 10.48279 10.45382 10.48044 10.47352</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 14.56981 14.55198 14.59389 14.58462 14.58305 14.56331 14.56842 14.56537</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 14.54379 14.58686 14.56654 14.60611 14.57515 14.56466 14.55182 14.54768</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [17] 14.59224 14.60748 14.59001 14.58728</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -1.757739 -1.779159 -1.751831 -1.776622 -1.749972 -1.754524 -1.758153</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8] -1.757246 -1.775884 -1.748051 -1.798152 -1.769693 -1.772099 -1.770955</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [15] -1.779208 -1.778736 -1.752328 -1.744077 -1.751488 -1.790190</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -1.548579 -1.564319 -1.531283 -1.543661 -1.548366 -1.546696 -1.547903</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8] -1.549986 -1.562112 -1.529190 -1.558967 -1.526998 -1.547935 -1.563234</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [15] -1.564237 -1.565955 -1.530522 -1.530806 -1.532604 -1.543226</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V34</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.1654597 -0.2022687 -0.1861584</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V35</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.5714650 -0.5620896 -0.5289427 -0.5230901</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V50</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.8706569 -0.8789415 -0.8650236 -0.8239921 -0.8700605 -0.8704989 -0.8724853</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [8] -0.8205079</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V51</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.036430980 0.004326727 0.042877552</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V63</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.7946861 -0.7989666 -0.7698577 -0.7473978 -0.7950032 -0.7989648 -0.7927315</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [8] -0.7232223</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V78</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V77</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.1948925 -0.2031730 -0.1848413</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V87</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V86</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1.529974 1.506564 1.506844 1.515732 1.542760 1.533030 1.529056 1.521742</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 1.509618 1.510129 1.492906 1.494184 1.485106 1.519009 1.506464 1.498269</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [17] 1.505715 1.520073 1.499415 1.472900</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V96</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V95</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.4162630 0.4153874 0.4266401</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
