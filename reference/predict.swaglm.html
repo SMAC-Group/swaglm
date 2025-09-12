@@ -108,41 +108,136 @@ and the corresponding predicted responses using the model's inverse link functio
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># set.seed(12345)</span></span></span>
-<span class="r-in"><span><span class="co"># n &lt;- 2000</span></span></span>
-<span class="r-in"><span><span class="co"># p &lt;- 100</span></span></span>
-<span class="r-in"><span><span class="co"># # create design matrix and vector of coefficients</span></span></span>
-<span class="r-in"><span><span class="co"># Sigma &lt;- diag(rep(1/p, p))</span></span></span>
-<span class="r-in"><span><span class="co"># X &lt;- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)</span></span></span>
-<span class="r-in"><span><span class="co"># beta = c(10, rep(0,p-1))</span></span></span>
-<span class="r-in"><span><span class="co"># sigma2=2</span></span></span>
-<span class="r-in"><span><span class="co"># y &lt;- 1 + X%*%beta + rnorm(n, mean = 0, sd = sqrt(sigma2))</span></span></span>
-<span class="r-in"><span><span class="co"># </span></span></span>
-<span class="r-in"><span><span class="co"># # subset data</span></span></span>
-<span class="r-in"><span><span class="co"># n_data_train = n-5</span></span></span>
-<span class="r-in"><span><span class="co"># X_sub = X[1:n_data_train, ]</span></span></span>
-<span class="r-in"><span><span class="co"># y_sub = y[1:n_data_train]</span></span></span>
-<span class="r-in"><span><span class="co"># </span></span></span>
-<span class="r-in"><span><span class="co"># # plot train data</span></span></span>
-<span class="r-in"><span><span class="co"># plot(X_sub[,1], y_sub)</span></span></span>
-<span class="r-in"><span><span class="co"># abline(a=1, b=beta[1])</span></span></span>
-<span class="r-in"><span><span class="co"># </span></span></span>
-<span class="r-in"><span><span class="co"># # run swag</span></span></span>
-<span class="r-in"><span><span class="co"># swaglm_obj = swaglm(X = X_sub, y = y_sub, p_max = 15, family = gaussian(), method = 0, alpha = .15)</span></span></span>
-<span class="r-in"><span><span class="co"># </span></span></span>
-<span class="r-in"><span><span class="co"># # compute prediction</span></span></span>
-<span class="r-in"><span><span class="co"># X_to_predict = X[(n_data_train+1):(dim(X)[1]), ]</span></span></span>
-<span class="r-in"><span><span class="co"># y_pred = predict(swaglm_obj, newdata = X_to_predict)</span></span></span>
-<span class="r-in"><span><span class="co"># </span></span></span>
-<span class="r-in"><span><span class="co"># </span></span></span>
-<span class="r-in"><span><span class="co"># # define swag parameters</span></span></span>
-<span class="r-in"><span><span class="co"># quantile_alpha = .15</span></span></span>
-<span class="r-in"><span><span class="co"># p_max = 20</span></span></span>
-<span class="r-in"><span><span class="co"># object = swaglm::swaglm(X=X, y = y, p_max = p_max, family = stats::binomial(),</span></span></span>
-<span class="r-in"><span><span class="co">#                         alpha = quantile_alpha, verbose = TRUE, seed = 123)</span></span></span>
-<span class="r-in"><span><span class="co"># </span></span></span>
-<span class="r-in"><span><span class="co"># </span></span></span>
-<span class="r-in"><span><span class="co"># newdata = X</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">2000</span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">100</span></span></span>
+<span class="r-in"><span><span class="co"># create design matrix and vector of coefficients</span></span></span>
+<span class="r-in"><span><span class="va">Sigma</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">p</span>, <span class="va">p</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html" class="external-link">mvrnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">p</span><span class="op">)</span>, Sigma <span class="op">=</span> <span class="va">Sigma</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">beta</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">p</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sigma2</span><span class="op">=</span><span class="fl">2</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">+</span> <span class="va">X</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span><span class="va">beta</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">sigma2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># subset data</span></span></span>
+<span class="r-in"><span><span class="va">n_data_train</span> <span class="op">=</span> <span class="va">n</span><span class="op">-</span><span class="fl">5</span></span></span>
+<span class="r-in"><span><span class="va">X_sub</span> <span class="op">=</span> <span class="va">X</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">n_data_train</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">y_sub</span> <span class="op">=</span> <span class="va">y</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">n_data_train</span><span class="op">]</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot train data</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">X_sub</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, <span class="va">y_sub</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>, b<span class="op">=</span><span class="va">beta</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="predict.swaglm-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># run swag</span></span></span>
+<span class="r-in"><span><span class="va">swaglm_obj</span> <span class="op">=</span> <span class="fu"><a href="swaglm.html">swaglm</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X_sub</span>, y <span class="op">=</span> <span class="va">y_sub</span>, p_max <span class="op">=</span> <span class="fl">15</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">gaussian</a></span><span class="op">(</span><span class="op">)</span>, method <span class="op">=</span> <span class="fl">0</span>, alpha <span class="op">=</span> <span class="fl">.15</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 15</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># compute prediction</span></span></span>
+<span class="r-in"><span><span class="va">X_to_predict</span> <span class="op">=</span> <span class="va">X</span><span class="op">[</span><span class="op">(</span><span class="va">n_data_train</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">y_pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">swaglm_obj</span>, newdata <span class="op">=</span> <span class="va">X_to_predict</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">n_selected_model</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">y_pred</span><span class="op">$</span><span class="va">mat_eta_prediction</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># in that case mat_eta_prediction and mat_reponse_prediction are the same</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">y_pred</span><span class="op">$</span><span class="va">mat_eta_prediction</span>, <span class="va">y_pred</span><span class="op">$</span><span class="va">mat_reponse_prediction</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># compute average prediction (accross selected models)</span></span></span>
+<span class="r-in"><span><span class="va">y_pred_mean</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">y_pred</span><span class="op">$</span><span class="va">mat_reponse_prediction</span>, MARGIN <span class="op">=</span> <span class="fl">1</span>, FUN <span class="op">=</span> <span class="va">mean</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot</span></span></span>
+<span class="r-in"><span><span class="va">y_to_predict</span> <span class="op">=</span> <span class="va">y</span><span class="op">[</span><span class="op">(</span><span class="va">n_data_train</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">X_to_predict</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, <span class="va">y_to_predict</span>, col<span class="op">=</span><span class="st">"red"</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, ylab<span class="op">=</span><span class="st">"y"</span>, xlab<span class="op">=</span><span class="st">"X"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># add all prediction</span></span></span>
+<span class="r-in"><span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">X_to_predict</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co"># i=1</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">X_to_predict</span><span class="op">[</span><span class="va">i</span>,<span class="fl">1</span><span class="op">]</span>,<span class="va">n_selected_model</span> <span class="op">)</span>, y <span class="op">=</span> <span class="va">y_pred</span><span class="op">$</span><span class="va">mat_reponse_prediction</span><span class="op">[</span><span class="va">i</span>,<span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span>x <span class="op">=</span><span class="va">X_to_predict</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">y_pred_mean</span>, col<span class="op">=</span><span class="st">"orange"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>, b<span class="op">=</span><span class="va">beta</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"topleft"</span>,</span></span>
+<span class="r-in"><span>  legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"True values (test set)"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Predictions (all selected models)"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Average prediction"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"True regression line"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>  col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"black"</span>, <span class="st">"orange"</span>, <span class="st">"black"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="cn">NA</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  cex <span class="op">=</span> <span class="fl">0.8</span>,</span></span>
+<span class="r-in"><span>  bty<span class="op">=</span><span class="st">"n"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="predict.swaglm-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># ----------------------------------- logistic regression</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">2000</span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">100</span></span></span>
+<span class="r-in"><span><span class="co"># create design matrix and vector of coefficients</span></span></span>
+<span class="r-in"><span><span class="va">Sigma</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">p</span>, <span class="va">p</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html" class="external-link">mvrnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">p</span><span class="op">)</span>, Sigma <span class="op">=</span> <span class="va">Sigma</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">beta</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">15</span>,<span class="op">-</span><span class="fl">10</span>,<span class="fl">5</span>,<span class="fl">10</span>,<span class="fl">15</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">p</span><span class="op">-</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># --------------------- generate from logistic regression with an intercept of one</span></span></span>
+<span class="r-in"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">+</span> <span class="va">X</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span><span class="va">beta</span></span></span>
+<span class="r-in"><span><span class="va">pr</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">z</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">1</span>, <span class="va">pr</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># subset data</span></span></span>
+<span class="r-in"><span><span class="va">n_data_train</span> <span class="op">=</span> <span class="va">n</span><span class="op">-</span><span class="fl">200</span></span></span>
+<span class="r-in"><span><span class="va">X_sub</span> <span class="op">=</span> <span class="va">X</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">n_data_train</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">y_sub</span> <span class="op">=</span> <span class="va">y</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">n_data_train</span><span class="op">]</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">swaglm_obj</span> <span class="op">=</span> <span class="fu">swaglm</span><span class="fu">::</span><span class="fu"><a href="swaglm.html">swaglm</a></span><span class="op">(</span>X<span class="op">=</span><span class="va">X_sub</span>, y <span class="op">=</span> <span class="va">y_sub</span>, p_max <span class="op">=</span> <span class="fl">20</span>, family <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                            alpha <span class="op">=</span> <span class="fl">.15</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Completed models of dimension 15</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># compute prediction</span></span></span>
+<span class="r-in"><span><span class="va">X_to_predict</span> <span class="op">=</span> <span class="va">X</span><span class="op">[</span><span class="op">(</span><span class="va">n_data_train</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">y_pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">swaglm_obj</span>, newdata <span class="op">=</span> <span class="va">X_to_predict</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y_pred_majority_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowMeans</a></span><span class="op">(</span><span class="va">y_pred</span><span class="op">$</span><span class="va">mat_reponse_prediction</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y_to_predict</span> <span class="op">=</span> <span class="va">y</span><span class="op">[</span><span class="op">(</span><span class="va">n_data_train</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># tabulate</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span>True <span class="op">=</span> <span class="va">y_to_predict</span>, Predicted <span class="op">=</span> <span class="va">y_pred_majority_class</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Predicted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> True   0   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    0  52  25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1  11 112</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
