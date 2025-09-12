@@ -226,23 +226,23 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
 
 /*** R
 # Parameters for data generation
-set.seed(1)
-n <- 2000
-p <- 50
-Sigma <- diag(rep(1/p, p))
-
-X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)
-beta = c(-10,5,6,19,70,rep(0,p-5))
-
-# --------------------- logistic reg
-z <- 1 + X%*%beta
-pr <- 1/(1 + exp(-z))
-y <- as.factor(rbinom(n, 1, pr))
-y = as.numeric(y)-1
-test=swaglm(y=y, X=X, p_max = 10, family = binomial())
-str(test$vec_selected_variables_dimension_1)
-test2 = summary(test)
-test2$lst_estimated_beta_per_variable
+# set.seed(1)
+# n <- 2000
+# p <- 50
+# Sigma <- diag(rep(1/p, p))
+# 
+# X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = Sigma)
+# beta = c(-10,5,6,19,70,rep(0,p-5))
+# 
+# # --------------------- logistic reg
+# z <- 1 + X%*%beta
+# pr <- 1/(1 + exp(-z))
+# y <- as.factor(rbinom(n, 1, pr))
+# y = as.numeric(y)-1
+# test=swaglm(y=y, X=X, p_max = 10, family = binomial())
+# str(test$vec_selected_variables_dimension_1)
+# test2 = summary(test)
+# test2$lst_estimated_beta_per_variable
 # # test
 # 
 # # 
