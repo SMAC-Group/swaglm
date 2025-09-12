@@ -94,7 +94,7 @@ arma::uvec generate_permutation(int n, int m, int seed=123){
 //' @param alpha A \code{double} specifying the quantile of the criterion used to select models which are employed to construct models to explore at the next dimension
 //' @param verbose A \code{boolean} used to control verbose
 //' @param seed An \code{integer} that is the random seed used when creating the set of model to explore for the next dimension
-//' @return A \code{List} of \code{List} containing:
+//' @return An object of class \code{swaglm} structured as a \code{List} containing:
 //'   - \code{lst_estimated_beta}: A \code{List} that contain the estimated coefficients for each estimated model. Each entry of this \code{List} is a matrix where in each rows are the estimated coefficients for the model.
 //'   - \code{lst_p_value} A \code{List} that contain the p-value associated with each estimated coefficients for each estimated model. Each entry of this \code{List} is a matrix where in each rows are the p-value for the model.
 //'   - \code{lst_AIC}: A \code{List} that contains the AIC values for each model at each dimension. Each entry of this list correspond to the AIC values for the models explored at this dimension.

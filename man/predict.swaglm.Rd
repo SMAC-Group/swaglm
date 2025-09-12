@@ -4,12 +4,14 @@
 \alias{predict.swaglm}
 \title{print.swaglm}
 \usage{
-\method{predict}{swaglm}(object, newdata)
+\method{predict}{swaglm}(object, newdata, ...)
 }
 \arguments{
 \item{object}{An object of class \code{swaglm}.}
 
 \item{newdata}{A data.frame that contains the same variable as the training dataset}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \value{
 TODO.

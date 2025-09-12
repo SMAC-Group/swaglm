@@ -10,6 +10,7 @@ reference:
     - swaglm
     - print.swaglm
     - summary.swaglm
+    - predict.swaglm
     - compute_network
     - plot.swaglm_network
     - swaglm_test
