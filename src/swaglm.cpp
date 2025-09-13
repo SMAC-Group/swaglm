@@ -139,7 +139,7 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
   arma::vec variables_screening = as<arma::vec>(res2["mat_of_variables_selected_models"]).col(0);
   
   // Compute the number of variables (p) in X and define the number of maximum explored model per dimension as number of selected variables in first screening step choose 2, so the number of models explored at dimension 2
-  int p = X.n_cols;
+  // int p = X.n_cols;
   int m = binomial_coefficient(variables_screening.n_elem, 2); // Now using C++ function
   
   if (verbose) {
@@ -152,7 +152,7 @@ List swaglm(const arma::mat& X, const arma::vec& y, int p_max=2, Nullable<List> 
     arma::mat res3 = compute_all_possible_variable_combinations_cpp(as<arma::mat>(res2["mat_of_variables_selected_models"]), variables_screening);
     
     // Select at most m models to evaluate randomly
-    if (res3.n_rows > m) {
+    if ((int)res3.n_rows > m) {
       // Generate random indices for sampling `m` rows
       arma::uvec random_indices = generate_permutation(res3.n_rows, m, seed);
       // subset matrix of model to explore
