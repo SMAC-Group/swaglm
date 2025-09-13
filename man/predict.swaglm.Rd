@@ -16,8 +16,14 @@
 \value{
 A list with two elements:
 \describe{
-\item{mat_eta_prediction}{A numeric matrix of linear predictors (\eqn{\eta = X \beta}) with rows corresponding to observations in \code{newdata} and columns to the selected models.}
-\item{mat_reponse_prediction}{A numeric matrix of predicted responses (after applying the inverse link function) with the same dimensions as \code{mat_eta_prediction}.}
+\item{mat_eta_prediction}{A numeric matrix containing the linear predictors
+(\eqn{\eta = X \hat{\beta}}) for each observation in \code{newdata} for all selected models. Each row corresponds to an observation in
+\code{newdata}, and each column corresponds to one of the selected models.}
+
+\item{mat_response_prediction}{A numeric matrix containing the predicted responses,
+obtained by applying the inverse link function to the elements in \code{mat_eta_prediction}.
+The dimensions are identical to \code{mat_eta_prediction}, so that for each
+observation (row) the predicted responses for all selected models are aligned per column.}
 }
 }
 \description{
@@ -31,7 +37,7 @@ and the corresponding predicted responses using the model's inverse link functio
 The function performs the following steps:
 \itemize{
 \item Checks that \code{newdata} has the same number of columns as the design matrix used in the fitted \code{swaglm} object.
-\item Computes the linear predictors (\eqn{\eta = X \beta}) for each selected model in the swaglm object.
+\item Computes the linear predictors (\eqn{\eta = X \hat{\beta}}) for each selected model in the swaglm object.
 \item Applies the inverse of the model's link function to compute predicted responses.
 }
 }
