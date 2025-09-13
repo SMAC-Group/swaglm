@@ -89,10 +89,16 @@
     <div id="value">
     <h2>Value</h2>
     <p>A list with two elements:</p><dl><dt>mat_eta_prediction</dt>
-<dd><p>A numeric matrix of linear predictors (\(\eta = X \beta\)) with rows corresponding to observations in <code>newdata</code> and columns to the selected models.</p></dd>
+<dd><p>A numeric matrix containing the linear predictors
+(\(\eta = X \hat{\beta}\)) for each observation in <code>newdata</code> for all selected models. Each row corresponds to an observation in
+<code>newdata</code>, and each column corresponds to one of the selected models.</p></dd>
 
-<dt>mat_reponse_prediction</dt>
-<dd><p>A numeric matrix of predicted responses (after applying the inverse link function) with the same dimensions as <code>mat_eta_prediction</code>.</p></dd>
+
+<dt>mat_response_prediction</dt>
+<dd><p>A numeric matrix containing the predicted responses,
+obtained by applying the inverse link function to the elements in <code>mat_eta_prediction</code>.
+The dimensions are identical to <code>mat_eta_prediction</code>, so that for each
+observation (row) the predicted responses for all selected models are aligned per column.</p></dd>
 
 
 </dl></div>
@@ -102,7 +108,7 @@
 The function returns the linear predictors (eta) for each selected model
 and the corresponding predicted responses using the model's inverse link function.</p>
 <p>The function performs the following steps:</p><ul><li><p>Checks that <code>newdata</code> has the same number of columns as the design matrix used in the fitted <code>swaglm</code> object.</p></li>
-<li><p>Computes the linear predictors (\(\eta = X \beta\)) for each selected model in the swaglm object.</p></li>
+<li><p>Computes the linear predictors (\(\eta = X \hat{\beta}\)) for each selected model in the swaglm object.</p></li>
 <li><p>Applies the inverse of the model's link function to compute predicted responses.</p></li>
 </ul></div>
 
