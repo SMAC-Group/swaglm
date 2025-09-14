@@ -101,3 +101,4 @@ predict.swaglm <- function(object, newdata, ...) {
   # return object
   return(res)
 }
+
