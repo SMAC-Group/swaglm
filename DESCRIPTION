@@ -1,5 +1,5 @@
 Package: swaglm
-Title: Fast Sparse Wrapper Algorithm for Generalized Linear Models and Testing Procedures for Network of Highly Predictive Variables
+Title: Fast Sparse Wrapper Algorithm for Generalized Linear Models
 Version: 0.0.1
 Authors@R: c(
     person("Lionel", "Voirol", email = "lionelvoirol@hotmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-1696-1407")),
