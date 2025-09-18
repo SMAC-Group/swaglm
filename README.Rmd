@@ -20,7 +20,7 @@ downloads](https://cranlogs.r-pkg.org/badges/grand-total/swaglm)](https://www.r-
 
 
 ## Overview
-The `swaglm` package is a fast implementation of the Sparse Wrapper Algorithm (SWAG) for Generalized Linear Models (GLM). SWAG is a meta-learning procedure that combines screening and wrapper methods to efficiently find strong low-dimensional attribute combinations for prediction. Additionally, the package provides a statistical test to assess whether the selected models (learners) extract meaningful information from the data.
+The `swaglm` package is a fast implementation of the Sparse Wrapper Algorithm (SWAG) for Generalized Linear Models (GLM). SWAG is a meta-learning procedure that combines screening and wrapper methods to efficiently find strong low-dimensional attribute combinations for prediction. Additionally, the package provides functions to visualize and extract information from the selected models as well as a statistical test to assess whether the selected models extract meaningful information from the data. For more details, see the [arXiv preprint](https://arxiv.org/abs/2006.12837).
 
 ## Features
 - Efficiently finds a set of low-dimensional learners with high predictive accuracy.
@@ -32,7 +32,20 @@ Below are instructions on how to install and make use of the `swaglm` package.
 
 ## Installation Instructions
 
-The `swaglm` package is currently only available on  GitHub.
+
+The `swaglm` package is available on both CRAN and GitHub. The CRAN
+version is considered stable while the GitHub version is subject to
+modifications/updates which may lead to installation problems or broken
+functions. You can install the stable version of the `swaglm` package
+with:
+
+``` r
+install.packages("swaglm")
+```
+
+For users who are interested in having the latest developments, the
+GitHub version is ideal although more dependencies are required to run a
+stable version of the package. 
 
 ``` r
 # Install dependencies

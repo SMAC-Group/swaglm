@@ -6,7 +6,7 @@ Authors@R: c(
     person("Yagmur", "Ozdemir", role = "aut")
     )
 Description: Provides a fast implementation of the SWAG algorithm for Generalized Linear Models which allows to perform a meta-learning procedure that combines 
-    screening and wrapper methods to find a set of extremely low-dimensional attribute combinations. The package then performs test on the network of selected models to identify the variables that are highly predictive by using entropy-based network measures.
+    screening and wrapper methods to find a set of extremely low-dimensional attribute combinations. The package provides functions to visualize and extract information of selected models and allows to perform a test on the network of selected models to identify the variables that are highly predictive by using entropy-based network measures.
 License: AGPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

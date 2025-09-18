@@ -1,10 +1,16 @@
 
 # `swaglm` Overview <img src="man/figures/logo.png" align="right" style="width: 15%; height: 15%"/>
 
-<!-- badges: start  -->
+<!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/swaglm)](https://CRAN.R-project.org/package=swaglm)
 ![](https://img.shields.io/github/last-commit/SMAC-Group/swaglm)
 [<img src="https://s-a.github.io/license/img/agpl-3.0.svg" />](https://s-a.github.io/license/?license=agpl-3.0&fullname=Stephan%20Ahlf&year=2015&profile=https://github.com/s-a&projectUrl=https://github.com/s-a/license&projectName=License%20Demo)
+[![CRAN RStudio mirror
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/swaglm)](https://www.r-pkg.org/pkg/swaglm)
+[![metacran
+downloads](https://cranlogs.r-pkg.org/badges/last-week/swaglm)](https://cran.r-project.org/package=swaglm)
 ![R-CMD-check](https://github.com/SMAC-Group/swaglm/actions/workflows/R-CMD-check.yaml/badge.svg)
 <!-- badges: end -->
 
@@ -14,9 +20,11 @@ The `swaglm` package is a fast implementation of the Sparse Wrapper
 Algorithm (SWAG) for Generalized Linear Models (GLM). SWAG is a
 meta-learning procedure that combines screening and wrapper methods to
 efficiently find strong low-dimensional attribute combinations for
-prediction. Additionally, the package provides a statistical test to
-assess whether the selected models (learners) extract meaningful
-information from the data.
+prediction. Additionally, the package provides functions to visualize
+and extract information from the selected models as well as a
+statistical test to assess whether the selected models extract
+meaningful information from the data. For more details, see the [arXiv
+preprint](https://arxiv.org/abs/2006.12837).
 
 ## Features
 
@@ -35,7 +43,19 @@ package.
 
 ## Installation Instructions
 
-The `swaglm` package is currently only available on GitHub.
+The `swaglm` package is available on both CRAN and GitHub. The CRAN
+version is considered stable while the GitHub version is subject to
+modifications/updates which may lead to installation problems or broken
+functions. You can install the stable version of the `swaglm` package
+with:
+
+``` r
+install.packages("swaglm")
+```
+
+For users who are interested in having the latest developments, the
+GitHub version is ideal although more dependencies are required to run a
+stable version of the package.
 
 ``` r
 # Install dependencies
@@ -64,8 +84,8 @@ library(swaglm)
 # Simulated data
 n <- 2000
 p <- 50
-X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = diag(rep(1/p, p)))
-beta <- c(-15, -10, 5, 10, 15, rep(0, p-5))
+X <- MASS::mvrnorm(n = n, mu = rep(0, p), Sigma = diag(rep(1 / p, p)))
+beta <- c(-15, -10, 5, 10, 15, rep(0, p - 5))
 
 # generate from logistic regression model
 z <- 1 + X %*% beta
@@ -75,8 +95,10 @@ y <- as.factor(rbinom(n, 1, pr))
 y <- as.numeric(y) - 1
 
 # Run SWAG
-swaglm_obj <- swaglm(X = X, y = y, p_max = 20, family = binomial(),
-                   alpha = 0.15, verbose = TRUE, seed = 123)
+swaglm_obj <- swaglm(
+  X = X, y = y, p_max = 20, family = binomial(),
+  alpha = 0.15, verbose = TRUE, seed = 123
+)
 ```
 
     ## Completed models of dimension 1
@@ -95,23 +117,20 @@ print(swaglm_obj)
     ## SWAGLM results :
     ## -----------------------------------------
     ## Input matrix dimension:  2000 50 
-    ## Number of explored models:  136 
+    ## Number of explored models:  129 
     ## Number of dimensions explored:  8
 
 ``` r
 # plot network
-swaglm_network_obj = compute_network(swaglm_obj)
+swaglm_network_obj <- compute_network(swaglm_obj)
 plot(swaglm_network_obj, scale_vertex = 1)
 ```
 
-
-<img src="man/figures/unnamed-chunk-2-1.png" width="80%" />
-
-
+![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 ``` r
 # Run statistical test
-B=20
+B <- 20
 test_results <- swaglm_test(swaglm_obj, B = B, verbose = TRUE)
 
 # View p-values for both entropy-based measures
@@ -120,8 +139,8 @@ print(test_results)
 
     ## SWAGLM Test Results:
     ## ----------------------
-    ## p-value (Eigen): 0.1306 
-    ## p-value (Freq): 0
+    ## p-value (Eigen): 0.3114 
+    ## p-value (Freq): 1e-04
 
 Find vignettes with detailed examples as well as the user’s manual at
 the [package website](https://smac-group.github.io/swaglm/index.html).
