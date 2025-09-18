@@ -139,8 +139,8 @@ print(test_results)
 
     ## SWAGLM Test Results:
     ## ----------------------
-    ## p-value (Eigen): 0.3114 
-    ## p-value (Freq): 1e-04
+    ## p-value (Eigen): 0.34625 
+    ## p-value (Freq): 0.0046
 
 Find vignettes with detailed examples as well as the user’s manual at
 the [package website](https://smac-group.github.io/swaglm/index.html).
