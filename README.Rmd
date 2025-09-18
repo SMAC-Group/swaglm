@@ -4,9 +4,15 @@ output: github_document
 
 # `swaglm` Overview <img src="man/figures/logo.png" align="right" style="width: 15%; height: 15%"/>
 
-<!-- badges: start  -->
+
+<!-- badges: start -->
+
+[![CRAN status](https://www.r-pkg.org/badges/version/swaglm)](https://CRAN.R-project.org/package=swaglm)
 ![](https://img.shields.io/github/last-commit/SMAC-Group/swaglm) 
 [<img src="https://s-a.github.io/license/img/agpl-3.0.svg" />](https://s-a.github.io/license/?license=agpl-3.0&fullname=Stephan%20Ahlf&year=2015&profile=https://github.com/s-a&projectUrl=https://github.com/s-a/license&projectName=License%20Demo "")
+[![CRAN RStudio mirror
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/swaglm)](https://www.r-pkg.org/pkg/swaglm)
+[![metacran downloads](https://cranlogs.r-pkg.org/badges/last-week/swaglm)](https://cran.r-project.org/package=swaglm)
 ![R-CMD-check](https://github.com/SMAC-Group/swaglm/actions/workflows/R-CMD-check.yaml/badge.svg)
 <!-- badges: end -->
 
